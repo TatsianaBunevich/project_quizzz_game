@@ -1,0 +1,25 @@
+.question {
+    display: grid;
+    grid-gap: 0.75em;
+    padding: 0.938em 0;
+    border-bottom: 1px solid #dbdef0;
+  }
+
+  .answers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .answer {
+    border-color: #4d5b9e;
+  }
+
+  .answer:hover {
+    background-color: #d6dbf5;
+  }
+
+  .selected {
+    background-color: #d6dbf5;
+    border-color: transparent;
+  }

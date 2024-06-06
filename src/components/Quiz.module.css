@@ -1,0 +1,13 @@
+.quiz {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5em 15vw 1.25em;
+    max-width: 400px;
+  }
+
+  @media (min-width: 992px) {
+    .quiz {
+      max-width: 1200px;
+    }
+  }
+

@@ -1,0 +1,10 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('/src/public/img/bg_img_3.svg'), url('/src/public/img/bg_img_4.svg');
+    background-repeat: no-repeat, no-repeat;
+    background-position: right top, left bottom;
+    width: 100vw;
+  }
