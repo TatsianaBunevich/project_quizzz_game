@@ -1,12 +1,7 @@
-.footer {
-    display: grid;
-    place-items: center;
-  }
-
-  .submitButton {
-    padding: 1.367em 2.246em;
-    color: var(--background-color);
-    background-color: var(--button-color);
-    font-weight: 600;
-    border-radius: 0.977em;
-  }
+.submitButton {
+  padding: 1.367em 2.246em;
+  color: var(--background-color);
+  background-color: var(--button-color);
+  font-weight: 600;
+  border-radius: 0.977em;
+}
