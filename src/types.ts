@@ -8,6 +8,12 @@ export interface ThemeProps {
 	onSwitchTheme: (theme: Theme) => void;
 }
 
+export type SelectedAnswer = string | undefined;
+
+export interface SelectedAnswers {
+    [key: string]: SelectedAnswer;
+}
+
 export interface Question {
 	category: string;
 	type: string;
@@ -18,10 +24,14 @@ export interface Question {
 	answers: string[];
 }
 
+export interface QuizProps {
+    questions: Question[];
+}
+
 export interface QuestionProps {
     question: Question;
-    selectedAnswer: string | undefined;
-    onSelectAnswer: (questionId: string, answer: string) => void;
+    selectedAnswer: SelectedAnswer;
+    onSelectAnswer: (questionId: string, answer: SelectedAnswer) => void;
 }
 
 export type BlobProps = {

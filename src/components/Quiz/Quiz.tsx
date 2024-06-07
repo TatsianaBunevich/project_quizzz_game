@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import Question from '../Question/Question';
 import styles from './Quiz.module.css';
-import { Question as QuestionType } from '../../types';
+import { QuizProps, SelectedAnswers, SelectedAnswer } from '../../types';
 
-const Quiz: React.FC<{ questions: QuestionType[] }> = ({ questions }) => {
+const Quiz: React.FC<QuizProps> = ({ questions }) => {
 
-	const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string }>({});
+	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswers>({});
 
-	const handleAnswerSelect = (questionId: string, answer: string) => {
-		setSelectedAnswers(prev => ({ ...prev, [questionId]: answer }));
+	const handleAnswerSelect = (questionId: string, answer: SelectedAnswer) => {
+		if (selectedAnswers[questionId] === answer) {
+			setSelectedAnswers({});
+		} else {
+			setSelectedAnswers(prev => ({ ...prev, [questionId]: answer }));
+		}
 	};
 
 	return (

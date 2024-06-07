@@ -18,7 +18,7 @@ const Question: React.FC<QuestionProps> = ({ question, selectedAnswer, onSelectA
 				{question.answers.map((answer) => (
 					<button
 						key={answer}
-						className={`${styles.answer} ${selectedAnswer === answer ? styles.selected : ''}`}
+						className={`${selectedAnswer === answer ? styles.selected : ''}`}
 						onClick={() => onSelectAnswer(question.question, answer)}
 					>
 						{decodeHtmlEntities(answer)}
