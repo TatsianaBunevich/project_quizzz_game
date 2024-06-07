@@ -8,6 +8,12 @@ export interface ThemeProps {
 	onSwitchTheme: (theme: Theme) => void;
 }
 
+export interface HeaderProps {
+	play: boolean;
+	theme: Theme;
+	onSwitchTheme: (theme: Theme) => void;
+}
+
 export type SelectedAnswer = string | undefined;
 
 export interface SelectedAnswers {
@@ -34,8 +40,14 @@ export interface QuestionProps {
     onSelectAnswer: (questionId: string, answer: SelectedAnswer) => void;
 }
 
+export interface ToggleProps {
+	theme: Theme;
+	onSwitchTheme: (theme: Theme) => void;
+}
+
 export type BlobProps = {
 	theme: Theme;
+	play: boolean;
     position: 'top' | 'bottom';
     width?: number;
     height?: number;

@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Toggle.module.css';
-import { Theme, ThemeProps } from '../../types';
+import { Theme, ToggleProps } from '../../types';
 
-const Toggle: React.FC<ThemeProps> = ({ theme, onSwitchTheme }) => {
+const Toggle: React.FC<ToggleProps> = ({ theme, onSwitchTheme }) => {
 
 	return (
 		<div className={styles.toggle}>

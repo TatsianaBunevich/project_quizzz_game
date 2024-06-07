@@ -59,7 +59,7 @@ const App: React.FC = () => {
 
 	return (
 		<div className={styles.app} data-theme={theme}>
-			<Header theme={theme} onSwitchTheme={handleSwitchTheme} />
+			<Header play={isPlaying} theme={theme} onSwitchTheme={handleSwitchTheme} />
 			{isPlaying ?
 				<Quiz questions={questions} /> :
 				<h1>Quizzz Game</h1>
