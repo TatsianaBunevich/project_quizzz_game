@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './App.module.css';
-import Toggle from './components/Toggle/Toggle';
+import Header from './components/Header/Header';
 import Quiz from './components/Quiz/Quiz';
 import Footer from './components/Footer/Footer';
-import Blob from './components/Blob/Blob';
 import { Theme } from './types';
 
 const App: React.FC = () => {
@@ -59,9 +58,7 @@ const App: React.FC = () => {
 
 	return (
 		<div className={styles.app} data-theme={theme}>
-			<Blob theme={theme} position={'top'} width={162} height={187} />
-			<Blob theme={theme} position={'bottom'} width={65} height={62} />
-			<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
+			<Header theme={theme} onSwitchTheme={handleSwitchTheme} />
 			<Quiz questions={questions} />
 			<Footer />
 		</div>
