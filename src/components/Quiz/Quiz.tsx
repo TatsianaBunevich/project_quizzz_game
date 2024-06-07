@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Question from './Question';
+import Question from '../Question/Question';
 import styles from './Quiz.module.css';
-import { Question as QuestionType } from '../types';
+import { Question as QuestionType } from '../../types';
 
 const Quiz: React.FC<{ questions: QuestionType[] }> = ({ questions }) => {
 

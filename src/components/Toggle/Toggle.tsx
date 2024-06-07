@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Toggle.module.css';
-import { Theme, ThemeProps } from '../types';
+import { Theme, ThemeProps } from '../../types';
 
 const Toggle: React.FC<ThemeProps> = ({ theme, onSwitchTheme }) => {
 

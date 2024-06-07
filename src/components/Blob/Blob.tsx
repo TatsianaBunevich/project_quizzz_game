@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Blob.module.css';
-import { BlobProps } from '../types';
+import { BlobProps } from '../../types';
 
 const Blob: React.FC<BlobProps> = ({ theme, position, width, height }) => {
 

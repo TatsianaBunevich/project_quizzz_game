@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Question.module.css';
-import { QuestionProps } from '../types';
+import { QuestionProps } from '../../types';
 
 const Question: React.FC<QuestionProps> = ({ question, selectedAnswer, onSelectAnswer }) => {
 

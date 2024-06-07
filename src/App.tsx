@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './App.module.css';
-import Toggle from './components/Toggle';
-import Quiz from './components/Quiz';
-import Footer from './components/Footer';
-import Blob from './components/Blob';
+import Toggle from './components/Toggle/Toggle';
+import Quiz from './components/Quiz/Quiz';
+import Footer from './components/Footer/Footer';
+import Blob from './components/Blob/Blob';
 import { Theme } from './types';
 
 const App: React.FC = () => {
