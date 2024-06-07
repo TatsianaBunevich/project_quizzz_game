@@ -10,6 +10,7 @@ const App: React.FC = () => {
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
 	const [theme, setThemeName] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
 	const [questions, setQuestions] = useState([]);
+	const [isPlaying, setIsPlaying] = useState(false);
 
 	useEffect(() => {
 
@@ -59,8 +60,11 @@ const App: React.FC = () => {
 	return (
 		<div className={styles.app} data-theme={theme}>
 			<Header theme={theme} onSwitchTheme={handleSwitchTheme} />
-			<Quiz questions={questions} />
-			<Footer />
+			{isPlaying ?
+				<Quiz questions={questions} /> :
+				<h1>Quizzz Game</h1>
+			}
+			<Footer play={isPlaying} setPlay={setIsPlaying} />
 		</div>
 	);
 };
