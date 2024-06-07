@@ -1,5 +1,11 @@
 :root {
-    font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --color: #e8e8ea;
+    --background-color: #1b1b32;
+    --button-bg-color: #6b7abb;
+    --border-color: #5d6baa;
+    --button-color: var(--color);
+
+    font-family: "Inter", sans-serif;
     line-height: 1;
     font-weight: 400;
     font-size: 16px;
@@ -7,13 +13,27 @@
     overflow-x: hidden;
 
     color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  [data-theme="light"] {
+    --color: #0a475c;
+    --background-color: #e8f7fc;
+    --button-bg-color: #96dcee;
+    --border-color: #72cce3;
+    --button-color: var(--color);
+  }
+
+  [data-theme="dark"] {
+    --color: #e8e8ea;
+    --background-color: #1b1b32;
+    --button-bg-color: #6b7abb;
+    --border-color: #5d6baa;
+    --button-color: var(--color);
   }
 
   /* a {
@@ -33,34 +53,36 @@
     min-height: 100vh;
   }
 
-  h1 {
+  h1,
+  h2 {
     font-family: "Karla", sans-serif;
-    font-size: 1.953em;
     font-weight: 700;
   }
 
+  h1 {
+    font-size: 1.953em;
+  }
+
   h2 {
-    font-family: "Karla", sans-serif;
     font-size: 1em;
-    font-weight: 700;
     margin: 0.938em 0;
   }
 
   button {
     border-radius: 0.781em;
-    border: 1px solid transparent;
+    border: 1px solid var(--button-color);
     padding: 0.438em 1.25em;
-    color: #293264;
+    color: var(--button-color);
     background-color: transparent;
     font-size: 0.64em;
     font-weight: 500;
-    font-family: inherit;
+    font-family: "Inter", sans-serif;
     cursor: pointer;
-    /* transition: opacity 0.25s; */
+    transition: background-color 0.25s ease-in-out;
   }
   button:hover {
-    /* border-color: #646cff; */
-    /* opacity: .8; */
+    color: var(--button-color);
+    background-color: var(--button-bg-color);
   }
   button:focus,
   button:focus-visible {
@@ -69,14 +91,17 @@
 
   @media (prefers-color-scheme: light) {
     :root {
-      color: #293264;
-      background-color: #f5f7fb;
+      --color: #0a475c;
+      --background-color: #e8f7fc;
+      --button-bg-color: #96dcee;
+      --border-color: #72cce3;
+      --button-color: var(--color);
     }
     /* a:hover {
       color: #747bff;
     } */
     /* button {
-      background-color: #f9f9f9;
+      color: var(--button-color);
     } */
   }
 

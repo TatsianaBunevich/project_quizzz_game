@@ -1,13 +1,12 @@
 .footer {
     display: grid;
     place-items: center;
-    margin-bottom: 1.563em;
   }
 
   .submitButton {
     padding: 1.367em 2.246em;
-    color: #f5f7fb;
-    background-color: rgba(77, 91, 158, 1);
+    color: var(--background-color);
+    background-color: var(--button-color);
     font-weight: 600;
     border-radius: 0.977em;
   }
