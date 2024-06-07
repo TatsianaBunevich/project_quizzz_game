@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import Header from './components/Header/Header';
 import Quiz from './components/Quiz/Quiz';
 import Footer from './components/Footer/Footer';
 import { Theme } from './types';
 
-const App: React.FC = () => {
+const App = () => {
 
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
 	const [theme, setThemeName] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);

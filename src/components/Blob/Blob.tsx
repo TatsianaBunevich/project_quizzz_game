@@ -1,6 +1,13 @@
-import React from 'react';
 import styles from './Blob.module.css';
-import { BlobProps } from '../../types';
+import { Theme } from '../../types';
+
+export type BlobProps = {
+	theme: Theme;
+	play: boolean;
+    position: 'top' | 'bottom';
+    width?: number;
+    height?: number;
+};
 
 const getPathData = (play: boolean, position: string) => {
 	const paths = {
@@ -17,7 +24,7 @@ const getPathData = (play: boolean, position: string) => {
 	return play ? (position === 'top' ? paths.play.top : paths.play.bottom) : (position === 'top' ? paths.default.top : paths.default.bottom);
 };
 
-const Blob: React.FC<BlobProps> = ({ theme, play, position, width, height }) => {
+const Blob = ({ theme, play, position, width, height }: BlobProps) => {
 	const blobClasses = `${styles.blob} ${styles[theme]} ${styles[position]}`;
 	const d = getPathData(play, position);
 

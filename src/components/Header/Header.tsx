@@ -1,9 +1,14 @@
-import React from 'react';
 import Blob from '../Blob/Blob';
 import Toggle from '../Toggle/Toggle';
-import { HeaderProps } from '../../types';
+import { Theme } from '../../types';
 
-const Header: React.FC<HeaderProps> = ({ play, theme, onSwitchTheme }) => {
+type HeaderProps = {
+	play: boolean;
+	theme: Theme;
+	onSwitchTheme: (theme: Theme) => void;
+};
+
+const Header = ({ play, theme, onSwitchTheme }: HeaderProps) => {
 	return (
 		<header>
 			<Blob theme={theme} play={play} position='top' width={play ? 162 : 194} height={play ? 187 : 197} />
@@ -14,4 +19,5 @@ const Header: React.FC<HeaderProps> = ({ play, theme, onSwitchTheme }) => {
 };
 
 export default Header;
+
 

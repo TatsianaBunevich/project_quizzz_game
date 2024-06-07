@@ -1,8 +1,13 @@
-import React from 'react';
 import styles from './Question.module.css';
-import { QuestionProps } from '../../types';
+import { Question as QuestionType, SelectedAnswer } from '../../types';
 
-const Question: React.FC<QuestionProps> = ({ question, selectedAnswer, onSelectAnswer }) => {
+type QuestionProps = {
+    question: QuestionType;
+    selectedAnswer: SelectedAnswer;
+    onSelectAnswer: (questionId: string, answer: SelectedAnswer) => void;
+}
+
+const Question = ({ question, selectedAnswer, onSelectAnswer }: QuestionProps) => {
 
 	function decodeHtmlEntities(text: string) {
 		const parser = new DOMParser();

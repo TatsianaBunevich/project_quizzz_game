@@ -3,17 +3,6 @@ export enum Theme {
 	DARK = 'dark',
 }
 
-export interface ThemeProps {
-	theme: Theme;
-	onSwitchTheme: (theme: Theme) => void;
-}
-
-export interface HeaderProps {
-	play: boolean;
-	theme: Theme;
-	onSwitchTheme: (theme: Theme) => void;
-}
-
 export type SelectedAnswer = string | undefined;
 
 export interface SelectedAnswers {
@@ -29,26 +18,3 @@ export interface Question {
 	incorrect_answers: string[];
 	answers: string[];
 }
-
-export interface QuizProps {
-    questions: Question[];
-}
-
-export interface QuestionProps {
-    question: Question;
-    selectedAnswer: SelectedAnswer;
-    onSelectAnswer: (questionId: string, answer: SelectedAnswer) => void;
-}
-
-export interface ToggleProps {
-	theme: Theme;
-	onSwitchTheme: (theme: Theme) => void;
-}
-
-export type BlobProps = {
-	theme: Theme;
-	play: boolean;
-    position: 'top' | 'bottom';
-    width?: number;
-    height?: number;
-};

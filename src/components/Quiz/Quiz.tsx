@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Question from '../Question/Question';
 import styles from './Quiz.module.css';
-import { QuizProps, SelectedAnswers, SelectedAnswer } from '../../types';
+import { Question as QuestionType, SelectedAnswers, SelectedAnswer } from '../../types';
 
-const Quiz: React.FC<QuizProps> = ({ questions }) => {
+type QuizProps = {
+    questions: QuestionType[];
+}
+
+const Quiz = ({ questions }: QuizProps) => {
 
 	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswers>({});
 
