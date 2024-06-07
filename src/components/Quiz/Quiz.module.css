@@ -1,13 +1,5 @@
 .quiz {
     display: flex;
     flex-direction: column;
-    padding: 0 15vw;
-    max-width: 400px;
-  }
-
-  @media (min-width: 992px) {
-    .quiz {
-      max-width: 1200px;
-    }
   }
 

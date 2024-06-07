@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './App.module.css';
+import Blob from './components/Blob/Blob';
 import Header from './components/Header/Header';
 import Quiz from './components/Quiz/Quiz';
 import Footer from './components/Footer/Footer';
@@ -59,12 +60,16 @@ const App = () => {
 
 	return (
 		<div className={styles.app} data-theme={theme}>
-			<Header play={isPlaying} theme={theme} onSwitchTheme={handleSwitchTheme} />
-			{isPlaying ?
-				<Quiz questions={questions} /> :
-				<h1>Quizzz Game</h1>
-			}
-			<Footer play={isPlaying} setPlay={setIsPlaying} />
+			<Blob theme={theme} play={isPlaying} position='top' width={isPlaying ? 162 : 194} height={isPlaying ? 187 : 197} />
+			<Blob theme={theme} play={isPlaying} position='bottom' width={isPlaying ? 65 : 148} height={isPlaying ? 62 : 118} />
+			<div className={styles.container}>
+				<Header theme={theme} onSwitchTheme={handleSwitchTheme} />
+				{isPlaying ?
+					<Quiz questions={questions} /> :
+					<h1>Quizzz Game</h1>
+				}
+				<Footer play={isPlaying} setPlay={setIsPlaying} />
+			</div>
 		</div>
 	);
 };

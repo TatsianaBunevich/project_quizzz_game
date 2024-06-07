@@ -1,3 +1,11 @@
+.footer {
+	display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: end;
+    align-self: end;
+}
+
 .submitButton {
   padding: 1.367em 2.246em;
   color: var(--background-color);
@@ -8,5 +16,11 @@
 
 .startButton {
   font-size: 1.5em;
+}
+
+.score {
+	font-size: 20px;
+  font-weight: 700;
+  text-align: end;
 }
 

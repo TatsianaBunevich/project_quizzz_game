@@ -38,8 +38,8 @@ const Blob = ({ theme, play, position, width, height }: BlobProps) => {
 			className={blobClasses}
 		>
 			<path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
+				fillRule="evenodd"
+				clipRule="evenodd"
 				d={d}
 			/>
 		</svg>
