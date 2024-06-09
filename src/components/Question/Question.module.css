@@ -1,18 +1,34 @@
 .question {
-    display: grid;
-    grid-gap: 0.75em;
-    padding: 0.938em 0;
-    border-bottom: 1px solid var(--border-color);
-  }
+  display: grid;
+  grid-gap: 0.75em;
+  padding: 0.938em 0;
+  border-bottom: 1px solid var(--border-color);
+}
 
-  .answers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+.answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 
-  .selected {
-    background-color: var(--button-bg-color);
-    border-color: transparent;
-  }
+.selected,
+.correct,
+.incorrect {
+  border-color: transparent !important;
+}
 
+.selected {
+  background-color: var(--button-bg-color);
+}
+
+.correct {
+  background-color: #94d7a2;
+}
+
+.incorrect {
+  background-color: #f8bcbc;
+}
+
+.correct:disabled {
+  color: inherit;
+}

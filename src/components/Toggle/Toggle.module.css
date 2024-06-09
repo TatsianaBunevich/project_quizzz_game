@@ -71,6 +71,7 @@
   /** The sun cloud and moon stars **/
   /** Sun/Moon element **/
   /** Gray dots on the moon **/
+  margin: 0 auto;
 }
 .toggleLabelBackground {
   width: 5px;

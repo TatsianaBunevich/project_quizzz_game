@@ -3,10 +3,10 @@ export enum Theme {
 	DARK = 'dark',
 }
 
-export type SelectedAnswer = string | undefined;
-
-export interface SelectedAnswers {
-    [key: string]: SelectedAnswer;
+export interface SelectedAnswer {
+	question: string;
+	answer: string;
+	isCorrect: boolean;
 }
 
 export interface Question {
@@ -17,4 +17,14 @@ export interface Question {
 	correct_answer: string;
 	incorrect_answers: string[];
 	answers: string[];
+}
+
+export interface Answer {
+	answer: string;
+	isCorrect: boolean;
+}
+
+export interface sortedQuestionsType {
+	question: string;
+	answers: Answer[];
 }

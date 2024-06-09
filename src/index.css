@@ -1,42 +1,42 @@
 :root {
-    --color: #e8e8ea;
-    --background-color: #1b1b32;
-    --button-bg-color: #6b7abb;
-    --border-color: #5d6baa;
-    --button-color: var(--color);
+  --color: #ffffff;
+  --background-color: #1b1b32;
+  --button-bg-color: #6b7abb;
+  --border-color: #5d6baa;
+  --button-color: var(--color);
 
-    font-family: "Inter", sans-serif;
-    line-height: 1;
-    font-weight: 400;
-    font-size: 12px;
-    width: 100%;
-    overflow-x: hidden;
+  font-family: "Inter", sans-serif;
+  line-height: 1;
+  font-weight: 400;
+  font-size: 12px;
+  width: 100%;
+  overflow-x: hidden;
 
-    color-scheme: light dark;
+  color-scheme: light dark;
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  [data-theme="light"] {
-    --color: #0a475c;
-    --background-color: #e8f7fc;
-    --button-bg-color: #96dcee;
-    --border-color: #72cce3;
-    --button-color: var(--color);
-  }
+[data-theme="light"] {
+  --color: #0a475c;
+  --background-color: #e8f7fc;
+  --button-bg-color: #96dcee;
+  --border-color: #72cce3;
+  --button-color: var(--color);
+}
 
-  [data-theme="dark"] {
-    --color: #e8e8ea;
-    --background-color: #1b1b32;
-    --button-bg-color: #6b7abb;
-    --border-color: #5d6baa;
-    --button-color: var(--color);
-  }
+[data-theme="dark"] {
+  --color: #ffffff;
+  --background-color: #1b1b32;
+  --button-bg-color: #6b7abb;
+  --border-color: #5d6baa;
+  --button-color: var(--color);
+}
 
-  /* a {
+/* a {
     font-weight: 500;
     color: #646cff;
     text-decoration: inherit;
@@ -45,69 +45,80 @@
     color: #535bf2;
   } */
 
-  body {
-    margin: 0;
-    /* display: grid;
+body {
+  margin: 0;
+  /* display: grid;
     place-items: center; */
-    min-width: 320px;
-    min-height: 100vh;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1,
+h2 {
+  font-family: "Karla", sans-serif;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 4em;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 0.938em 0;
+}
+
+button {
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  border-radius: 0.781em;
+  border: 1px solid var(--button-color);
+  padding: 0.438em 1.25em;
+  color: var(--button-color);
+  background-color: transparent;
+  transition: background-color 0.25s ease-in-out;
+}
+
+button:enabled {
+  cursor: pointer;
+}
+
+button:hover:enabled {
+  color: var(--button-color);
+  background-color: var(--button-bg-color);
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+button:disabled {
+  color: #808080;
+  border-color: #808080;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color: #0a475c;
+    --background-color: #e8f7fc;
+    --button-bg-color: #96dcee;
+    --border-color: #72cce3;
+    --button-color: var(--color);
   }
 
-  h1,
-  h2 {
-    font-family: "Karla", sans-serif;
-    font-weight: 700;
-  }
-
-  h1 {
-    font-size: 4em;
-  }
-
-  h2 {
-    font-size: 1.5em;
-    margin: 0.938em 0;
-  }
-
-  button {
-    border-radius: 0.781em;
-    border: 1px solid var(--button-color);
-    padding: 0.438em 1.25em;
-    color: var(--button-color);
-    background-color: transparent;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: "Inter", sans-serif;
-    cursor: pointer;
-    transition: background-color 0.25s ease-in-out;
-  }
-  button:hover {
-    color: var(--button-color);
-    background-color: var(--button-bg-color);
-  }
-  button:focus,
-  button:focus-visible {
-    outline: none;
-  }
-
-  @media (prefers-color-scheme: light) {
-    :root {
-      --color: #0a475c;
-      --background-color: #e8f7fc;
-      --button-bg-color: #96dcee;
-      --border-color: #72cce3;
-      --button-color: var(--color);
-    }
-    /* a:hover {
+  /* a:hover {
       color: #747bff;
     } */
-    /* button {
+  /* button {
       color: var(--button-color);
     } */
-  }
+}
 
-  @media (min-width: 992px) {
-    :root {
-      font-size: 16px;
-    }
+@media (min-width: 992px) {
+  :root {
+    font-size: 16px;
   }
-
+}

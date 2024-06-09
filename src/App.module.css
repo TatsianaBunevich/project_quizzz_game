@@ -15,15 +15,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: var(--gap) 0;
+  place-items: stretch;
+  margin: var(--gap) auto;
   gap: var(--gap);
-  padding: 0 15vw;
+  padding: 0 1.25em;
   max-width: 400px;
+  width: 100%;
+  z-index: 1;
 }
 
 @media (min-width: 992px) {
   .container {
     max-width: 1200px;
+    padding: 0 3em;
   }
 }
 

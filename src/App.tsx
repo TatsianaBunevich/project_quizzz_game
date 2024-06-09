@@ -4,6 +4,7 @@ import Blob from './components/Blob/Blob';
 import Header from './components/Header/Header';
 import Quiz from './components/Quiz/Quiz';
 import Footer from './components/Footer/Footer';
+import { QuestionsContextProvider } from './context/questionsContext';
 import { Theme } from './types';
 
 const App = () => {
@@ -28,7 +29,7 @@ const App = () => {
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
-			const data = await fetchWithRetry('https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple');
+			const data = await fetchWithRetry('https://opentdb.com/api.php?amount=3&category=9&difficulty=easy&type=multiple');
 			setQuestions(data.results);
 		};
 
@@ -64,11 +65,15 @@ const App = () => {
 			<Blob theme={theme} play={isPlaying} position='bottom' width={isPlaying ? 65 : 148} height={isPlaying ? 62 : 118} />
 			<div className={styles.container}>
 				<Header theme={theme} onSwitchTheme={handleSwitchTheme} />
-				{isPlaying ?
-					<Quiz questions={questions} /> :
-					<h1>Quizzz Game</h1>
-				}
-				<Footer play={isPlaying} setPlay={setIsPlaying} />
+				<QuestionsContextProvider questions={questions}>
+					<main>
+						{isPlaying ?
+							<Quiz /> :
+							<h1>Quizzz Game</h1>
+						}
+					</main>
+					<Footer play={isPlaying} setPlay={setIsPlaying} />
+				</QuestionsContextProvider>
 			</div>
 		</div>
 	);
