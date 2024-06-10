@@ -24,6 +24,12 @@ const Question = ({ quizItem, selectedAnswer, onSelectAnswer }: QuestionProps) =
 		return selectedAnswer?.answer === answer ? styles.selected : '';
 	};
 
+	const blurUnselectedAnswers = (selectedAnswer: SelectedAnswer | undefined) => {
+		return selectedAnswer === undefined ? styles.shown : '';
+	};
+
+	const blurClasses = isAnswersShown ? blurUnselectedAnswers(selectedAnswer) : '';
+
 	const showAnswers = (selectedAnswer: SelectedAnswer | undefined) => {
 		return quizItem.answers.reduce((acc: { [key: string]: string }, item) => {
 			if (item.isCorrect) {
@@ -43,6 +49,9 @@ const Question = ({ quizItem, selectedAnswer, onSelectAnswer }: QuestionProps) =
 		<div className={styles.question}>
 			<h2>{decodeHtmlEntities(quizItem.question)}</h2>
 			<div className={styles.answers}>
+				<div className={`${styles.blur} ${blurClasses}`}>
+					<p>You didn't answer this question</p>
+				</div>
 				{quizItem.answers.map((a) => (
 					<button
 						key={a.answer}
