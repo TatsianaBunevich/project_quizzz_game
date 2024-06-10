@@ -28,3 +28,10 @@ export interface sortedQuestionsType {
 	question: string;
 	answers: Answer[];
 }
+
+export interface Score {
+	timestamp: Date;
+	score: string;
+	questions: string;
+	win: boolean;
+}

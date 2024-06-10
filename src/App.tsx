@@ -3,6 +3,7 @@ import styles from './App.module.css';
 import Blob from './components/Blob/Blob';
 import Header from './components/Header/Header';
 import Quiz from './components/Quiz/Quiz';
+import History from './components/History/History';
 import Footer from './components/Footer/Footer';
 import { QuestionsContextProvider } from './context/questionsContext';
 import { Theme } from './types';
@@ -13,9 +14,9 @@ const App = () => {
 	const [theme, setThemeName] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
 	const [questions, setQuestions] = useState([]);
 	const [isPlaying, setIsPlaying] = useState(false);
+	const [isHistory, setIsHistory] = useState(false);
 
 	useEffect(() => {
-
 		const handleChange = (e: MediaQueryListEvent) => {
 			handleSwitchTheme(!e.matches ? Theme.DARK : Theme.LIGHT);
 		};
@@ -68,11 +69,13 @@ const App = () => {
 				<QuestionsContextProvider questions={questions}>
 					<main>
 						{isPlaying ?
-							<Quiz /> :
+							isHistory ?
+								<History /> :
+								<Quiz /> :
 							<h1>Quizzz Game</h1>
 						}
 					</main>
-					<Footer play={isPlaying} setPlay={setIsPlaying} />
+					<Footer play={isPlaying} setPlay={setIsPlaying} isHistory={isHistory} setIsHistory={setIsHistory} />
 				</QuestionsContextProvider>
 			</div>
 		</div>

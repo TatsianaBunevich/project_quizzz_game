@@ -4,6 +4,8 @@
   --button-bg-color: #6b7abb;
   --border-color: #5d6baa;
   --button-color: var(--color);
+  --win-color: #4caf50;
+  --lose-color: #ff6f61;
 
   font-family: "Inter", sans-serif;
   line-height: 1;
@@ -73,9 +75,9 @@ button {
   font-family: "Inter", sans-serif;
   font-size: 1em;
   font-weight: 500;
-  border-radius: 0.781em;
+  border-radius: 0.75em;
   border: 1px solid var(--button-color);
-  padding: 0.438em 1.25em;
+  padding: 0.5em 1.25em;
   color: var(--button-color);
   background-color: transparent;
   transition: background-color 0.25s ease-in-out;

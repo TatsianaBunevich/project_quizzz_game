@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
-import { Question, sortedQuestionsType, Answer, SelectedAnswer } from '../types';
+import { Question, sortedQuestionsType, Answer, SelectedAnswer, Score } from '../types';
 
 type QuestionsContextType = {
     sortedQuestions: sortedQuestionsType[];
@@ -8,6 +8,11 @@ type QuestionsContextType = {
 	setIsAnswersShown: (isAnswersShown: boolean) => void;
 	isAnswersShown: boolean;
 	clearState: () => void;
+	calculateScore: () => void;
+	calculatedScore: number;
+	isWin: boolean;
+	score: Score[];
+	clearHistory: () => void;
 }
 
 export const QuestionsContext = createContext<QuestionsContextType>({
@@ -16,13 +21,21 @@ export const QuestionsContext = createContext<QuestionsContextType>({
 	handleSelectAnswer: () => {},
 	setIsAnswersShown: () => {},
 	isAnswersShown: false,
-	clearState: () => {}
+	clearState: () => {},
+	calculateScore: () => {},
+	calculatedScore: 0,
+	isWin: false,
+	score: [],
+	clearHistory: () => {}
 });
 
 export const QuestionsContextProvider = ({ children, questions }: { children: React.ReactNode, questions: Question[] }) => {
 	const [sortedQuestions, setSortedQuestions] = useState<sortedQuestionsType[]>([]);
 	const [isAnswersShown, setIsAnswersShown] = useState(false);
 	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
+	const [calculatedScore, setCalculatedScore] = useState(0);
+	const [isWin, setIsWin] = useState(false);
+	const [score, setScore] = useState<Score[]>([]);
 
 	useEffect(() => {
 		const sortedQuestions = questions.map(q => ({
@@ -71,6 +84,38 @@ export const QuestionsContextProvider = ({ children, questions }: { children: Re
 	const clearState = () => {
 		setIsAnswersShown(false);
 		setSelectedAnswers([]);
+		setCalculatedScore(0);
+		setIsWin(false);
+	}
+
+	const calculateScore = () => {
+		const score = selectedAnswers.reduce((acc, item) => {
+			return item.isCorrect ? acc + 1 : acc;
+		}, 0)
+
+		const nowIsWin = score >= sortedQuestions.length/2;
+
+		setCalculatedScore(score);
+		setIsWin(nowIsWin);
+		setUserScore(score, nowIsWin);
+	};
+
+	const setUserScore = (userScore: number, win: boolean) => {
+		setScore(prev => {
+			return [
+				...prev,
+				{
+					timestamp: new Date(),
+					score: `${userScore}`,
+					questions:`${sortedQuestions.length}`,
+					win,
+				}
+			];
+		});
+	};
+
+	const clearHistory = () => {
+		setScore([]);
 	}
 
 	return (
@@ -81,7 +126,12 @@ export const QuestionsContextProvider = ({ children, questions }: { children: Re
 				handleSelectAnswer,
 				setIsAnswersShown,
 				isAnswersShown,
-				clearState
+				clearState,
+				calculateScore,
+				calculatedScore,
+				isWin,
+				score,
+				clearHistory
 			}
 		}>
 			{children}

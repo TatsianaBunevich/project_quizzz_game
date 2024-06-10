@@ -1,22 +1,22 @@
 .footer {
-  display: grid;
-  align-items: center;
-  justify-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1em;
 }
 
 .submitButton {
-  padding: 1.367em 2.246em;
+  padding: 1.5em 2.25em;
   color: var(--background-color);
   background-color: var(--button-color);
   font-weight: 600;
-  border-radius: 0.977em;
+  border-radius: 1em;
   width: 100%;
 }
 
 .startButton {
   font-size: 1.5em;
-  justify-self: center;
+  width: auto;
 }
 
 .score {
@@ -27,19 +27,25 @@
 }
 
 .win {
-  color: #4caf50;
+  color: var(--win-color);
 }
 
 .lose {
-  color: #ff6f61;
+  color: var(--lose-color);
 }
 
 @media (min-width: 992px) {
   .answersShown {
+    display: grid;
+    align-items: center;
+    justify-items: end;
     grid-template-columns: 1fr repeat(3, 9.5em);
   }
   .submitButton {
     width: 9.5em;
+  }
+  .backButton {
+    order: 1;
   }
   .score {
     justify-self: start;
