@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import Blob from './components/Blob/Blob';
-import Header from './components/Header/Header';
+import Toggle from './components/Toggle/Toggle';
 import Quiz from './components/Quiz/Quiz';
-import History from './components/History/History';
+import Scoreboard from './components/Scoreboard/Scoreboard';
 import Footer from './components/Footer/Footer';
-import { QuestionsContextProvider } from './context/questionsContext';
+import { QuizContextProvider } from './context/QuizContext';
 import { Theme } from './types';
 
 const App = () => {
@@ -14,14 +14,12 @@ const App = () => {
 	const [theme, setThemeName] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
 	const [questions, setQuestions] = useState([]);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [isHistory, setIsHistory] = useState(false);
+	const [isScoreboard, setIsScoreboard] = useState(false);
 
 	useEffect(() => {
 		const handleChange = (e: MediaQueryListEvent) => {
 			handleSwitchTheme(!e.matches ? Theme.DARK : Theme.LIGHT);
 		};
-
-		// handleSwitchTheme(!mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
 
 		mediaQuery.addEventListener('change', handleChange);
 
@@ -65,18 +63,20 @@ const App = () => {
 			<Blob theme={theme} play={isPlaying} position='top' width={isPlaying ? 162 : 194} height={isPlaying ? 187 : 197} />
 			<Blob theme={theme} play={isPlaying} position='bottom' width={isPlaying ? 65 : 148} height={isPlaying ? 62 : 118} />
 			<div className={styles.container}>
-				<Header theme={theme} onSwitchTheme={handleSwitchTheme} />
-				<QuestionsContextProvider questions={questions}>
+				<header>
+					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
+				</header>
+				<QuizContextProvider questions={questions}>
 					<main>
 						{isPlaying ?
-							isHistory ?
-								<History /> :
+							isScoreboard ?
+								<Scoreboard /> :
 								<Quiz /> :
 							<h1>Quizzz Game</h1>
 						}
 					</main>
-					<Footer play={isPlaying} setPlay={setIsPlaying} isHistory={isHistory} setIsHistory={setIsHistory} />
-				</QuestionsContextProvider>
+					<Footer play={isPlaying} setPlay={setIsPlaying} isScoreboard={isScoreboard} setIsScoreboard={setIsScoreboard} />
+				</QuizContextProvider>
 			</div>
 		</div>
 	);

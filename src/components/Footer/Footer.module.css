@@ -26,12 +26,12 @@
   margin: 0;
 }
 
-.win {
-  color: var(--win-color);
+.good {
+  color: var(--good-color);
 }
 
-.lose {
-  color: var(--lose-color);
+.bad {
+  color: var(--bad-color);
 }
 
 @media (min-width: 992px) {

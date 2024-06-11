@@ -1,0 +1,72 @@
+.table {
+    display: grid;
+}
+
+.tableRow {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    align-items: center;
+    justify-items: stretch;
+    margin: 1em 0;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* .tableRow:nth-child(odd):not(.tableHeader) {
+    background-color: rgba(150, 220, 238, 0.15);
+} */
+
+.tableHeader {
+    background-color: var(--button-bg-color);
+    margin-bottom: 1em;
+}
+
+.tableHeader div {
+    font-size: 1.5em;
+    padding: 1em 0;
+    cursor: pointer;
+}
+
+.tableHeader span {
+    --triangle-size: 5px;
+    --triangle-color: var(--color);
+    --triangle-offset: calc(var(--triangle-size) * 1.5 / 2);
+
+    position: relative;
+    margin-right: calc(var(--triangle-size) * 4);
+}
+
+.tableHeader span:after {
+    content: '';
+    position: absolute;
+    right: calc(var(--triangle-size) * -4);
+    transform: translateY(-50%);
+    width: 0;
+	height: 0;
+    border-color: transparent;
+    border-style: solid;
+	border-left-width: var(--triangle-size);
+	border-right-width: var(--triangle-size);
+    border-bottom-width: calc(var(--triangle-size) * 1.5);
+    border-top-width: calc(var(--triangle-size) * 1.5);
+}
+
+.tableHeader .up:after {
+    top: calc(50% - var(--triangle-offset));
+	border-bottom-color: var(--triangle-color);
+}
+
+.tableHeader .down:after {
+    top: calc(50% + var(--triangle-offset));
+	border-top-color: var(--triangle-color);
+}
+
+.tableHeader > div:first-child:before {
+    content: '#';
+}
+
+@media (min-width: 992px) {
+    .tableHeader > div:first-child:before {
+        content: 'Round';
+    }
+}

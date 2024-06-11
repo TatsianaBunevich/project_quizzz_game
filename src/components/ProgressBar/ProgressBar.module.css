@@ -1,0 +1,54 @@
+.progress {
+    --wrapper-size: 2em;
+    --bar-margin: calc(var(--wrapper-size) / 5);
+    --value-size: calc(var(--wrapper-size) * 1.5);
+    --border-size: calc(var(--value-size) / 10);
+    --offset-size: calc(var(--value-size)) + calc(var(--bar-margin) * 2) + calc(var(--border-size) * 2);
+
+    background: var(--white);
+    justify-content: flex-start;
+    border-radius: calc(var(--wrapper-size) / 2);
+    align-items: center;
+    position: relative;
+    display: flex;
+    height: var(--wrapper-size);
+    width: calc(100% - var(--offset-size));
+}
+
+.progressBar {
+    animation: load 3s normal forwards;
+    background-color: var(--normal-color);
+    border-radius: calc(var(--wrapper-size) / 2);
+    height: 75%;
+    width: 0;
+    margin: 0 var(--bar-margin);
+    position: relative;
+}
+
+.progressBarValue {
+    content: "";
+    position: absolute;
+    right: calc((calc(var(--value-size) / 2) + var(--bar-margin) + var(--border-size))* -1);
+    background-color: inherit;
+    height: var(--value-size);
+    width: var(--value-size);
+    border-radius: 50%;
+    border: var(--border-size) solid var(--white);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--white);
+    line-height: var(--value-size);
+}
+
+.good {
+    background-color: var(--good-color);
+}
+
+.bad {
+    background-color: var(--bad-color);
+}
+
+@keyframes load {
+    0% { width: 0; }
+    100% { width: var(--score); }
+}

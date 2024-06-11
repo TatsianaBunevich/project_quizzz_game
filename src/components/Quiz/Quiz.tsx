@@ -1,10 +1,10 @@
 import Question from '../Question/Question';
 import styles from './Quiz.module.css';
 import { useContext } from 'react';
-import { QuestionsContext } from '../../context/questionsContext';
+import { QuizContext } from '../../context/QuizContext';
 
 const Quiz = () => {
-	const { sortedQuestions, selectedAnswers, handleSelectAnswer } = useContext(QuestionsContext);
+	const { sortedQuestions, selectedAnswers, handleSelectAnswer } = useContext(QuizContext);
 
 	return (
 		<div className={styles.quiz}>

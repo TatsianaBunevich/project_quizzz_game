@@ -1,16 +1,16 @@
 import { useContext } from 'react';
-import { QuestionsContext } from '../../context/questionsContext';
+import { QuizContext } from '../../context/QuizContext';
 import styles from './Footer.module.css';
 
 type FooterProps = {
 	play: boolean;
 	setPlay: (play: boolean) => void;
-	isHistory: boolean;
-	setIsHistory: (isHistory: boolean) => void;
+	isScoreboard: boolean;
+	setIsScoreboard: (isScoreboard: boolean) => void;
 }
 
-const Footer = ({ play, setPlay, isHistory, setIsHistory }: FooterProps) => {
-	const { setIsAnswersShown, isAnswersShown, sortedQuestions, clearState, calculateScore, calculatedScore, isWin, clearHistory } = useContext(QuestionsContext);
+const Footer = ({ play, setPlay, isScoreboard, setIsScoreboard }: FooterProps) => {
+	const { setIsAnswersShown, isAnswersShown, sortedQuestions, clearQuizState, calculateScore, calculatedScore, isWin, clearScores } = useContext(QuizContext);
 
 	const showAnswers = () => {
 		setIsAnswersShown(true);
@@ -19,7 +19,7 @@ const Footer = ({ play, setPlay, isHistory, setIsHistory }: FooterProps) => {
 
 	const setNewTry = () => {
 		setPlay(false);
-		clearState();
+		clearQuizState();
 	}
 
 	const submitElement = () => {
@@ -32,11 +32,11 @@ const Footer = ({ play, setPlay, isHistory, setIsHistory }: FooterProps) => {
 				return (
 					<button className={`${styles.submitButton}`} onClick={showAnswers}>Check</button>
 				)
-			} else if (isHistory) {
+			} else if (isScoreboard) {
 				return (
 					<>
-						<button className={`${styles.submitButton} ${styles.backButton}`} onClick={() => setIsHistory(false)}>Back</button>
-						<button className={`${styles.submitButton}`} onClick={clearHistory}>Clear</button>
+						<button className={`${styles.submitButton} ${styles.backButton}`} onClick={() => setIsScoreboard(false)}>Back</button>
+						<button className={`${styles.submitButton}`} onClick={clearScores}>Clear</button>
 
 					</>
 				)
@@ -44,14 +44,14 @@ const Footer = ({ play, setPlay, isHistory, setIsHistory }: FooterProps) => {
 				return (
 					<>
 						<p className={styles.score}>
-							<span className={`${isWin ? styles.win : styles.lose}`}>
+							<span className={`${isWin ? styles.good : styles.bad}`}>
 								{calculatedScore}
 							</span>
 							/{sortedQuestions.length}
 						</p>
 						<button className={`${styles.submitButton}`} onClick={setNewTry}>Try again</button>
-						<button className={`${styles.submitButton}`} onClick={() => setIsHistory(true)}>History</button>
-						<button className={`${styles.submitButton}`} onClick={() => setPlay(false)}>Settings</button>
+						<button className={`${styles.submitButton}`} onClick={() => setIsScoreboard(true)}>Scores</button>
+						<button className={`${styles.submitButton}`} onClick={setNewTry}>Settings</button>
 					</>
 				)
 			}
@@ -59,7 +59,7 @@ const Footer = ({ play, setPlay, isHistory, setIsHistory }: FooterProps) => {
 	}
 
 	return (
-		<footer className={`${styles.footer} ${!isAnswersShown || !play || isHistory? '' : styles.answersShown}`}>
+		<footer className={`${styles.footer} ${!isAnswersShown || !play || isScoreboard? '' : styles.answersShown}`}>
 			{submitElement()}
 		</footer>
 	);

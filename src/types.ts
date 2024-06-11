@@ -29,9 +29,14 @@ export interface sortedQuestionsType {
 	answers: Answer[];
 }
 
+export enum Status {
+	GOOD = 'good',
+	NORMAL = 'normal',
+	BAD = 'bad',
+}
+
 export interface Score {
-	timestamp: Date;
-	score: string;
-	questions: string;
-	win: boolean;
+	index: number;
+	total: number;
+	status: Status;
 }

@@ -2,7 +2,7 @@ import styles from './Question.module.css';
 import { SelectedAnswer, Answer } from '../../types';
 import { sortedQuestionsType } from '../../types';
 import { useContext } from 'react';
-import { QuestionsContext } from '../../context/questionsContext';
+import { QuizContext } from '../../context/QuizContext';
 
 type QuestionProps = {
     quizItem: sortedQuestionsType;
@@ -11,7 +11,7 @@ type QuestionProps = {
 }
 
 const Question = ({ quizItem, selectedAnswer, onSelectAnswer }: QuestionProps) => {
-	const { isAnswersShown } = useContext(QuestionsContext);
+	const { isAnswersShown } = useContext(QuizContext);
 
 	const decodeHtmlEntities = (text: string) => {
 		const parser = new DOMParser();

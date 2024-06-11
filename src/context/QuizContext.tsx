@@ -1,41 +1,41 @@
 import { useState, useEffect, createContext } from 'react';
-import { Question, sortedQuestionsType, Answer, SelectedAnswer, Score } from '../types';
+import { Question, sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../types';
 
-type QuestionsContextType = {
+type QuizContextType = {
     sortedQuestions: sortedQuestionsType[];
     selectedAnswers: SelectedAnswer[];
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	setIsAnswersShown: (isAnswersShown: boolean) => void;
 	isAnswersShown: boolean;
-	clearState: () => void;
+	clearQuizState: () => void;
 	calculateScore: () => void;
 	calculatedScore: number;
 	isWin: boolean;
-	score: Score[];
-	clearHistory: () => void;
+	scores: Score[];
+	clearScores: () => void;
 }
 
-export const QuestionsContext = createContext<QuestionsContextType>({
+export const QuizContext = createContext<QuizContextType>({
 	sortedQuestions: [],
 	selectedAnswers: [],
 	handleSelectAnswer: () => {},
 	setIsAnswersShown: () => {},
 	isAnswersShown: false,
-	clearState: () => {},
+	clearQuizState: () => {},
 	calculateScore: () => {},
 	calculatedScore: 0,
 	isWin: false,
-	score: [],
-	clearHistory: () => {}
+	scores: [],
+	clearScores: () => {}
 });
 
-export const QuestionsContextProvider = ({ children, questions }: { children: React.ReactNode, questions: Question[] }) => {
+export const QuizContextProvider = ({ children, questions }: { children: React.ReactNode, questions: Question[] }) => {
 	const [sortedQuestions, setSortedQuestions] = useState<sortedQuestionsType[]>([]);
 	const [isAnswersShown, setIsAnswersShown] = useState(false);
 	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
 	const [calculatedScore, setCalculatedScore] = useState(0);
 	const [isWin, setIsWin] = useState(false);
-	const [score, setScore] = useState<Score[]>([]);
+	const [scores, setScores] = useState<Score[]>([]);
 
 	useEffect(() => {
 		const sortedQuestions = questions.map(q => ({
@@ -81,7 +81,7 @@ export const QuestionsContextProvider = ({ children, questions }: { children: Re
 		});
 	};
 
-	const clearState = () => {
+	const clearQuizState = () => {
 		setIsAnswersShown(false);
 		setSelectedAnswers([]);
 		setCalculatedScore(0);
@@ -89,53 +89,65 @@ export const QuestionsContextProvider = ({ children, questions }: { children: Re
 	}
 
 	const calculateScore = () => {
-		const score = selectedAnswers.reduce((acc, item) => {
+		const goal = sortedQuestions.length;
+		const points = selectedAnswers.reduce((acc, item) => {
 			return item.isCorrect ? acc + 1 : acc;
-		}, 0)
+		}, 0);
 
-		const nowIsWin = score >= sortedQuestions.length/2;
+		const nowIsWin = points >= goal/2;
+		const percentage = Number(((points / goal) * 100).toFixed(0));
 
-		setCalculatedScore(score);
+		const setStatus = (percentage: number) => {
+			const step = 100 / 3;
+			if (percentage >= step * 2) {
+				return Status.GOOD;
+			} else if (percentage >= step) {
+				return Status.NORMAL;
+			} else {
+				return Status.BAD;
+			}
+		}
+
+		setCalculatedScore(points);
 		setIsWin(nowIsWin);
-		setUserScore(score, nowIsWin);
+		setTotalScore(percentage, setStatus(percentage));
 	};
 
-	const setUserScore = (userScore: number, win: boolean) => {
-		setScore(prev => {
+	const setTotalScore = (total: number, status: Status) => {
+		setScores(prev => {
 			return [
 				...prev,
 				{
-					timestamp: new Date(),
-					score: `${userScore}`,
-					questions:`${sortedQuestions.length}`,
-					win,
+					index: prev.length + 1,
+					total,
+					status
 				}
 			];
 		});
 	};
 
-	const clearHistory = () => {
-		setScore([]);
+	const clearScores = () => {
+		setScores([]);
 	}
 
 	return (
-		<QuestionsContext.Provider value={
+		<QuizContext.Provider value={
 			{
 				sortedQuestions,
 				selectedAnswers,
 				handleSelectAnswer,
 				setIsAnswersShown,
 				isAnswersShown,
-				clearState,
+				clearQuizState,
 				calculateScore,
 				calculatedScore,
 				isWin,
-				score,
-				clearHistory
+				scores,
+				clearScores
 			}
 		}>
 			{children}
-		</QuestionsContext.Provider>
+		</QuizContext.Provider>
 	)
 }
 

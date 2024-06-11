@@ -1,11 +1,14 @@
 :root {
+  --white: #ffffff;
   --color: #ffffff;
   --background-color: #1b1b32;
   --button-bg-color: #6b7abb;
   --border-color: #5d6baa;
   --button-color: var(--color);
-  --win-color: #4caf50;
-  --lose-color: #ff6f61;
+
+  --normal-color: #ead910;
+  --good-color: #4caf50;
+  --bad-color: #ff6f61;
 
   font-family: "Inter", sans-serif;
   line-height: 1;
