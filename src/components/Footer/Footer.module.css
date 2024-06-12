@@ -1,27 +1,80 @@
 .footer {
+  --gap: 1em;
+
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   gap: 1em;
 }
 
 .submitButton {
+  --border-width: 3px;
+
   padding: 1.5em 2.25em;
   color: var(--background-color);
   background-color: var(--button-color);
   font-weight: 600;
   border-radius: 1em;
-  width: 100%;
+  border-width: var(--border-width);
+  position: relative;
+  width: calc(50% - var(--gap));
 }
 
 .startButton {
   font-size: 1.5em;
   width: auto;
+  margin: 0 auto;
+}
+
+.arrow {
+  --arrow-size: 0.75em;
+
+  display: block;
+  height: calc(var(--arrow-size) * 2);
+  width: var(--arrow-size);
+  position: relative;
+  margin: 0 auto;
+}
+
+.arrow::after {
+  --arrow-shift: calc(var(--arrow-size) / 4);
+
+  content: "";
+  border-bottom-style: solid;
+  border-bottom-width: var(--border-width);
+  border-right-style: solid;
+  border-right-width: var(--border-width);
+  height: var(--arrow-size);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--arrow-size);
+  border-color: var(--background-color);
+  transition: border-color 0.3s ease-in-out;
+}
+
+.submitButton:hover .arrow::after {
+  border-color: var(--button-color);
+}
+
+.arrow.next::after {
+  /* -moz-transform: rotate(315deg);
+  -ms-transform: rotate(315deg);
+  -webkit-transform: rotate(315deg); */
+  transform: translate(calc(calc(var(--arrow-shift) * -1) - 50%), -50%)
+    rotate(315deg);
+}
+
+.arrow.back::after {
+  /* -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -webkit-transform: rotate(135deg); */
+  transform: translate(calc(var(--arrow-shift) - 50%), -50%) rotate(135deg);
 }
 
 .score {
   justify-self: center;
-	font-size: 20px;
+  font-size: 20px;
   font-weight: 700;
   margin: 0;
 }
@@ -35,6 +88,9 @@
 }
 
 @media (min-width: 992px) {
+  .footer {
+    justify-content: center;
+  }
   .answersShown {
     display: grid;
     align-items: center;
@@ -44,11 +100,7 @@
   .submitButton {
     width: 9.5em;
   }
-  .backButton {
-    order: 1;
-  }
   .score {
     justify-self: start;
   }
 }
-

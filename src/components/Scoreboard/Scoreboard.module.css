@@ -35,7 +35,7 @@
     position: relative;
     margin-right: calc(var(--triangle-size) * 4);
 }
-
+/* TODO: change arrows */
 .tableHeader span:after {
     content: '';
     position: absolute;

@@ -4,6 +4,8 @@ import { sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../t
 
 type QuizContextType = {
     sortedQuestions: sortedQuestionsType[];
+	activeQuestionId: number;
+	setActiveQuestionId: (activeQuestionId: number) => void;
     selectedAnswers: SelectedAnswer[];
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	setIsAnswersShown: (isAnswersShown: boolean) => void;
@@ -18,6 +20,8 @@ type QuizContextType = {
 
 export const QuizContext = createContext<QuizContextType>({
 	sortedQuestions: [],
+	activeQuestionId: 0,
+	setActiveQuestionId: () => {},
 	selectedAnswers: [],
 	handleSelectAnswer: () => {},
 	setIsAnswersShown: () => {},
@@ -33,6 +37,7 @@ export const QuizContext = createContext<QuizContextType>({
 export const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const { questions } = useContext(GameContext);
 	const [sortedQuestions, setSortedQuestions] = useState<sortedQuestionsType[]>([]);
+	const [activeQuestionId, setActiveQuestionId] = useState(0);
 	const [isAnswersShown, setIsAnswersShown] = useState(false);
 	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
 	const [calculatedScore, setCalculatedScore] = useState(0);
@@ -84,6 +89,7 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	};
 
 	const clearQuizState = () => {
+		setActiveQuestionId(0);
 		setIsAnswersShown(false);
 		setSelectedAnswers([]);
 		setCalculatedScore(0);
@@ -97,6 +103,7 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 		}, 0);
 
 		const nowIsWin = points >= goal/2;
+		// TODO: percentage = full % or rounded
 		const percentage = Number(((points / goal) * 100).toFixed(0));
 
 		const setStatus = (percentage: number) => {
@@ -136,6 +143,8 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 		<QuizContext.Provider value={
 			{
 				sortedQuestions,
+				activeQuestionId,
+				setActiveQuestionId,
 				selectedAnswers,
 				handleSelectAnswer,
 				setIsAnswersShown,

@@ -1,5 +1,23 @@
 .quiz {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
 
+.quizProgress {
+  --progress-size: 0.3em;
+
+  background-color: var(--border-color);
+  height: var(--progress-size);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes :global(load) {
+  0% {
+    width: var(--old-length);
+  }
+  100% {
+    width: var(--new-length);
+  }
+}

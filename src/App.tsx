@@ -34,7 +34,7 @@ const App = () => {
 		<div className={styles.app} data-theme={theme}>
 			<Blob theme={theme} play={isPlaying} position='top' width={isPlaying ? 162 : 194} height={isPlaying ? 187 : 197} />
 			<Blob theme={theme} play={isPlaying} position='bottom' width={isPlaying ? 65 : 148} height={isPlaying ? 62 : 118} />
-			<div className={styles.container}>
+			<div className={`${styles.container} ${isPlaying ? '' : styles.start}`}>
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
 				</header>

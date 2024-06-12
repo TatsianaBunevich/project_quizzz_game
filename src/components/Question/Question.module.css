@@ -1,7 +1,14 @@
 .question {
-  display: grid;
   grid-gap: 0.75em;
   padding: 1em 0;
+  display: none;
+}
+
+.question.active {
+  display: grid;
+}
+
+.question.all {
   border-bottom: 1px solid var(--border-color);
 }
 

@@ -6,12 +6,20 @@ import { QuizContext } from '../../context/QuizContext';
 
 type QuestionProps = {
     quizItem: sortedQuestionsType;
+	id: number;
     selectedAnswer: SelectedAnswer | undefined;
     onSelectAnswer: (questionId: string, answer: Answer) => void;
 }
 
-const Question = ({ quizItem, selectedAnswer, onSelectAnswer }: QuestionProps) => {
-	const { isAnswersShown } = useContext(QuizContext);
+const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProps) => {
+	const { activeQuestionId, isAnswersShown } = useContext(QuizContext);
+
+	const applyQuestionClasses = () => {
+		if (activeQuestionId === id) {
+			return styles.active;
+		}
+		return isAnswersShown ? [styles.active, styles.all].join(' ') : '';
+	};
 
 	const decodeHtmlEntities = (text: string) => {
 		const parser = new DOMParser();
@@ -45,9 +53,11 @@ const Question = ({ quizItem, selectedAnswer, onSelectAnswer }: QuestionProps) =
 
 	const answerClasses = isAnswersShown ? showAnswers(selectedAnswer) : {};
 
+	// TODO: styled items when active and on Check
+
 	return (
-		<div className={styles.question}>
-			<h2>{decodeHtmlEntities(quizItem.question)}</h2>
+		<div className={`${styles.question} ${applyQuestionClasses()}`}>
+			<h2>{id+1}. {decodeHtmlEntities(quizItem.question)}</h2>
 			<div className={styles.answers}>
 				<div className={`${styles.blur} ${blurClasses}`}>
 					<p>You didn't answer this question</p>

@@ -10,7 +10,7 @@ type FooterProps = {
 }
 
 const Footer = ({ play, setPlay, isScoreboard, setIsScoreboard }: FooterProps) => {
-	const { setIsAnswersShown, isAnswersShown, sortedQuestions, clearQuizState, calculateScore, calculatedScore, isWin, clearScores } = useContext(QuizContext);
+	const { setIsAnswersShown, isAnswersShown, sortedQuestions, activeQuestionId, setActiveQuestionId, clearQuizState, calculateScore, calculatedScore, isWin, clearScores } = useContext(QuizContext);
 
 	const showAnswers = () => {
 		setIsAnswersShown(true);
@@ -29,15 +29,42 @@ const Footer = ({ play, setPlay, isScoreboard, setIsScoreboard }: FooterProps) =
 			)
 		} else {
 			if (!isAnswersShown) {
-				return (
-					<button className={`${styles.submitButton}`} onClick={showAnswers}>Check</button>
-				)
+				const backBtn = <button className={`${styles.submitButton}`} onClick={setNewTry}>Back</button>;
+				const prevBtn = <button className={`${styles.submitButton}`} onClick={() => setActiveQuestionId(activeQuestionId - 1)}>
+					<span className={`${styles.arrow} ${styles.back}`}></span>
+				</button>;
+				const nextBtn = <button className={`${styles.submitButton}`} onClick={() => setActiveQuestionId(activeQuestionId + 1)}>
+					<span className={`${styles.arrow} ${styles.next}`}></span>
+				</button>;
+				const checkBtn = <button className={`${styles.submitButton}`} onClick={showAnswers}>Check</button>;
+
+				if (activeQuestionId === 0) {
+					return (
+						<>
+							{backBtn}
+							{nextBtn}
+						</>
+					)
+				} else if (activeQuestionId === sortedQuestions.length - 1) {
+					return (
+						<>
+							{prevBtn}
+							{checkBtn}
+						</>
+					)
+				} else {
+					return (
+						<>
+							{prevBtn}
+							{nextBtn}
+						</>
+					)
+				}
 			} else if (isScoreboard) {
 				return (
 					<>
-						<button className={`${styles.submitButton} ${styles.backButton}`} onClick={() => setIsScoreboard(false)}>Back</button>
 						<button className={`${styles.submitButton}`} onClick={clearScores}>Clear</button>
-
+						<button className={`${styles.submitButton}`} onClick={() => setIsScoreboard(false)}>Back</button>
 					</>
 				)
 			} else {

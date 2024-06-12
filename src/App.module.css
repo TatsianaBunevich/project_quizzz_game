@@ -14,14 +14,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   place-items: stretch;
   margin: var(--gap) auto;
   gap: var(--gap);
   padding: 0 1.25em;
   max-width: 400px;
   width: 100%;
-  z-index: 1;
+}
+
+.start {
+  justify-content: center;
 }
 
 @media (min-width: 992px) {
