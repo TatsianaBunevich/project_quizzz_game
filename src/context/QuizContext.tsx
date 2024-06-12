@@ -1,5 +1,6 @@
-import { useState, useEffect, createContext } from 'react';
-import { Question, sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../types';
+import { useState, useEffect, createContext, useContext } from 'react';
+import { GameContext } from './GameContext';
+import { sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../types';
 
 type QuizContextType = {
     sortedQuestions: sortedQuestionsType[];
@@ -29,7 +30,8 @@ export const QuizContext = createContext<QuizContextType>({
 	clearScores: () => {}
 });
 
-export const QuizContextProvider = ({ children, questions }: { children: React.ReactNode, questions: Question[] }) => {
+export const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
+	const { questions } = useContext(GameContext);
 	const [sortedQuestions, setSortedQuestions] = useState<sortedQuestionsType[]>([]);
 	const [isAnswersShown, setIsAnswersShown] = useState(false);
 	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);

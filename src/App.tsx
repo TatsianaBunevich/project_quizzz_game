@@ -5,14 +5,13 @@ import Toggle from './components/Toggle/Toggle';
 import Quiz from './components/Quiz/Quiz';
 import Scoreboard from './components/Scoreboard/Scoreboard';
 import Footer from './components/Footer/Footer';
+import { GameContextProvider } from './context/GameContext';
 import { QuizContextProvider } from './context/QuizContext';
 import { Theme } from './types';
 
 const App = () => {
-
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
-	const [theme, setThemeName] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
-	const [questions, setQuestions] = useState([]);
+	const [theme, setTheme] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [isScoreboard, setIsScoreboard] = useState(false);
 
@@ -26,37 +25,10 @@ const App = () => {
 		return () => mediaQuery.removeEventListener('change', handleChange);
 	}, [mediaQuery]);
 
-	useEffect(() => {
-		const fetchQuestions = async () => {
-			const data = await fetchWithRetry('https://opentdb.com/api.php?amount=3&category=9&difficulty=easy&type=multiple');
-			setQuestions(data.results);
-		};
-
-		fetchQuestions();
-	}, []);
-
 	const handleSwitchTheme = (theme: Theme) => {
 		const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
-		setThemeName(newTheme);
+		setTheme(newTheme);
 	}
-
-	const fetchWithRetry = async (url: string, retries = 3, backoff = 300) => {
-		for (let i = 0; i < retries; i++) {
-			try {
-				const response = await fetch(url);
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
-				return await response.json();
-			} catch (error) {
-				if (i < retries - 1) {
-					await new Promise(res => setTimeout(res, backoff * (i + 1)));
-				} else {
-					throw error;
-				}
-			}
-		}
-	};
 
 	return (
 		<div className={styles.app} data-theme={theme}>
@@ -66,17 +38,19 @@ const App = () => {
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
 				</header>
-				<QuizContextProvider questions={questions}>
-					<main>
-						{isPlaying ?
-							isScoreboard ?
-								<Scoreboard /> :
-								<Quiz /> :
-							<h1>Quizzz Game</h1>
-						}
-					</main>
-					<Footer play={isPlaying} setPlay={setIsPlaying} isScoreboard={isScoreboard} setIsScoreboard={setIsScoreboard} />
-				</QuizContextProvider>
+				<GameContextProvider>
+					<QuizContextProvider>
+						<main>
+							{isPlaying ?
+								isScoreboard ?
+									<Scoreboard /> :
+									<Quiz /> :
+								<h1>Quizzz Game</h1>
+							}
+						</main>
+						<Footer play={isPlaying} setPlay={setIsPlaying} isScoreboard={isScoreboard} setIsScoreboard={setIsScoreboard} />
+					</QuizContextProvider>
+				</GameContextProvider>
 			</div>
 		</div>
 	);
