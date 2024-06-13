@@ -1,14 +1,13 @@
-import React, { HTMLAttributes } from 'react';
-import cn from 'classnames';
+import React, { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	onClick: () => void;
 	children: React.ReactNode;
 }
 
 const Button = ({ onClick, children, className, ...rest }: ButtonProps) => {
 	return (
-		<button className={cn(className)} onClick={onClick} {...rest}>
+		<button className={className} onClick={onClick} {...rest}>
 			{children}
 		</button>
 	);

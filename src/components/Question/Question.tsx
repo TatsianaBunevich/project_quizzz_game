@@ -3,6 +3,7 @@ import { SelectedAnswer, Answer } from '../../types';
 import { sortedQuestionsType } from '../../types';
 import { useContext } from 'react';
 import { QuizContext } from '../../context/QuizContext';
+import Button from '../Button/Button';
 
 type QuestionProps = {
     quizItem: sortedQuestionsType;
@@ -65,14 +66,14 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 					<p>You didn't answer this question</p>
 				</div>
 				{quizItem.answers.map((a) => (
-					<button
+					<Button
 						key={a.answer}
 						disabled={isAnswersShown}
 						className={`${styles.answer} ${selectAnswers(selectedAnswer, a.answer)} ${answerClasses[a.answer] || ''}`}
 						onClick={() => onSelectAnswer(quizItem.question, a)}
 					>
 						{decodeHtmlEntities(a.answer)}
-					</button>
+					</Button>
 				))}
 			</div>
 		</div>
