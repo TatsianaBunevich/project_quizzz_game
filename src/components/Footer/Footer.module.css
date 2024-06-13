@@ -5,6 +5,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1em;
+  z-index: 1;
 }
 
 .submitButton {
@@ -31,7 +32,7 @@
 
   display: block;
   height: calc(var(--arrow-size) * 2);
-  width: var(--arrow-size);
+  width: calc(var(--arrow-size) * 2);
   position: relative;
   margin: 0 auto;
 }

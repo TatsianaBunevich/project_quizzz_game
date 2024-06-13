@@ -21,7 +21,7 @@ const Footer = ({ play, setPlay, isScoreboard, setIsScoreboard }: FooterProps) =
 		setPlay(false);
 		clearQuizState();
 	}
-
+	// TODO: add buttons for case: 1 question in quiz
 	const submitElement = () => {
 		if (!play) {
 			return (

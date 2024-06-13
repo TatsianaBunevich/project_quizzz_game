@@ -40,6 +40,8 @@ export const GameContextProvider = ({ children }: { children: React.ReactNode })
 		}
 	};
 
+	// TODO: Add timer
+
 	return (
 		<GameContext.Provider value={
 			{

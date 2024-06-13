@@ -1,72 +1,100 @@
 .table {
-    display: grid;
+  display: grid;
+  gap: 3em;
+  position: relative;
+  margin-bottom: 3em;
+}
+
+.table::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 20vh;
+  width: 100%;
+  box-shadow: 0px -25vw 10vw -15vw var(--background-color) inset;
 }
 
 .tableRow {
-    display: grid;
-    grid-template-columns: 20% 80%;
-    align-items: center;
-    justify-items: stretch;
-    margin: 1em 0;
-    font-weight: 700;
-    text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  align-items: center;
+  justify-items: stretch;
+  font-weight: 700;
+  text-align: center;
+  gap: 2em;
 }
 
-/* .tableRow:nth-child(odd):not(.tableHeader) {
-    background-color: rgba(150, 220, 238, 0.15);
-} */
-
 .tableHeader {
-    background-color: var(--button-bg-color);
-    margin-bottom: 1em;
+  position: sticky;
+  top: -1px;
+  padding: 1em 0;
+  background-color: var(--background-color);
+  box-shadow: var(--background-color) 10px 20px 10px;
+  z-index: 1;
 }
 
 .tableHeader div {
-    font-size: 1.5em;
-    padding: 1em 0;
-    cursor: pointer;
+  display: flex;
+  place-content: center;
+  font-size: 1.5em;
+  padding: 1em 0;
+  background-color: var(--button-bg-color);
+  border-radius: 2em;
+  cursor: pointer;
+  position: relative;
 }
 
-.tableHeader span {
-    --triangle-size: 5px;
-    --triangle-color: var(--color);
-    --triangle-offset: calc(var(--triangle-size) * 1.5 / 2);
-
-    position: relative;
-    margin-right: calc(var(--triangle-size) * 4);
-}
-/* TODO: change arrows */
-.tableHeader span:after {
-    content: '';
-    position: absolute;
-    right: calc(var(--triangle-size) * -4);
-    transform: translateY(-50%);
-    width: 0;
-	height: 0;
-    border-color: transparent;
-    border-style: solid;
-	border-left-width: var(--triangle-size);
-	border-right-width: var(--triangle-size);
-    border-bottom-width: calc(var(--triangle-size) * 1.5);
-    border-top-width: calc(var(--triangle-size) * 1.5);
+.arrow {
+  --arrow-size: 0.25em;
+  --wrapper-size: calc(var(--arrow-size) * 2.5);
+  --border-width: 2px;
+  display: block;
+  height: var(--wrapper-size);
+  width: var(--wrapper-size);
+  position: absolute;
+  right: var(--wrapper-size);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.tableHeader .up:after {
-    top: calc(50% - var(--triangle-offset));
-	border-bottom-color: var(--triangle-color);
+.arrow::after {
+  --arrow-shift: calc(var(--arrow-size) / 4);
+  content: "";
+  border-bottom-style: solid;
+  border-bottom-width: var(--border-width);
+  border-right-style: solid;
+  border-right-width: var(--border-width);
+  height: var(--arrow-size);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--arrow-size);
+  border-color: transparent;
 }
 
-.tableHeader .down:after {
-    top: calc(50% + var(--triangle-offset));
-	border-top-color: var(--triangle-color);
+.arrow.up::after {
+  border-color: var(--color);
+  transform: translate(-50%, calc(calc(var(--arrow-shift) * 1) - 50%))
+    rotate(225deg);
+}
+
+.arrow.down::after {
+  border-color: var(--color);
+  transform: translate(-50%, calc(calc(var(--arrow-shift) * -1) - 50%))
+    rotate(45deg);
 }
 
 .tableHeader > div:first-child:before {
-    content: '#';
+  content: "#";
 }
 
 @media (min-width: 992px) {
-    .tableHeader > div:first-child:before {
-        content: 'Round';
-    }
+  .tableHeader > div:first-child:before {
+    content: "Round";
+  }
+  .arrow {
+    --arrow-size: 0.5em;
+    --border-width: 3px;
+  }
 }

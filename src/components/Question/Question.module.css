@@ -56,11 +56,11 @@
 }
 
 .correct {
-  background-color: #94d7a2;
+  background-color: var(--good-color);
 }
 
 .incorrect {
-  background-color: #f8bcbc;
+  background-color: var(--bad-color);
 }
 
 .correct:disabled {
