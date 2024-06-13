@@ -15,10 +15,10 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 	const { activeQuestionId, isAnswersShown } = useContext(QuizContext);
 
 	const applyQuestionClasses = () => {
-		if (activeQuestionId === id) {
+		if (activeQuestionId === id && !isAnswersShown) {
 			return styles.active;
 		}
-		return isAnswersShown ? [styles.active, styles.all].join(' ') : '';
+		return isAnswersShown ? [styles.active, styles.allShown].join(' ') : '';
 	};
 
 	const decodeHtmlEntities = (text: string) => {
@@ -53,11 +53,13 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 
 	const answerClasses = isAnswersShown ? showAnswers(selectedAnswer) : {};
 
-	// TODO: styled items when active and on Check
-
 	return (
 		<div className={`${styles.question} ${applyQuestionClasses()}`}>
-			<h2>{id+1}. {decodeHtmlEntities(quizItem.question)}</h2>
+			<div className={styles.questionNumber}>{id+1}</div>
+			<h2 className={styles.questionTitle}>
+				<span className={styles.questionShownNumber}>{id+1}</span>
+				{decodeHtmlEntities(quizItem.question)}
+			</h2>
 			<div className={styles.answers}>
 				<div className={`${styles.blur} ${blurClasses}`}>
 					<p>You didn't answer this question</p>
@@ -66,7 +68,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 					<button
 						key={a.answer}
 						disabled={isAnswersShown}
-						className={`${selectAnswers(selectedAnswer, a.answer)} ${answerClasses[a.answer] || ''}`}
+						className={`${styles.answer} ${selectAnswers(selectedAnswer, a.answer)} ${answerClasses[a.answer] || ''}`}
 						onClick={() => onSelectAnswer(quizItem.question, a)}
 					>
 						{decodeHtmlEntities(a.answer)}
