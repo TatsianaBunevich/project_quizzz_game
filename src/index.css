@@ -59,6 +59,18 @@ body {
   min-height: 100vh;
 }
 
+body::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--progress-color);
+}
+
 h1,
 h2 {
   font-family: "Karla", sans-serif;
