@@ -1,5 +1,4 @@
 :root {
-  --white: #ffffff;
   --color: #ffffff;
   --background-color: #1b1b32;
   --button-bg-color: #6b7abb;
@@ -9,6 +8,8 @@
   --normal-color: #fce795;
   --good-color: #91c483;
   --bad-color: #fd9091;
+
+  --progress-color: #dddddd;
 
   font-family: "Inter", sans-serif;
   line-height: 1;

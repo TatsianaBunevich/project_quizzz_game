@@ -13,7 +13,8 @@ type QuizContextType = {
 	clearQuizState: () => void;
 	calculateScore: () => void;
 	calculatedScore: number;
-	isWin: boolean;
+	roundScore: number;
+	roundStatus: Status;
 	scores: Score[];
 	clearScores: () => void;
 }
@@ -29,7 +30,8 @@ export const QuizContext = createContext<QuizContextType>({
 	clearQuizState: () => {},
 	calculateScore: () => {},
 	calculatedScore: 0,
-	isWin: false,
+	roundScore: 0,
+	roundStatus: Status.NORMAL,
 	scores: [],
 	clearScores: () => {}
 });
@@ -41,7 +43,8 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	const [isAnswersShown, setIsAnswersShown] = useState(false);
 	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
 	const [calculatedScore, setCalculatedScore] = useState(0);
-	const [isWin, setIsWin] = useState(false);
+	const [roundScore, setRoundScore] = useState(0);
+	const [roundStatus, setRoundStatus] = useState(Status.NORMAL);
 	const [scores, setScores] = useState<Score[]>([]);
 
 	useEffect(() => {
@@ -93,7 +96,7 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 		setIsAnswersShown(false);
 		setSelectedAnswers([]);
 		setCalculatedScore(0);
-		setIsWin(false);
+		setRoundScore(0);
 	}
 
 	const calculateScore = () => {
@@ -102,11 +105,10 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 			return item.isCorrect ? acc + 1 : acc;
 		}, 0);
 
-		const nowIsWin = points >= goal/2;
-		// TODO: percentage = full % or rounded
-		const percentage = Number(((points / goal) * 100).toFixed(0));
+		const percentage = (points / goal) * 100;
+		const total = Number(percentage.toFixed(0));
 
-		const setStatus = (percentage: number) => {
+		const calculateStatus = (percentage: number) => {
 			const step = 100 / 3;
 			if (percentage >= step * 2) {
 				return Status.GOOD;
@@ -118,8 +120,9 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 		}
 
 		setCalculatedScore(points);
-		setIsWin(nowIsWin);
-		setTotalScore(percentage, setStatus(percentage));
+		setRoundScore(total);
+		setRoundStatus(calculateStatus(percentage));
+		setTotalScore(total, calculateStatus(percentage));
 	};
 
 	const setTotalScore = (total: number, status: Status) => {
@@ -152,7 +155,8 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 				clearQuizState,
 				calculateScore,
 				calculatedScore,
-				isWin,
+				roundScore,
+				roundStatus,
 				scores,
 				clearScores
 			}

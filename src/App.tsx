@@ -4,6 +4,7 @@ import Blob from './components/Blob/Blob';
 import Toggle from './components/Toggle/Toggle';
 import Quiz from './components/Quiz/Quiz';
 import Scoreboard from './components/Scoreboard/Scoreboard';
+import Result from './components/Result/Result';
 import Footer from './components/Footer/Footer';
 import { GameContextProvider } from './context/GameContext';
 import { QuizContextProvider } from './context/QuizContext';
@@ -13,7 +14,7 @@ const App = () => {
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
 	const [theme, setTheme] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [isScoreboard, setIsScoreboard] = useState(false);
+	const [page, setPage] = useState('quiz');
 
 	useEffect(() => {
 		const handleChange = (e: MediaQueryListEvent) => {
@@ -30,6 +31,19 @@ const App = () => {
 		setTheme(newTheme);
 	}
 
+	const switchPage = (page: string) => {
+		switch(page) {
+			case 'quiz':
+				return <Quiz />;
+			case 'result':
+				return <Result />;
+			case 'scoreboard':
+				return <Scoreboard />;
+			default:
+				break;
+		}
+	}
+
 	return (
 		<div className={styles.app} data-theme={theme}>
 			<Blob theme={theme} play={isPlaying} position='top' width={isPlaying ? 162 : 194} height={isPlaying ? 187 : 197} />
@@ -42,13 +56,11 @@ const App = () => {
 					<QuizContextProvider>
 						<main>
 							{isPlaying ?
-								isScoreboard ?
-									<Scoreboard /> :
-									<Quiz /> :
+								switchPage(page) :
 								<h1>Quizzz Game</h1>
 							}
 						</main>
-						<Footer play={isPlaying} setPlay={setIsPlaying} isScoreboard={isScoreboard} setIsScoreboard={setIsScoreboard} />
+						<Footer play={isPlaying} setPlay={setIsPlaying} page={page} setPage={setPage} />
 					</QuizContextProvider>
 				</GameContextProvider>
 			</div>

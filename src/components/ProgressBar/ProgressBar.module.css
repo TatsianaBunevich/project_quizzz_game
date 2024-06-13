@@ -3,7 +3,7 @@
   --value-size: calc(var(--wrapper-size) * 4);
   --border-size: calc(var(--value-size) / 15);
   --offset-size: calc(var(--value-size) + calc(var(--border-size) * 2));
-  background: var(--white);
+  background-color: var(--progress-color);
   justify-content: flex-start;
   border-radius: calc(var(--wrapper-size) / 2);
   align-items: center;
@@ -15,8 +15,7 @@
 }
 
 .progressBar {
-  animation: load 3s normal forwards;
-  background-color: var(--normal-color);
+  animation: progress 3s normal forwards;
   border-radius: calc(var(--wrapper-size) / 2);
   height: 100%;
   width: 0;
@@ -42,11 +41,15 @@
   background-color: var(--good-color);
 }
 
+.normal {
+  background-color: var(--normal-color);
+}
+
 .bad {
   background-color: var(--bad-color);
 }
 
-@keyframes load {
+@keyframes progress {
   0% {
     width: 0;
   }

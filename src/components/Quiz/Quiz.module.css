@@ -13,7 +13,7 @@
   left: 0;
 }
 
-@keyframes :global(load) {
+@keyframes :global(progress) {
   0% {
     width: var(--old-length);
   }

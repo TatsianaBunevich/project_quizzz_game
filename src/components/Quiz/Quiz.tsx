@@ -15,7 +15,7 @@ const Quiz = () => {
 			progress.current.offsetHeight;
 			progress.current.style.setProperty("--old-length", `${oldLength.current}%`);
 			progress.current.style.setProperty("--new-length", `${newLength}%`);
-			progress.current.style.animation = 'load 0.5s normal forwards';
+			progress.current.style.animation = 'progress 0.5s normal forwards';
 			oldLength.current = newLength;
 		}
 	}, [newLength]);
