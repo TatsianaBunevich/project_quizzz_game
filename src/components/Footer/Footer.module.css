@@ -19,14 +19,12 @@
   width: calc(50% - var(--gap));
 }
 
-.startButton {
+.start {
   font-size: 1.5em;
-  width: auto;
-  margin: 0 auto;
 }
 
-.backButton {
-  margin: 0 auto;
+.footerCentered {
+  justify-content: center;
 }
 
 .arrow {

@@ -3,6 +3,8 @@ export enum Theme {
 	DARK = 'dark',
 }
 
+export type Page = string | null;
+
 export interface SelectedAnswer {
 	question: string;
 	answer: string;

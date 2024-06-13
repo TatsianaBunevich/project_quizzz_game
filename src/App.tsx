@@ -8,13 +8,13 @@ import Result from './components/Result/Result';
 import Footer from './components/Footer/Footer';
 import { GameContextProvider } from './context/GameContext';
 import { QuizContextProvider } from './context/QuizContext';
-import { Theme } from './types';
+import { Theme, Page } from './types';
 
 const App = () => {
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
 	const [theme, setTheme] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [page, setPage] = useState('quiz');
+	const [page, setPage] = useState<Page>(null);
 
 	useEffect(() => {
 		const handleChange = (e: MediaQueryListEvent) => {
@@ -31,7 +31,10 @@ const App = () => {
 		setTheme(newTheme);
 	}
 
-	const switchPage = (page: string) => {
+	const switchPage = (page: Page) => {
+		if (!page) {
+			return null;
+		}
 		switch(page) {
 			case 'quiz':
 				return <Quiz />;
@@ -40,7 +43,7 @@ const App = () => {
 			case 'scoreboard':
 				return <Scoreboard />;
 			default:
-				break;
+				return null;
 		}
 	}
 
