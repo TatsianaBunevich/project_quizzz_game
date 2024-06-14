@@ -53,7 +53,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 	};
 
 	const answerClasses = isAnswersShown ? showAnswers(selectedAnswer) : {};
-	// TODO: add animation to show/hide question
+
 	return (
 		<div className={`${styles.question} ${applyQuestionClasses()}`}>
 			<div className={styles.questionNumber}>{id+1}</div>

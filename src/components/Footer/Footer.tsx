@@ -89,7 +89,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 				<Button className={styles.submitButton} onClick={handleNextButton}>
 					{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <span className={`${styles.arrow} ${styles.next}`}></span>}
 				</Button>
-				{/* TODO: add Exit button (When click Exit we should provide user to Settings page? or show result?) */}
+				<Button className={`${styles.submitButton} ${styles.stopButton}`} onClick={handleCheckAnswers}>Stop</Button>
 			</>
 		)
 	}
