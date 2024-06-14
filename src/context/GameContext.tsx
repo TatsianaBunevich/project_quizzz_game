@@ -1,17 +1,45 @@
 import { useState, useEffect, createContext } from 'react';
-import { Question } from '../types';
+import { SettingsType, SettingType, IdType, Question } from '../types';
+import { defaultSettings } from '../constants';
 
 type GameContextType = {
+	settings: SettingsType;
+	handleSelectOption: (optionId: IdType | number, setting: keyof SettingsType) => void;
+	setSettings: (settings: SettingsType) => void;
 	questions: Question[];
 }
 
 export const GameContext = createContext<GameContextType>({
+	settings: structuredClone(defaultSettings),
+	handleSelectOption: () => {},
+	setSettings: () => {},
 	questions: []
 });
 
-export const GameContextProvider = ({ children }: { children: React.ReactNode }) => {
-
+export const GameContextProvider = ({ play, children }: { play: boolean, children: React.ReactNode }) => {
+	const [settings, setSettings] = useState<SettingsType>(structuredClone(defaultSettings));
 	const [questions, setQuestions] = useState([]);
+
+	useEffect(() => {
+		const fetchSettings = async () => {
+			const data = await fetchWithRetry('https://opentdb.com/api_category.php');
+			setSettings(prev => {
+				return {
+					...prev,
+					category: [
+						...prev.category,
+						...data.trivia_categories.map((category: { id: number, name: string }) => ({
+							id: category.id.toString(),
+							name: category.name,
+							isSelect: false
+						}))
+					]
+				};
+			});
+		};
+
+		if (play) fetchSettings();
+	}, [play]);
 
 	useEffect(() => {
 		const fetchQuestions = async () => {
@@ -40,11 +68,35 @@ export const GameContextProvider = ({ children }: { children: React.ReactNode })
 		}
 	};
 
+	const handleSelectOption = (optionId: IdType | number, setting: keyof SettingsType) => {
+		setSettings(prev => {
+			const newPrev = {...prev};
+
+			if (setting === 'amount') {
+				newPrev.amount = optionId as number;
+			} else {
+				const settingsArray = newPrev[setting] as SettingType[];
+				const foundIndex = settingsArray.findIndex((item: SettingType) => item.id === optionId);
+
+				settingsArray.forEach((item: SettingType) => {
+					item.isSelect = false;
+				});
+
+				settingsArray[foundIndex].isSelect = true;
+			}
+
+			return newPrev;
+		});
+	};
+
 	// TODO: Add timer
 
 	return (
 		<GameContext.Provider value={
 			{
+				settings,
+				handleSelectOption,
+				setSettings,
 				questions
 			}
 		}>

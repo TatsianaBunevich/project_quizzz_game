@@ -25,6 +25,7 @@
 
 .progressBarValue {
   content: "";
+  font-family: "Karla", sans-serif;
   position: absolute;
   right: calc(((calc(var(--value-size) / 2) + var(--border-size)) * -1));
   background-color: var(--background-color);

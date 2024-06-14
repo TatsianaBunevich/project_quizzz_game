@@ -5,6 +5,34 @@ export enum Theme {
 
 export type Page = string | null;
 
+export enum DifficultyType {
+	ANY = 'any',
+	EASY = 'easy',
+	MEDIUM = 'medium',
+	HARD = 'hard'
+}
+
+export enum TypeItem {
+	ANY = 'any',
+	MULTIPLE = 'multiple',
+	BOOLEAN = 'boolean'
+}
+
+export type IdType = string | DifficultyType | TypeItem;
+
+export type SettingType = {
+	id: IdType;
+	name: string;
+	isSelect: boolean;
+};
+
+export type SettingsType = {
+	category: SettingType[];
+	difficulty: SettingType[];
+	type: SettingType[];
+	amount: number;
+}
+
 export interface SelectedAnswer {
 	question: string;
 	answer: string;

@@ -5,6 +5,7 @@ import Toggle from './components/Toggle/Toggle';
 import Quiz from './components/Quiz/Quiz';
 import Scoreboard from './components/Scoreboard/Scoreboard';
 import Result from './components/Result/Result';
+import Settings from './components/Settings/Settings';
 import Footer from './components/Footer/Footer';
 import { GameContextProvider } from './context/GameContext';
 import { QuizContextProvider } from './context/QuizContext';
@@ -36,6 +37,8 @@ const App = () => {
 			return null;
 		}
 		switch(page) {
+			case 'settings':
+				return <Settings />;
 			case 'quiz':
 				return <Quiz />;
 			case 'result':
@@ -55,7 +58,7 @@ const App = () => {
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
 				</header>
-				<GameContextProvider>
+				<GameContextProvider play={isPlaying}>
 					<QuizContextProvider>
 						<main>
 							{isPlaying ?

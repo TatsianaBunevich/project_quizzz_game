@@ -1,8 +1,10 @@
 import { useContext } from 'react';
+import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
 import Button from '../Button/Button';
 import styles from './Footer.module.css';
 import { Page } from '../../types';
+import { defaultSettings } from '../../constants';
 
 type FooterProps = {
 	play: boolean;
@@ -12,6 +14,7 @@ type FooterProps = {
 }
 
 const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
+	const { setSettings } = useContext(GameContext);
 	const {
 		setIsAnswersShown,
 		isAnswersShown,
@@ -23,9 +26,18 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 		clearScores
 	} = useContext(QuizContext);
 
-	const handleStartQuiz = () => {
+	const handleSettings = () => {
 		setPlay(true);
+		setPage('settings');
+	}
+
+	const handleStartQuiz = () => {
 		setPage('quiz');
+	}
+
+	const handleEndQuiz = () => {
+		setPlay(false);
+		setSettings(structuredClone(defaultSettings));
 	}
 
 	const handleCheckAnswers = () => {
@@ -43,15 +55,14 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 		setPage('result');
 	}
 
-	const handleNewTry = () => {
-		setPlay(false);
+	const handleNewTry = (isNewTry: boolean) => {
 		clearQuizState();
-		setPage('quiz');
+		setPage(isNewTry ? 'quiz' : 'settings');
 	}
 
 	const handlePrevButton = () => {
 		if (activeQuestionId === 0) {
-			handleNewTry();
+			handleNewTry(false);
 		} else {
 			setActiveQuestionId(activeQuestionId - 1);
 		}
@@ -78,15 +89,23 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 				<Button className={styles.submitButton} onClick={handleNextButton}>
 					{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <span className={`${styles.arrow} ${styles.next}`}></span>}
 				</Button>
+				{/* TODO: add Exit button (When click Exit we should provide user to Settings page? or show result?) */}
 			</>
 		)
 	}
 
 	const renderSubmitElement = () => {
 		if (!play) {
-			return <Button className={styles.submitButton} onClick={handleStartQuiz}>START</Button>
+			return <Button className={styles.submitButton} onClick={handleSettings}>START</Button>
 		}
 		switch(page) {
+			case 'settings':
+				return (
+					<>
+						<Button className={styles.submitButton} onClick={handleStartQuiz}>Let's go</Button>
+						<Button className={styles.submitButton} onClick={handleEndQuiz}>Exit</Button>
+					</>
+				);
 			case 'quiz':
 				return renderQuizButtons();
 			case 'result':
@@ -94,8 +113,8 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 					<>
 						<Button className={styles.submitButton} onClick={handleShowAnswers}>Answers</Button>
 						<Button className={styles.submitButton} onClick={() => setPage('scoreboard')}>Scores</Button>
-						<Button className={styles.submitButton} onClick={handleNewTry}>Try again</Button>
-						<Button className={styles.submitButton} onClick={handleNewTry}>Settings</Button>
+						<Button className={styles.submitButton} onClick={() => handleNewTry(true)}>Try again</Button>
+						<Button className={styles.submitButton} onClick={() => handleNewTry(false)}>Settings</Button>
 					</>
 				);
 			case 'scoreboard':
@@ -111,7 +130,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	}
 
 	return (
-		<footer className={`${styles.footer} ${isAnswersShown || !play ? styles.footerCentered : ''} ${!play ? styles.start : ''}`}>
+		<footer className={`${styles.footer} ${!play || isAnswersShown ? styles.footerCentered : ''} ${!play ? styles.start : ''} ${page === 'quiz' ? styles.quiz : ''}`}>
 			{renderSubmitElement()}
 		</footer>
 	);

@@ -2,7 +2,7 @@
   --gap: 1em;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1em;
   z-index: 1;
 }
@@ -16,15 +16,21 @@
   border-radius: 1em;
   border-width: var(--border-width);
   position: relative;
-  width: calc(50% - var(--gap));
+  text-wrap: nowrap;
+  min-width: 12em;
+  flex: 1 0 0;
 }
 
 .start {
   font-size: 1.5em;
 }
 
-.footerCentered {
-  justify-content: center;
+.footerCentered button {
+  flex: 0 0 auto;
+}
+
+.quiz .submitButton {
+  min-width: auto;
 }
 
 .arrow {
@@ -67,10 +73,7 @@
 }
 
 @media (min-width: 992px) {
-  .footer {
-    justify-content: center;
-  }
   .submitButton {
-    width: 12em;
+    flex: 0 0 12em;
   }
 }
