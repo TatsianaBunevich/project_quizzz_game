@@ -1,16 +1,26 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useCallback } from 'react';
 import { GameContext } from '../../context/GameContext';
 import styles from './Settings.module.css';
 import Setting from '../Setting/Setting';
 import Button from '../Button/Button';
+import { debounce } from 'lodash';
 
 const Settings = () => {
 	const { settings, handleSelectOption } = useContext(GameContext);
 	const [categoryClass, setCategoryClass] = useState('');
+	const [rangeValue, setRangeValue] = useState(settings.amount);
 
 	const handleOverflow = () => {
 		setCategoryClass(styles.overflowHidden);
 	};
+
+	const debounceFn = useCallback(debounce((value: number) => handleSelectOption(value, 'amount'), 300), [handleSelectOption]);
+
+	const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const value = Number(event.target.value);
+		setRangeValue(value);
+		debounceFn(value);
+	}
 
 	return (
 		<div className={styles.settings}>
@@ -42,11 +52,10 @@ const Settings = () => {
 					</Button>
 				))}
 			</Setting>
-			{/* TODO: add debounce */}
 			<Setting title="Number of Questions">
 				<div className={styles.sliderContainer}>
-					<input type="range" min="1" max="50" value={settings.amount} className={styles.slider} onChange={(e) => handleSelectOption(Number(e.target.value), 'amount')} />
-					<div className={styles.sliderValue}>{settings.amount}</div>
+					<input type="range" min="1" max="50" value={rangeValue} className={styles.slider} onChange={handleAmountChange} />
+					<div className={styles.sliderValue}>{rangeValue}</div>
 				</div>
 			</Setting>
 		</div>
