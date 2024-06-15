@@ -2,20 +2,15 @@ import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import Blob from './components/Blob/Blob';
 import Toggle from './components/Toggle/Toggle';
-import Quiz from './components/Quiz/Quiz';
-import Scoreboard from './components/Scoreboard/Scoreboard';
-import Result from './components/Result/Result';
-import Settings from './components/Settings/Settings';
-import Footer from './components/Footer/Footer';
 import { GameContextProvider } from './context/GameContext';
 import { QuizContextProvider } from './context/QuizContext';
-import { Theme, Page } from './types';
+import PageContainer from './components/PageContainer/PageContainer';
+import { Theme } from './types';
 
 const App = () => {
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
 	const [theme, setTheme] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [page, setPage] = useState<Page>(null);
 
 	useEffect(() => {
 		const handleChange = (e: MediaQueryListEvent) => {
@@ -31,25 +26,7 @@ const App = () => {
 		const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
 		setTheme(newTheme);
 	}
-
-	const switchPage = (page: Page) => {
-		if (!page) {
-			return null;
-		}
-		switch(page) {
-			case 'settings':
-				return <Settings />;
-			case 'quiz':
-				return <Quiz />;
-			case 'result':
-				return <Result />;
-			case 'scoreboard':
-				return <Scoreboard />;
-			default:
-				return null;
-		}
-	}
-
+	// TODO: animate blobs
 	return (
 		<div className={styles.app} data-theme={theme}>
 			<Blob theme={theme} play={isPlaying} position='top' width={isPlaying ? 162 : 194} height={isPlaying ? 187 : 197} />
@@ -60,13 +37,7 @@ const App = () => {
 				</header>
 				<GameContextProvider play={isPlaying}>
 					<QuizContextProvider>
-						<main>
-							{isPlaying ?
-								switchPage(page) :
-								<h1>Quizzz Game</h1>
-							}
-						</main>
-						<Footer play={isPlaying} setPlay={setIsPlaying} page={page} setPage={setPage} />
+						<PageContainer  play={isPlaying} setPlay={setIsPlaying} />
 					</QuizContextProvider>
 				</GameContextProvider>
 			</div>

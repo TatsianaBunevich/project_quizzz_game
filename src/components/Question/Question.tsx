@@ -53,7 +53,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 	};
 
 	const answerClasses = isAnswersShown ? showAnswers(selectedAnswer) : {};
-
+	//  TODO: add popup
 	return (
 		<div className={`${styles.question} ${applyQuestionClasses()}`}>
 			<div className={styles.questionNumber}>{id+1}</div>

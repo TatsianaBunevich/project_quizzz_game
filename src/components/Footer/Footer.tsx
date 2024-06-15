@@ -14,7 +14,7 @@ type FooterProps = {
 }
 
 const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
-	const { setSettings } = useContext(GameContext);
+	const { setSettings, createQuestionsUrl } = useContext(GameContext);
 	const {
 		setIsAnswersShown,
 		isAnswersShown,
@@ -32,6 +32,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	}
 
 	const handleStartQuiz = () => {
+		createQuestionsUrl();
 		setPage('quiz');
 	}
 
@@ -57,6 +58,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 
 	const handleNewTry = (isNewTry: boolean) => {
 		clearQuizState();
+		isNewTry && createQuestionsUrl();
 		setPage(isNewTry ? 'quiz' : 'settings');
 	}
 
@@ -120,6 +122,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 			case 'scoreboard':
 				return (
 					<>
+						{/* TODO: change buttons order on mobile */}
 						<Button className={styles.submitButton} onClick={clearScores}>Clear</Button>
 						<Button className={styles.submitButton} onClick={() => setPage('result')}>Back</Button>
 					</>
@@ -128,7 +131,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 				return null;
 		}
 	}
-
+	// TODO: change arrow icons
 	return (
 		<footer className={`${styles.footer} ${!play || isAnswersShown ? styles.footerCentered : ''} ${!play ? styles.start : ''} ${page === 'quiz' ? styles.quiz : ''}`}>
 			{renderSubmitElement()}

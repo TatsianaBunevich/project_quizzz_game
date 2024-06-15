@@ -12,6 +12,7 @@
   bottom: 0;
   height: 20vh;
   width: 100%;
+  /* TODO: change box-shadow to linear-gradient */
   box-shadow: 0px -25vw 10vw -15vw var(--background-color) inset;
 }
 
@@ -30,6 +31,7 @@
   top: -1px;
   padding: 1em 0;
   background-color: var(--background-color);
+  /* TODO: change box-shadow to linear-gradient */
   box-shadow: var(--background-color) 10px 20px 10px;
   z-index: 1;
 }
@@ -45,7 +47,7 @@
   cursor: pointer;
   position: relative;
 }
-
+/* TODO: change arrow icons */
 .arrow {
   --arrow-size: 0.25em;
   --wrapper-size: calc(var(--arrow-size) * 2.5);

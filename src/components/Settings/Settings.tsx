@@ -11,6 +11,7 @@ const Settings = () => {
 		<div className={styles.settings}>
 			<Setting title="Category">
 				{settings.category.map((option) => (
+					// TODO: show full height on click liner-gradient
 					<Button
 						key={option.id}
 						className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
@@ -36,6 +37,7 @@ const Settings = () => {
 					</Button>
 				))}
 			</Setting>
+			{/* TODO: add debounce */}
 			<Setting title="Number of Questions">
 				<div className={styles.sliderContainer}>
 					<input type="range" min="1" max="50" value={settings.amount} className={styles.slider} onChange={(e) => handleSelectOption(Number(e.target.value), 'amount')} />
