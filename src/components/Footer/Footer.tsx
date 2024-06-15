@@ -122,7 +122,6 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 			case 'scoreboard':
 				return (
 					<>
-						{/* TODO: change buttons order on mobile */}
 						<Button className={styles.submitButton} onClick={clearScores}>Clear</Button>
 						<Button className={styles.submitButton} onClick={() => setPage('result')}>Back</Button>
 					</>

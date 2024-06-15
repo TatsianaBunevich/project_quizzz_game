@@ -2,6 +2,30 @@
   text-align: center;
 }
 
+.category {
+  position: relative;
+  height: 20em;
+  overflow: hidden;
+}
+
+.overflow {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 65%;
+  width: 100%;
+  background: linear-gradient(to bottom, transparent, var(--background-color));
+  cursor: pointer;
+}
+
+.overflowHidden {
+  height: auto;
+}
+
+.overflowHidden .overflow {
+  height: 0;
+}
+
 .option {
   flex: 1 1 auto;
 }

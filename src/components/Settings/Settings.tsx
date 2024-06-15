@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { GameContext } from '../../context/GameContext';
 import styles from './Settings.module.css';
 import Setting from '../Setting/Setting';
@@ -6,12 +6,17 @@ import Button from '../Button/Button';
 
 const Settings = () => {
 	const { settings, handleSelectOption } = useContext(GameContext);
+	const [categoryClass, setCategoryClass] = useState('');
+
+	const handleOverflow = () => {
+		setCategoryClass(styles.overflowHidden);
+	};
 
 	return (
 		<div className={styles.settings}>
-			<Setting title="Category">
+			<Setting title="Category" className={`${styles.category} ${categoryClass}`}>
+				<div className={styles.overflow} onClick={handleOverflow}></div>
 				{settings.category.map((option) => (
-					// TODO: show full height on click liner-gradient
 					<Button
 						key={option.id}
 						className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
