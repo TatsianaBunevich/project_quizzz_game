@@ -37,7 +37,7 @@ const App = () => {
 				</header>
 				<GameContextProvider play={isPlaying}>
 					<QuizContextProvider>
-						<PageContainer  play={isPlaying} setPlay={setIsPlaying} />
+						<PageContainer play={isPlaying} setPlay={setIsPlaying} />
 					</QuizContextProvider>
 				</GameContextProvider>
 			</div>

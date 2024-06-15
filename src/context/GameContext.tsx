@@ -1,13 +1,12 @@
 import { useState, useEffect, createContext, useCallback } from 'react';
 import { SettingsType, SettingType, IdType, Question } from '../types';
 import { defaultSettings } from '../constants';
-import useSWR from 'swr';
 
 type GameContextType = {
 	settings: SettingsType;
 	handleSelectOption: (optionId: IdType | number, setting: keyof SettingsType) => void;
 	setSettings: (settings: SettingsType) => void;
-	createQuestionsUrl: () => void;
+	setIsUpdateQuestions: (isUpdateQuestions: boolean) => void;
 	questions: Question[];
 }
 
@@ -15,52 +14,24 @@ export const GameContext = createContext<GameContextType>({
 	settings: structuredClone(defaultSettings),
 	handleSelectOption: () => {},
 	setSettings: () => {},
-	createQuestionsUrl: () => {},
+	setIsUpdateQuestions: () => {},
 	questions: []
 });
 
 export const GameContextProvider = ({ play, children }: { play: boolean, children: React.ReactNode }) => {
 	const [settings, setSettings] = useState<SettingsType>(structuredClone(defaultSettings));
 	const [questions, setQuestions] = useState([]);
-	const [isSendingCategories, setIsSendingCategories] = useState(false);
-	const [isSendingQuestions, setIsSendingQuestions] = useState(false);
-	const [questionsUrl, setQuestionsUrl] = useState('');
-
-	const fetcher = useCallback(async (url: string) => {
-		const res = await fetch(url);
-		const data = await res.json();
-
-		if (!data) {
-			throw new Error(`Unexpected data: ${data}.`);
-		}
-
-		if (url.includes('api_category')) {
-			setIsSendingCategories(false);
-		} else {
-			setIsSendingQuestions(false);
-		}
-
-		return data;
-	}, []);
-
-	const { data: dbCategories, error: categoriesError, isLoading: categoriesLoading } = useSWR(isSendingCategories ? 'https://opentdb.com/api_category.php' : null, fetcher);
-	const { data: dbQuestions, error: questionsError, isLoading: questionsLoading } = useSWR(questionsUrl, fetcher);
-	console.log('GameContextProvider', questionsLoading);
-	// TODO: add skeleton
-
-	useEffect(() => {
-		if (play) setIsSendingCategories(true);
-	}, [play]);
+	const [isUpdateQuestions, setIsUpdateQuestions] = useState(false);
 
 	useEffect(() => {
 		const updateSettings = async () => {
+			const data = await fetchWithRetry('https://opentdb.com/api_category.php');
 			setSettings(prev => {
-				const categories = dbCategories || {trivia_categories: []};
 				return {
 					...prev,
 					category: [
 						...prev.category,
-						...categories.trivia_categories.map((category: { id: number, name: string }) => ({
+						...data.trivia_categories.map((category: { id: number, name: string }) => ({
 							id: category.id.toString(),
 							name: category.name,
 							isSelect: false
@@ -70,10 +41,10 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 			});
 		};
 
-		updateSettings();
-	}, [dbCategories]);
+		if (play) updateSettings();
+	}, [play]);
 
-	const createQuestionsUrl = () => {
+	const createQuestionsUrl = useCallback(() => {
 		const createSettingId = (setting: SettingType[]) => {
 			const foundItem = setting.find((item: SettingType) => item.isSelect === true);
 			return foundItem?.id === 'any' ? '' : foundItem?.id;
@@ -81,17 +52,36 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 
 		const params = `amount=${settings.amount}&category=${createSettingId(settings.category)}&difficulty=${createSettingId(settings.difficulty)}&type=${createSettingId(settings.type)}`;
 
-		setQuestionsUrl(`https://opentdb.com/api.php?${params}`);
-		setIsSendingQuestions(true);
-	};
+		return `https://opentdb.com/api.php?${params}`;
+	}, [settings]);
 
 	useEffect(() => {
 		const updateQuestions = async () => {
-			setQuestions([...dbQuestions?.results || []]);
+			const data = await fetchWithRetry(createQuestionsUrl());
+			setQuestions(data.results);
+			setIsUpdateQuestions(false);
 		};
 
-		updateQuestions();
-	}, [dbQuestions]);
+		if (isUpdateQuestions) updateQuestions();
+	}, [isUpdateQuestions, createQuestionsUrl]);
+
+	const fetchWithRetry = async (url: string, retries = 3, backoff = 300) => {
+		for (let i = 0; i < retries; i++) {
+			try {
+				const response = await fetch(url);
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				return await response.json();
+			} catch (error) {
+				if (i < retries - 1) {
+					await new Promise(res => setTimeout(res, backoff * (i + 1)));
+				} else {
+					throw error;
+				}
+			}
+		}
+	};
 
 	const handleSelectOption = (optionId: IdType | number, setting: keyof SettingsType) => {
 		setSettings(prev => {
@@ -122,7 +112,7 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 				settings,
 				handleSelectOption,
 				setSettings,
-				createQuestionsUrl,
+				setIsUpdateQuestions,
 				questions
 			}
 		}>

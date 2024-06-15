@@ -14,7 +14,7 @@ type FooterProps = {
 }
 
 const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
-	const { setSettings, createQuestionsUrl } = useContext(GameContext);
+	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
 		setIsAnswersShown,
 		isAnswersShown,
@@ -32,7 +32,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	}
 
 	const handleStartQuiz = () => {
-		createQuestionsUrl();
+		setIsUpdateQuestions(true);
 		setPage('quiz');
 	}
 
@@ -58,7 +58,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 
 	const handleNewTry = (isNewTry: boolean) => {
 		clearQuizState();
-		isNewTry && createQuestionsUrl();
+		isNewTry && setIsUpdateQuestions(true);
 		setPage(isNewTry ? 'quiz' : 'settings');
 	}
 
