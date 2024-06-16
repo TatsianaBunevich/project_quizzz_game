@@ -22,9 +22,14 @@
   z-index: 1;
 }
 
+.modalButton {
+  display: block;
+  width: 14em;
+  margin: 0 auto 1em;
+}
+
 .quizProgress {
   --progress-size: 0.3em;
-
   background-color: var(--border-color);
   height: var(--progress-size);
   position: absolute;

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
-import Button from '../Button/Button';
+import SubmitButton from '../SubmitButton/SubmitButton';
 import styles from './Footer.module.css';
 import { Page } from '../../types';
 import { defaultSettings } from '../../constants';
@@ -17,6 +17,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
 		updateSortedQuestions,
+		setIsModalShown,
 		setIsAnswersShown,
 		isAnswersShown,
 		sortedQuestions,
@@ -39,6 +40,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 
 	const handleEndQuiz = () => {
 		setPlay(false);
+		clearScores();
 		setSettings(structuredClone(defaultSettings));
 	}
 
@@ -79,35 +81,38 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 		}
 	}
 
+	const openModal = () => {
+		setIsModalShown(true);
+	}
+
 	const renderQuizButtons = () => {
 		if (isAnswersShown) {
-			// TODO: show Back button always at the bottom
-			return <Button className={styles.submitButton} onClick={handleBackToResult}>Back</Button>
+			return <SubmitButton className={styles.footerButton} onClick={handleBackToResult}>Back</SubmitButton>
 		}
 
 		return (
 			<>
-				<Button className={styles.submitButton} onClick={handlePrevButton}>
+				<SubmitButton className={styles.footerButton} onClick={handlePrevButton}>
 					{activeQuestionId === 0 ? 'Back' : <span className={`${styles.arrow} ${styles.back}`}></span>}
-				</Button>
-				<Button className={styles.submitButton} onClick={handleNextButton}>
+				</SubmitButton>
+				<SubmitButton className={styles.footerButton} onClick={handleNextButton}>
 					{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <span className={`${styles.arrow} ${styles.next}`}></span>}
-				</Button>
-				<Button className={`${styles.submitButton} ${styles.stopButton}`} onClick={handleCheckAnswers}>Stop</Button>
+				</SubmitButton>
+				<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={openModal}>Stop</SubmitButton>
 			</>
 		)
 	}
 
 	const renderSubmitElement = () => {
 		if (!play) {
-			return <Button className={styles.submitButton} onClick={handleSettings}>START</Button>
+			return <SubmitButton className={styles.footerButton} onClick={handleSettings}>START</SubmitButton>
 		}
 		switch(page) {
 			case 'settings':
 				return (
 					<>
-						<Button className={styles.submitButton} onClick={handleStartQuiz}>Let's go</Button>
-						<Button className={styles.submitButton} onClick={handleEndQuiz}>Exit</Button>
+						<SubmitButton className={styles.footerButton} onClick={handleStartQuiz}>Let's go</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={handleEndQuiz}>Exit</SubmitButton>
 					</>
 				);
 			case 'quiz':
@@ -115,17 +120,17 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 			case 'result':
 				return (
 					<>
-						<Button className={styles.submitButton} onClick={handleShowAnswers}>Answers</Button>
-						<Button className={styles.submitButton} onClick={() => setPage('scoreboard')}>Scores</Button>
-						<Button className={styles.submitButton} onClick={() => handleNewTry(true)}>Try again</Button>
-						<Button className={styles.submitButton} onClick={() => handleNewTry(false)}>Settings</Button>
+						<SubmitButton className={styles.footerButton} onClick={handleShowAnswers}>Answers</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={() => setPage('scoreboard')}>Scores</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={() => handleNewTry(true)}>Try again</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={() => handleNewTry(false)}>Settings</SubmitButton>
 					</>
 				);
 			case 'scoreboard':
 				return (
 					<>
-						<Button className={styles.submitButton} onClick={clearScores}>Clear</Button>
-						<Button className={styles.submitButton} onClick={() => setPage('result')}>Back</Button>
+						<SubmitButton className={styles.footerButton} onClick={clearScores}>Clear</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={() => setPage('result')}>Back</SubmitButton>
 					</>
 				);
 			default:

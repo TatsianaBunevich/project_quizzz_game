@@ -8,6 +8,8 @@ type QuizContextType = {
 	activeQuestionId: number;
 	setActiveQuestionId: (activeQuestionId: number) => void;
     selectedAnswers: SelectedAnswer[];
+	setIsModalShown: (isModalShown: boolean) => void;
+	isModalShown: boolean;
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	setIsAnswersShown: (isAnswersShown: boolean) => void;
 	isAnswersShown: boolean;
@@ -26,6 +28,8 @@ export const QuizContext = createContext<QuizContextType>({
 	activeQuestionId: 0,
 	setActiveQuestionId: () => {},
 	selectedAnswers: [],
+	setIsModalShown: () => {},
+	isModalShown: false,
 	handleSelectAnswer: () => {},
 	setIsAnswersShown: () => {},
 	isAnswersShown: false,
@@ -44,6 +48,7 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	const [activeQuestionId, setActiveQuestionId] = useState(0);
 	const [isAnswersShown, setIsAnswersShown] = useState(false);
 	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
+	const [isModalShown, setIsModalShown] = useState(false);
 	const [calculatedScore, setCalculatedScore] = useState(0);
 	const [roundScore, setRoundScore] = useState(0);
 	const [roundStatus, setRoundStatus] = useState(Status.NORMAL);
@@ -159,6 +164,8 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 				setActiveQuestionId,
 				selectedAnswers,
 				handleSelectAnswer,
+				setIsModalShown,
+				isModalShown,
 				setIsAnswersShown,
 				isAnswersShown,
 				clearQuizState,

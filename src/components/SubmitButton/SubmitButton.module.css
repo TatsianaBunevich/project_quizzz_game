@@ -1,0 +1,11 @@
+.submitButton {
+  --border-width: 3px;
+  padding: 1.5em 2.25em;
+  color: var(--background-color);
+  background-color: var(--button-color);
+  font-weight: 600;
+  border-radius: 1em;
+  border-width: var(--border-width);
+  position: relative;
+  text-wrap: nowrap;
+}

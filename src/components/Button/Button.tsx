@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
+import styles from './Button.module.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	onClick: () => void;
@@ -7,7 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ onClick, children, className, ...rest }: ButtonProps) => {
 	return (
-		<button className={className} onClick={onClick} {...rest}>
+		<button className={`${styles.button} ${className}`} onClick={onClick} {...rest}>
 			{children}
 		</button>
 	);

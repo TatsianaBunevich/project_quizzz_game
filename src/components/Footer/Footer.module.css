@@ -8,16 +8,7 @@
   z-index: 2;
 }
 
-.submitButton {
-  --border-width: 3px;
-  padding: 1.5em 2.25em;
-  color: var(--background-color);
-  background-color: var(--button-color);
-  font-weight: 600;
-  border-radius: 1em;
-  border-width: var(--border-width);
-  position: relative;
-  text-wrap: nowrap;
+.footerButton {
   min-width: 12em;
   flex: 1 0 0;
 }
@@ -26,7 +17,7 @@
   font-size: 1.5em;
 }
 
-.footerCentered .submitButton {
+.footerCentered .footerButton {
   flex: 0 0 auto;
 }
 
@@ -34,7 +25,7 @@
   min-width: 100%;
 }
 
-.allShown .submitButton {
+.allShown .footerButton {
   position: fixed;
   bottom: 2.5em;
 }
@@ -65,7 +56,7 @@
   transition: border-color 0.3s ease-in-out;
 }
 
-.submitButton:hover .arrow::after {
+.footerButton:hover .arrow::after {
   border-color: var(--button-color);
 }
 
@@ -79,7 +70,7 @@
 }
 
 @media (min-width: 992px) {
-  .submitButton {
+  .footerButton {
     flex: 0 0 12em;
     min-width: 12em;
   }

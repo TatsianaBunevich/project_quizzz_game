@@ -22,7 +22,7 @@ const PageContainer = ({ play, setPlay }: PageContainerProps) => {
 			case 'settings':
 				return <Settings />;
 			case 'quiz':
-				return <Quiz />;
+				return <Quiz setPage={setPage} />;
 			case 'result':
 				return <Result />;
 			case 'scoreboard':

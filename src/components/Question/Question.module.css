@@ -67,7 +67,7 @@
   counter-reset: count;
 }
 
-.answer {
+.answers .answer {
   display: inline-grid;
   grid-template-columns: min-content 1fr;
   align-items: center;
@@ -76,7 +76,7 @@
   position: relative;
 }
 
-.answer::before {
+.answers .answer::before {
   content: counter(count, upper-alpha) ":";
 }
 
@@ -106,25 +106,25 @@
   visibility: visible;
 }
 
-.selected,
-.correct,
-.incorrect {
+.answers .selected,
+.answers .correct,
+.answers .incorrect {
   border-color: transparent !important;
 }
 
-.selected {
+.answers .selected {
   background-color: var(--button-bg-color);
 }
 
-.correct {
+.answers .correct {
   background-color: var(--good-color);
 }
 
-.incorrect {
+.answers .incorrect {
   background-color: var(--bad-color);
 }
 
-.correct:disabled {
+.answers .correct:disabled {
   color: inherit;
 }
 

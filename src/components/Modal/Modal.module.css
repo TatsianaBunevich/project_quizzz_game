@@ -1,0 +1,21 @@
+.modal {
+  background-color: var(--background-color);
+  border: 1px solid var(--button-color);
+  border-radius: 0.75em;
+  padding: 2em 0;
+  max-width: calc(100% - 4em);
+  text-align: center;
+  color: var(--color);
+  width: calc(100% - 1.25em * 2);
+  max-width: 400px;
+}
+
+.modal::backdrop {
+  backdrop-filter: blur(calc(var(--blur-size) * 2));
+}
+
+@media (min-width: 992px) {
+  .modal {
+    max-width: 600px;
+  }
+}
