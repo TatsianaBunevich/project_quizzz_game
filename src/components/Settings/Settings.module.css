@@ -23,7 +23,7 @@
 }
 
 .overflowHidden .overflow {
-  height: 0;
+  display: none;
 }
 
 .option {
@@ -75,4 +75,13 @@
   font-size: 1.5em;
   font-weight: 700;
   margin-top: 1em;
+}
+
+@media (min-width: 992px) {
+  .category {
+    height: auto;
+  }
+  .overflow {
+    display: none;
+  }
 }

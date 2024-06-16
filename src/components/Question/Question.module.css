@@ -1,11 +1,14 @@
 .question {
-  grid-gap: 1em;
   text-align: center;
   display: none;
+  padding: 1em 0;
 }
 
 .question.active {
   display: grid;
+}
+
+.question:not(.allShown).active {
   animation: show 1s;
 }
 
@@ -28,16 +31,12 @@
 .questionTitle {
   border: 1px solid var(--button-color);
   border-radius: 0.75em;
-  padding: 2em;
+  padding: 2em 1em;
   margin: 1em 0;
 }
 
 .questionShownNumber {
   display: none;
-}
-
-.question.allShown {
-  padding: 2em 0;
 }
 
 .question.allShown:not(:last-child) {
@@ -82,7 +81,7 @@
 }
 
 .blur {
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(var(--blur-size));
   position: absolute;
   width: 100%;
   height: 100%;

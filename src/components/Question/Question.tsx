@@ -14,8 +14,8 @@ type QuestionProps = {
 
 const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProps) => {
 	const { activeQuestionId, isAnswersShown } = useContext(QuizContext);
-
-	const applyQuestionClasses = () => {
+	// TODO: sort answers here, remove sending request from GameContext
+	const questionClasses = () => {
 		if (activeQuestionId === id && !isAnswersShown) {
 			return styles.active;
 		}
@@ -55,7 +55,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 	const answerClasses = isAnswersShown ? showAnswers(selectedAnswer) : {};
 	//  TODO: add popup
 	return (
-		<div className={`${styles.question} ${applyQuestionClasses()}`}>
+		<div className={`${styles.question} ${questionClasses()}`}>
 			<div className={styles.questionNumber}>{id+1}</div>
 			<h2 className={styles.questionTitle}>
 				<span className={styles.questionShownNumber}>{id+1}</span>

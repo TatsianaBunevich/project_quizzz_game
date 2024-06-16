@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './App.module.css';
-import Blob from './components/Blob/Blob';
+import Blobs from './components/Blobs/Blobs';
 import Toggle from './components/Toggle/Toggle';
 import { GameContextProvider } from './context/GameContext';
 import { QuizContextProvider } from './context/QuizContext';
@@ -26,11 +26,10 @@ const App = () => {
 		const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
 		setTheme(newTheme);
 	}
-	// TODO: animate blobs
+
 	return (
 		<div className={styles.app} data-theme={theme}>
-			<Blob theme={theme} play={isPlaying} position='top' width={isPlaying ? 162 : 194} height={isPlaying ? 187 : 197} />
-			<Blob theme={theme} play={isPlaying} position='bottom' width={isPlaying ? 65 : 148} height={isPlaying ? 62 : 118} />
+			<Blobs play={isPlaying} />
 			<div className={`${styles.container} ${isPlaying ? '' : styles.start}`}>
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />

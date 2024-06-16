@@ -6,18 +6,15 @@
   color: var(--color);
   background-color: var(--background-color);
   position: relative;
+  overflow: hidden;
 }
 
 .container {
-  --gap: 2.5em;
-
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   place-items: stretch;
-  margin: var(--gap) auto;
-  gap: var(--gap);
+  margin: 2.5em auto;
   padding: 0 1.25em;
   max-width: 400px;
   width: 100%;
@@ -25,6 +22,10 @@
 
 .start {
   justify-content: center;
+  backdrop-filter: blur(var(--blur-size));
+  z-index: 1;
+  max-width: 100%;
+  margin: 0;
 }
 
 @media (min-width: 992px) {
