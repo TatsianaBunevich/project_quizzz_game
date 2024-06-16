@@ -106,6 +106,7 @@
   width: 18em;
   height: 18em;
   background: var(--button-bg-color);
+  z-index: 2;
 }
 
 @keyframes blob-changes {

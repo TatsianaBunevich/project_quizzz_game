@@ -23,7 +23,7 @@ const Quiz = () => {
 	return (
 		<>
 			{!isAnswersShown && <div className={styles.quizProgress} ref={progress}></div>}
-			<div className={styles.quiz}>
+			<div className={`${styles.quiz} ${isAnswersShown ? styles.allShown : ''}`}>
 				{sortedQuestions.map((q, index) => {
 					return <Question
 						key={index}

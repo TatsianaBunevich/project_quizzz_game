@@ -132,9 +132,17 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 				return null;
 		}
 	}
+
+	const footerClasses = () => {
+		const startClass = !play ? [styles.start, styles.footerCentered].join(' ') : '';
+		const quizClass = page === 'quiz' ? styles.quiz : '';
+		const allShownClass = isAnswersShown ? [styles.allShown, styles.footerCentered].join(' ') : '';
+
+		return `${startClass} ${quizClass} ${allShownClass}`;
+	}
 	// TODO: change arrow icons
 	return (
-		<footer className={`${styles.footer} ${!play || isAnswersShown ? styles.footerCentered : ''} ${!play ? styles.start : ''} ${page === 'quiz' ? styles.quiz : ''}`}>
+		<footer className={`${styles.footer} ${footerClasses()}`}>
 			{renderSubmitElement()}
 		</footer>
 	);

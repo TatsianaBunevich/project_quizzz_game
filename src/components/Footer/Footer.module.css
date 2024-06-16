@@ -5,7 +5,7 @@
   justify-content: center;
   gap: 1em;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .submitButton {
@@ -26,12 +26,17 @@
   font-size: 1.5em;
 }
 
-.footerCentered button {
+.footerCentered .submitButton {
   flex: 0 0 auto;
 }
 
 .quiz .stopButton {
   min-width: 100%;
+}
+
+.allShown .submitButton {
+  position: fixed;
+  bottom: 2.5em;
 }
 
 .arrow {

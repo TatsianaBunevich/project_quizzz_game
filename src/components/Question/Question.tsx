@@ -13,7 +13,7 @@ type QuestionProps = {
 
 const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProps) => {
 	const { activeQuestionId, isAnswersShown } = useContext(QuizContext);
-	// TODO: sort answers here, remove sending request from GameContext
+
 	const questionClasses = () => {
 		if (activeQuestionId === id && !isAnswersShown) {
 			return styles.active;

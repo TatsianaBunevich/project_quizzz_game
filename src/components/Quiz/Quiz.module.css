@@ -3,6 +3,25 @@
   flex-direction: column;
 }
 
+.allShown {
+  margin-bottom: 5em;
+}
+
+.allShown::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 10em;
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--background-color) 30%
+  );
+  z-index: 1;
+}
+
 .quizProgress {
   --progress-size: 0.3em;
 

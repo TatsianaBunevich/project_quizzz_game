@@ -91,6 +91,7 @@
   bottom: 0;
   display: grid;
   align-content: center;
+  border-radius: 1em;
   visibility: hidden;
   z-index: 1;
 }
