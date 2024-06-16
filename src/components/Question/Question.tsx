@@ -1,6 +1,5 @@
 import styles from './Question.module.css';
-import { SelectedAnswer, Answer } from '../../types';
-import { sortedQuestionsType } from '../../types';
+import { sortedQuestionsType, SelectedAnswer, Answer } from '../../types';
 import { useContext } from 'react';
 import { QuizContext } from '../../context/QuizContext';
 import Button from '../Button/Button';

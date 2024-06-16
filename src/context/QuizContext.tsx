@@ -4,6 +4,7 @@ import { sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../t
 
 type QuizContextType = {
     sortedQuestions: sortedQuestionsType[];
+	updateSortedQuestions: () => void;
 	activeQuestionId: number;
 	setActiveQuestionId: (activeQuestionId: number) => void;
     selectedAnswers: SelectedAnswer[];
@@ -21,6 +22,7 @@ type QuizContextType = {
 
 export const QuizContext = createContext<QuizContextType>({
 	sortedQuestions: [],
+	updateSortedQuestions: () => {},
 	activeQuestionId: 0,
 	setActiveQuestionId: () => {},
 	selectedAnswers: [],
@@ -46,9 +48,10 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	const [roundScore, setRoundScore] = useState(0);
 	const [roundStatus, setRoundStatus] = useState(Status.NORMAL);
 	const [scores, setScores] = useState<Score[]>([]);
+	// TODO: set timer when start quiz (3...2...1...GO!)
 
 	useEffect(() => {
-		const sortedQuestions = questions.map(q => ({
+		const mappedQuestions = questions.map(q => ({
 			question: q.question,
 			answers: [
 				{
@@ -59,11 +62,16 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 					answer: a,
 					isCorrect: false
 				}))
-			].sort(() => Math.random() - 0.5)
+			]
 		}));
 
-		setSortedQuestions(sortedQuestions);
+		setSortedQuestions(sortAnswers(mappedQuestions));
+
 	}, [questions]);
+
+	const updateSortedQuestions = () => {
+		setSortedQuestions(sortAnswers(sortedQuestions));
+	};
 
 	const handleSelectAnswer = (question: string, a: Answer) => {
 		setSelectedAnswers(prev => {
@@ -146,6 +154,7 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 		<QuizContext.Provider value={
 			{
 				sortedQuestions,
+				updateSortedQuestions,
 				activeQuestionId,
 				setActiveQuestionId,
 				selectedAnswers,
@@ -166,3 +175,9 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	)
 }
 
+const sortAnswers = (questions: sortedQuestionsType[]) => {
+	return structuredClone(questions).map(item => ({
+		...item,
+		answers: item.answers.sort(() => Math.random() - 0.5)
+	}));
+}

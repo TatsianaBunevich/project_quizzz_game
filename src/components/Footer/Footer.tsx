@@ -16,6 +16,7 @@ type FooterProps = {
 const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
+		updateSortedQuestions,
 		setIsAnswersShown,
 		isAnswersShown,
 		sortedQuestions,
@@ -58,7 +59,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 
 	const handleNewTry = (isNewTry: boolean) => {
 		clearQuizState();
-		isNewTry && setIsUpdateQuestions(true);
+		isNewTry && updateSortedQuestions();
 		setPage(isNewTry ? 'quiz' : 'settings');
 	}
 
@@ -80,6 +81,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 
 	const renderQuizButtons = () => {
 		if (isAnswersShown) {
+			// TODO: show Back button always at the bottom
 			return <Button className={styles.submitButton} onClick={handleBackToResult}>Back</Button>
 		}
 
