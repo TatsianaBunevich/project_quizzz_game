@@ -64,7 +64,7 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 
 		if (isUpdateQuestions) updateQuestions();
 	}, [isUpdateQuestions, createQuestionsUrl]);
-
+	// TODO: add skeleton
 	const fetchWithRetry = async (url: string, retries = 3, backoff = 300) => {
 		for (let i = 0; i < retries; i++) {
 			try {

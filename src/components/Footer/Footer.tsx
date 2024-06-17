@@ -17,6 +17,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
 		updateSortedQuestions,
+		setIsCountdown,
 		setIsModalShown,
 		setIsAnswersShown,
 		isAnswersShown,
@@ -36,6 +37,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	const handleStartQuiz = () => {
 		setIsUpdateQuestions(true);
 		setPage('quiz');
+		setIsCountdown(true);
 	}
 
 	const handleEndQuiz = () => {
@@ -59,15 +61,21 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 		setPage('result');
 	}
 
-	const handleNewTry = (isNewTry: boolean) => {
+	const handleNewTry = () => {
 		clearQuizState();
-		isNewTry && updateSortedQuestions();
-		setPage(isNewTry ? 'quiz' : 'settings');
+		updateSortedQuestions();
+		setIsCountdown(true);
+		setPage('quiz');
+	}
+
+	const handleOpenSettings = () => {
+		clearQuizState();
+		setPage('settings');
 	}
 
 	const handlePrevButton = () => {
 		if (activeQuestionId === 0) {
-			handleNewTry(false);
+			handleOpenSettings();
 		} else {
 			setActiveQuestionId(activeQuestionId - 1);
 		}
@@ -122,8 +130,8 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 					<>
 						<SubmitButton className={styles.footerButton} onClick={handleShowAnswers}>Answers</SubmitButton>
 						<SubmitButton className={styles.footerButton} onClick={() => setPage('scoreboard')}>Scores</SubmitButton>
-						<SubmitButton className={styles.footerButton} onClick={() => handleNewTry(true)}>Try again</SubmitButton>
-						<SubmitButton className={styles.footerButton} onClick={() => handleNewTry(false)}>Settings</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={handleNewTry}>Try again</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={handleOpenSettings}>Settings</SubmitButton>
 					</>
 				);
 			case 'scoreboard':

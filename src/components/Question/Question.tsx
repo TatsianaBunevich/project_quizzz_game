@@ -52,7 +52,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 	};
 
 	const answerClasses = isAnswersShown ? showAnswers(selectedAnswer) : {};
-	//  TODO: add popup
+	// TODO: add number of questions?
 	return (
 		<div className={`${styles.question} ${questionClasses()}`}>
 			<div className={styles.questionNumber}>{id+1}</div>

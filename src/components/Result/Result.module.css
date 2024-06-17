@@ -1,7 +1,7 @@
 .result {
   text-align: center;
 }
-
+/* TODO:  --size: vmin? */
 .circularProgress {
   --size: 250px;
   --half-size: calc(var(--size) / 2);

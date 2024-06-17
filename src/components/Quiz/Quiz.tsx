@@ -2,6 +2,7 @@ import Question from '../Question/Question';
 import styles from './Quiz.module.css';
 import { useContext, useRef, useEffect } from 'react';
 import { QuizContext } from '../../context/QuizContext';
+import Countdown from '../Countdown/Countdown';
 import Modal from '../Modal/Modal';
 import SubmitButton from '../SubmitButton/SubmitButton';
 
@@ -13,6 +14,8 @@ const Quiz = ({ setPage }: QuizProps) => {
 	const {
 		sortedQuestions,
 		activeQuestionId,
+		isCountdown,
+		setIsCountdown,
 		selectedAnswers,
 		handleSelectAnswer,
 		isModalShown,
@@ -47,26 +50,27 @@ const Quiz = ({ setPage }: QuizProps) => {
 	};
 
 	return (
-		<>
-			{!isAnswersShown && <div className={styles.quizProgress} ref={progress}></div>}
-			<div className={`${styles.quiz} ${isAnswersShown ? styles.allShown : ''}`}>
-				{sortedQuestions.map((q, index) => {
-					return <Question
-						key={index}
-						quizItem={q}
-						id={index}
-						selectedAnswer={selectedAnswers.find(item => item.question === q.question)}
-						onSelectAnswer={handleSelectAnswer}
-					/>
-				})}
-			</div>
-			<Modal isOpen={isModalShown}>
-				<h2>Do you want to</h2>
-				<SubmitButton className={styles.modalButton} onClick={() => setIsModalShown(false)}>Back to the game</SubmitButton>
-				<SubmitButton className={styles.modalButton} onClick={handleResult}>See the result</SubmitButton>
-				<SubmitButton className={styles.modalButton} onClick={handleSettings}>Go to settings</SubmitButton>
-			</Modal>
-		</>
+		isCountdown ? <Countdown setIsCountdown={setIsCountdown} /> :
+			(<>
+				{!isAnswersShown && <div className={styles.quizProgress} ref={progress}></div>}
+				<div className={`${styles.quiz} ${isAnswersShown ? styles.allShown : ''}`}>
+					{sortedQuestions.map((q, index) => {
+						return <Question
+							key={index}
+							quizItem={q}
+							id={index}
+							selectedAnswer={selectedAnswers.find(item => item.question === q.question)}
+							onSelectAnswer={handleSelectAnswer}
+						/>
+					})}
+				</div>
+				<Modal isOpen={isModalShown}>
+					<h2>Do you want to</h2>
+					<SubmitButton className={styles.modalButton} onClick={() => setIsModalShown(false)}>Back to the game</SubmitButton>
+					<SubmitButton className={styles.modalButton} onClick={handleResult}>See the result</SubmitButton>
+					<SubmitButton className={styles.modalButton} onClick={handleSettings}>Go to settings</SubmitButton>
+				</Modal>
+			</>)
 	);
 };
 

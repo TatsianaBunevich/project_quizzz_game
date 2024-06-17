@@ -7,6 +7,8 @@ type QuizContextType = {
 	updateSortedQuestions: () => void;
 	activeQuestionId: number;
 	setActiveQuestionId: (activeQuestionId: number) => void;
+	isCountdown: boolean;
+	setIsCountdown: (isCountdown: boolean) => void;
     selectedAnswers: SelectedAnswer[];
 	setIsModalShown: (isModalShown: boolean) => void;
 	isModalShown: boolean;
@@ -27,6 +29,8 @@ export const QuizContext = createContext<QuizContextType>({
 	updateSortedQuestions: () => {},
 	activeQuestionId: 0,
 	setActiveQuestionId: () => {},
+	isCountdown: false,
+	setIsCountdown: () => {},
 	selectedAnswers: [],
 	setIsModalShown: () => {},
 	isModalShown: false,
@@ -46,6 +50,7 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	const { questions } = useContext(GameContext);
 	const [sortedQuestions, setSortedQuestions] = useState<sortedQuestionsType[]>([]);
 	const [activeQuestionId, setActiveQuestionId] = useState(0);
+	const [isCountdown, setIsCountdown] = useState(false);
 	const [isAnswersShown, setIsAnswersShown] = useState(false);
 	const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
 	const [isModalShown, setIsModalShown] = useState(false);
@@ -53,7 +58,6 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	const [roundScore, setRoundScore] = useState(0);
 	const [roundStatus, setRoundStatus] = useState(Status.NORMAL);
 	const [scores, setScores] = useState<Score[]>([]);
-	// TODO: set timer when start quiz (3...2...1...GO!)
 
 	useEffect(() => {
 		const mappedQuestions = questions.map(q => ({
@@ -162,6 +166,8 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 				updateSortedQuestions,
 				activeQuestionId,
 				setActiveQuestionId,
+				isCountdown,
+				setIsCountdown,
 				selectedAnswers,
 				handleSelectAnswer,
 				setIsModalShown,

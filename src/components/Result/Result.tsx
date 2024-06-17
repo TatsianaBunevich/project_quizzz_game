@@ -8,7 +8,7 @@ const Result = () => {
 	const progress = useRef<HTMLDivElement>(null);
 	const [result, setResult] = useState(true);
 	const statusClass = roundStatus === Status.GOOD ? styles.good : roundStatus === Status.NORMAL ? styles.normal : styles.bad;
-
+	// TODO: check gap here and on scoreboard
 	useEffect(() => {
 		if (progress.current) {
 			progress.current.style.setProperty("--score", `${roundScore}`);
@@ -18,7 +18,7 @@ const Result = () => {
 	const switchResult = () => {
 		setResult(!result);
 	}
-
+	// TODO: set animation on switchResult?
 	return (
 		<div className={`${styles.result}`} ref={progress}>
 			<svg className={`${styles.circularProgress}`} onClick={switchResult}>
