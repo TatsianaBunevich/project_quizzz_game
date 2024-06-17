@@ -1,6 +1,6 @@
 .submitButton {
   --border-width: 3px;
-  padding: 1.5em 2.25em;
+  padding: 1.5em;
   color: var(--background-color);
   background-color: var(--button-color);
   font-weight: 600;

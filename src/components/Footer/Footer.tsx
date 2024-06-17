@@ -5,6 +5,8 @@ import SubmitButton from '../SubmitButton/SubmitButton';
 import styles from './Footer.module.css';
 import { Page } from '../../types';
 import { defaultSettings } from '../../constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 type FooterProps = {
 	play: boolean;
@@ -17,6 +19,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
 		updateSortedQuestions,
+		isCountdown,
 		setIsCountdown,
 		setIsModalShown,
 		setIsAnswersShown,
@@ -96,19 +99,19 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	const renderQuizButtons = () => {
 		if (isAnswersShown) {
 			return <SubmitButton className={styles.footerButton} onClick={handleBackToResult}>Back</SubmitButton>
+		} else if (!isCountdown) {
+			return (
+				<>
+					<SubmitButton className={styles.footerButton} onClick={handlePrevButton}>
+						{activeQuestionId === 0 ? 'Back' : <FontAwesomeIcon icon={faChevronLeft} />}
+					</SubmitButton>
+					<SubmitButton className={styles.footerButton} onClick={handleNextButton}>
+						{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <FontAwesomeIcon icon={faChevronRight} />}
+					</SubmitButton>
+					<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={openModal}>Stop</SubmitButton>
+				</>
+			)
 		}
-
-		return (
-			<>
-				<SubmitButton className={styles.footerButton} onClick={handlePrevButton}>
-					{activeQuestionId === 0 ? 'Back' : <span className={`${styles.arrow} ${styles.back}`}></span>}
-				</SubmitButton>
-				<SubmitButton className={styles.footerButton} onClick={handleNextButton}>
-					{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <span className={`${styles.arrow} ${styles.next}`}></span>}
-				</SubmitButton>
-				<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={openModal}>Stop</SubmitButton>
-			</>
-		)
 	}
 
 	const renderSubmitElement = () => {
@@ -153,7 +156,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 
 		return `${startClass} ${quizClass} ${allShownClass}`;
 	}
-	// TODO: change arrow icons
+
 	return (
 		<footer className={`${styles.footer} ${footerClasses()}`}>
 			{renderSubmitElement()}

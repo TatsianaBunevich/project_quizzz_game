@@ -69,7 +69,6 @@
 
 .answers .answer {
   display: inline-grid;
-  grid-template-columns: min-content 1fr;
   align-items: center;
   padding: 1.5em 1em;
   counter-increment: count;
@@ -78,6 +77,24 @@
 
 .answers .answer::before {
   content: counter(count, upper-alpha) ":";
+}
+
+.answers .boolean {
+  font-size: 1.5em;
+  margin: auto;
+  filter: brightness(80%);
+}
+
+.answers .boolean.true {
+  color: var(--good-color);
+}
+
+.answers .boolean.false {
+  color: var(--bad-color);
+}
+
+.allShown .answers .boolean {
+  color: inherit;
 }
 
 .blur {
@@ -131,5 +148,11 @@
 @media (max-width: calc(400px + 1.25em * 2 - 1px)) {
   .question.allShown .questionTitle {
     text-align: left;
+  }
+}
+
+@media (min-width: 992px) {
+  .answers .answer {
+    grid-template-columns: min-content 1fr;
   }
 }

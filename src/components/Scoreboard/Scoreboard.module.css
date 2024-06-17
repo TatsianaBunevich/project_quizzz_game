@@ -45,57 +45,26 @@
   cursor: pointer;
   position: relative;
 }
-/* TODO: change arrow icons */
-.arrow {
-  --arrow-size: 0.25em;
-  --wrapper-size: calc(var(--arrow-size) * 2.5);
-  --border-width: 2px;
-  display: block;
-  height: var(--wrapper-size);
-  width: var(--wrapper-size);
+
+.sortIcon {
   position: absolute;
-  right: var(--wrapper-size);
+  right: 1em;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.arrow::after {
-  --arrow-shift: calc(var(--arrow-size) / 4);
-  content: "";
-  border-bottom-style: solid;
-  border-bottom-width: var(--border-width);
-  border-right-style: solid;
-  border-right-width: var(--border-width);
-  height: var(--arrow-size);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: var(--arrow-size);
-  border-color: transparent;
-}
-
-.arrow.up::after {
-  border-color: var(--color);
-  transform: translate(-50%, calc(calc(var(--arrow-shift) * 1) - 50%))
-    rotate(225deg);
-}
-
-.arrow.down::after {
-  border-color: var(--color);
-  transform: translate(-50%, calc(calc(var(--arrow-shift) * -1) - 50%))
-    rotate(45deg);
 }
 
 .tableHeader > div:first-child:before {
   content: "#";
 }
 
+@media (max-width: 991px) {
+  .sortIcon {
+    font-size: 0.7em;
+  }
+}
+
 @media (min-width: 992px) {
   .tableHeader > div:first-child:before {
     content: "Round";
-  }
-  .arrow {
-    --arrow-size: 0.5em;
-    --border-width: 3px;
   }
 }

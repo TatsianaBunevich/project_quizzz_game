@@ -3,6 +3,8 @@ import { sortedQuestionsType, SelectedAnswer, Answer } from '../../types';
 import { useContext } from 'react';
 import { QuizContext } from '../../context/QuizContext';
 import Button from '../Button/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 type QuestionProps = {
     quizItem: sortedQuestionsType;
@@ -28,6 +30,17 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 		return decodedString;
 	};
 
+	const displayAnswer = (text: string) => {
+		switch (text) {
+			case 'True':
+				return <FontAwesomeIcon className={`${styles.boolean} ${styles.true}`} icon={faCheck} />;
+			case 'False':
+				return <FontAwesomeIcon className={`${styles.boolean} ${styles.false}`} icon={faXmark} />;
+			default:
+				return decodeHtmlEntities(text);
+		}
+	}
+
 	const selectAnswers = (selectedAnswer: SelectedAnswer | undefined, answer: string) => {
 		return selectedAnswer?.answer === answer ? styles.selected : '';
 	};
@@ -52,7 +65,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 	};
 
 	const answerClasses = isAnswersShown ? showAnswers(selectedAnswer) : {};
-	// TODO: add number of questions?
+
 	return (
 		<div className={`${styles.question} ${questionClasses()}`}>
 			<div className={styles.questionNumber}>{id+1}</div>
@@ -71,7 +84,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 						className={`${styles.answer} ${selectAnswers(selectedAnswer, a.answer)} ${answerClasses[a.answer] || ''}`}
 						onClick={() => onSelectAnswer(quizItem.question, a)}
 					>
-						{decodeHtmlEntities(a.answer)}
+						{displayAnswer(a.answer)}
 					</Button>
 				))}
 			</div>

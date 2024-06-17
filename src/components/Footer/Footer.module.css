@@ -30,43 +30,10 @@
   bottom: 2.5em;
 }
 
-.arrow {
-  --arrow-size: 0.75em;
-  --wrapper-size: calc(var(--arrow-size) * 2);
-  display: block;
-  height: var(--wrapper-size);
-  width: var(--wrapper-size);
-  position: relative;
-  margin: 0 auto;
-}
-
-.arrow::after {
-  --arrow-shift: calc(var(--arrow-size) / 4);
-  content: "";
-  border-bottom-style: solid;
-  border-bottom-width: var(--border-width);
-  border-right-style: solid;
-  border-right-width: var(--border-width);
-  height: var(--arrow-size);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: var(--arrow-size);
-  border-color: var(--background-color);
-  transition: border-color 0.3s ease-in-out;
-}
-
-.footerButton:hover .arrow::after {
-  border-color: var(--button-color);
-}
-
-.arrow.next::after {
-  transform: translate(calc(calc(var(--arrow-shift) * -1) - 50%), -50%)
-    rotate(315deg);
-}
-
-.arrow.back::after {
-  transform: translate(calc(var(--arrow-shift) - 50%), -50%) rotate(135deg);
+@media (max-width: 991px) {
+  .quiz .footerButton {
+    min-width: calc(50% - var(--gap));
+  }
 }
 
 @media (min-width: 992px) {

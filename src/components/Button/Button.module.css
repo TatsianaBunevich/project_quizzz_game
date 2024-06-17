@@ -7,7 +7,7 @@
   padding: 0.5em 1.25em;
   color: var(--button-color);
   background-color: transparent;
-  transition: background-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 .button:enabled {

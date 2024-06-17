@@ -3,6 +3,8 @@ import { QuizContext } from '../../context/QuizContext';
 import styles from './Scoreboard.module.css';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { Score } from '../../types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDownShortWide, faArrowDownWideShort } from '@fortawesome/free-solid-svg-icons';
 
 const Scoreboard = () => {
 	const { scores } = useContext(QuizContext);
@@ -31,11 +33,11 @@ const Scoreboard = () => {
 		<div className={styles.table}>
 			<div className={`${styles.tableRow} ${styles.tableHeader}`}>
 				<div onClick={() => updateSortConfig('index')}>
-					<span className={`${styles.arrow} ${sortConfig.key === 'index' ? (sortConfig.ascending ? styles.down : styles.up) : ''}`}></span>
+					{sortConfig.key === 'index' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
 				</div>
 				<div onClick={() => updateSortConfig('total')}>
 					Score
-					<span className={`${styles.arrow} ${sortConfig.key === 'total' ? (sortConfig.ascending ? styles.up : styles.down) : ''}`}></span>
+					{sortConfig.key === 'total' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
 				</div>
 			</div>
 			{sortedScore.map((score, index) => (

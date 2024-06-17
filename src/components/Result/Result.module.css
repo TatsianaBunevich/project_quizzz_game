@@ -1,5 +1,6 @@
 .result {
   text-align: center;
+  margin: 2em auto;
 }
 /* TODO:  --size: vmin? */
 .circularProgress {
@@ -53,6 +54,15 @@
   font-size: 4em;
   font-weight: 700;
   fill: var(--color);
+}
+
+.text {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.text.show {
+  opacity: 1;
 }
 
 @property --progress {
