@@ -27,7 +27,6 @@ const Result = () => {
 				<text x="50%" y="50%" textAnchor="middle" className={`${styles.circularProgressValue}`} dy=".3em">
 					<tspan x="50%" className={`${styles.text} ${result ? styles.show : ''}`}>{`${roundScore}%`}</tspan>
 					<tspan x="50%" className={`${styles.text} ${!result ? styles.show : ''}`}>{`${calculatedScore}/${sortedQuestions.length}`}</tspan>
-					{/* {show ? (result ? `${roundScore}%` : `${calculatedScore}/${sortedQuestions.length}`) : null} */}
 				</text>
 			</svg>
 		</div>

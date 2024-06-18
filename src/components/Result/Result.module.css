@@ -2,7 +2,7 @@
   text-align: center;
   margin: 2em auto;
 }
-/* TODO:  --size: vmin? */
+
 .circularProgress {
   --size: 250px;
   --half-size: calc(var(--size) / 2);

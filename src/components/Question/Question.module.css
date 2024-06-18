@@ -73,6 +73,7 @@
   padding: 1.5em 1em;
   counter-increment: count;
   position: relative;
+  gap: 0.5em;
 }
 
 .answers .answer::before {

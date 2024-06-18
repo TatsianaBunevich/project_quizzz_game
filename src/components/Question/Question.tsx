@@ -1,8 +1,8 @@
-import styles from './Question.module.css';
-import { sortedQuestionsType, SelectedAnswer, Answer } from '../../types';
 import { useContext } from 'react';
 import { QuizContext } from '../../context/QuizContext';
 import Button from '../Button/Button';
+import { sortedQuestionsType, SelectedAnswer, Answer } from '../../types';
+import styles from './Question.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 

@@ -1,6 +1,6 @@
 import { SettingsType, DifficultyType, TypeItem } from './types';
 
-export const defaultSettings: SettingsType = {
+export const DEFAULTSETTINGS: SettingsType = {
 	category: [
 		{
 			id: 'any',

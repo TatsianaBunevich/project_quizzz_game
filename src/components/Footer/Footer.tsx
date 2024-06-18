@@ -2,9 +2,10 @@ import { useContext } from 'react';
 import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
 import SubmitButton from '../SubmitButton/SubmitButton';
+import Skeleton from '../Skeleton/Skeleton';
 import styles from './Footer.module.css';
 import { Page } from '../../types';
-import { defaultSettings } from '../../constants';
+import { DEFAULTSETTINGS } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,7 +17,7 @@ type FooterProps = {
 }
 
 const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
-	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
+	const { isLoading, setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
 		updateSortedQuestions,
 		isCountdown,
@@ -46,7 +47,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 	const handleEndQuiz = () => {
 		setPlay(false);
 		clearScores();
-		setSettings(structuredClone(defaultSettings));
+		setSettings(structuredClone(DEFAULTSETTINGS));
 	}
 
 	const handleCheckAnswers = () => {
@@ -100,17 +101,27 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 		if (isAnswersShown) {
 			return <SubmitButton className={styles.footerButton} onClick={handleBackToResult}>Back</SubmitButton>
 		} else if (!isCountdown) {
-			return (
-				<>
-					<SubmitButton className={styles.footerButton} onClick={handlePrevButton}>
-						{activeQuestionId === 0 ? 'Back' : <FontAwesomeIcon icon={faChevronLeft} />}
-					</SubmitButton>
-					<SubmitButton className={styles.footerButton} onClick={handleNextButton}>
-						{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <FontAwesomeIcon icon={faChevronRight} />}
-					</SubmitButton>
-					<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={openModal}>Stop</SubmitButton>
-				</>
-			)
+			if (isLoading) {
+				return (
+					<>
+						<Skeleton className={styles.footerButton} width="12em" height="4em" />
+						<Skeleton className={styles.footerButton} width="12em" height="4em" />
+						<Skeleton className={`${styles.footerButton} ${styles.stopButton}`} width="12em" height="4em" />
+					</>
+				)
+			} else if (!isLoading) {
+				return (
+					<>
+						<SubmitButton className={styles.footerButton} onClick={handlePrevButton}>
+							{activeQuestionId === 0 ? 'Back' : <FontAwesomeIcon icon={faChevronLeft} />}
+						</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={handleNextButton}>
+							{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <FontAwesomeIcon icon={faChevronRight} />}
+						</SubmitButton>
+						<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={openModal}>Stop</SubmitButton>
+					</>
+				)
+			}
 		}
 	}
 
@@ -120,6 +131,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 		}
 		switch(page) {
 			case 'settings':
+				if (isLoading) return null;
 				return (
 					<>
 						<SubmitButton className={styles.footerButton} onClick={handleStartQuiz}>Let's go</SubmitButton>

@@ -1,16 +1,19 @@
-import Question from '../Question/Question';
-import styles from './Quiz.module.css';
 import { useContext, useRef, useEffect } from 'react';
+import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
 import Countdown from '../Countdown/Countdown';
+import QuestionSkeleton from '../QuestionSkeleton/QuestionSkeleton';
+import Question from '../Question/Question';
 import Modal from '../Modal/Modal';
 import SubmitButton from '../SubmitButton/SubmitButton';
+import styles from './Quiz.module.css';
 
 type QuizProps = {
 	setPage: (page: string) => void;
 };
 
 const Quiz = ({ setPage }: QuizProps) => {
+	const { isLoading } = useContext(GameContext);
 	const {
 		sortedQuestions,
 		activeQuestionId,
@@ -49,28 +52,37 @@ const Quiz = ({ setPage }: QuizProps) => {
 		setPage('settings');
 	};
 
+	if (isCountdown) {
+		return <Countdown setIsCountdown={setIsCountdown} />;
+	} else if (isLoading) {
+		return (
+			<div className={styles.quiz}>
+				<QuestionSkeleton />
+			</div>
+		)
+	}
+
 	return (
-		isCountdown ? <Countdown setIsCountdown={setIsCountdown} /> :
-			(<>
-				{!isAnswersShown && <div className={styles.quizProgress} ref={progress}></div>}
-				<div className={`${styles.quiz} ${isAnswersShown ? styles.allShown : ''}`}>
-					{sortedQuestions.map((q, index) => {
-						return <Question
-							key={index}
-							quizItem={q}
-							id={index}
-							selectedAnswer={selectedAnswers.find(item => item.question === q.question)}
-							onSelectAnswer={handleSelectAnswer}
-						/>
-					})}
-				</div>
-				<Modal isOpen={isModalShown}>
-					<h2>Do you want to</h2>
-					<SubmitButton className={styles.modalButton} onClick={() => setIsModalShown(false)}>Back to the game</SubmitButton>
-					<SubmitButton className={styles.modalButton} onClick={handleResult}>See the result</SubmitButton>
-					<SubmitButton className={styles.modalButton} onClick={handleSettings}>Go to settings</SubmitButton>
-				</Modal>
-			</>)
+		<>
+			{!isAnswersShown && <div className={styles.quizProgress} ref={progress}></div>}
+			<div className={`${styles.quiz} ${isAnswersShown ? styles.allShown : ''}`}>
+				{sortedQuestions.map((q, index) => {
+					return <Question
+						key={index}
+						quizItem={q}
+						id={index}
+						selectedAnswer={selectedAnswers.find(item => item.question === q.question)}
+						onSelectAnswer={handleSelectAnswer}
+					/>
+				})}
+			</div>
+			<Modal isOpen={isModalShown}>
+				<h2>Do you want to</h2>
+				<SubmitButton className={styles.modalButton} onClick={() => setIsModalShown(false)}>Back to the game</SubmitButton>
+				<SubmitButton className={styles.modalButton} onClick={handleResult}>See the result</SubmitButton>
+				<SubmitButton className={styles.modalButton} onClick={handleSettings}>Go to settings</SubmitButton>
+			</Modal>
+		</>
 	);
 };
 

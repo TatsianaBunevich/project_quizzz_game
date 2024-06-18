@@ -1,8 +1,9 @@
 import { useState, useEffect, createContext, useCallback } from 'react';
 import { SettingsType, SettingType, IdType, Question } from '../types';
-import { defaultSettings } from '../constants';
+import { DEFAULTSETTINGS } from '../constants';
 
 type GameContextType = {
+	isLoading: boolean;
 	settings: SettingsType;
 	handleSelectOption: (optionId: IdType | number, setting: keyof SettingsType) => void;
 	setSettings: (settings: SettingsType) => void;
@@ -11,7 +12,8 @@ type GameContextType = {
 }
 
 export const GameContext = createContext<GameContextType>({
-	settings: structuredClone(defaultSettings),
+	isLoading: false,
+	settings: structuredClone(DEFAULTSETTINGS),
 	handleSelectOption: () => {},
 	setSettings: () => {},
 	setIsUpdateQuestions: () => {},
@@ -19,7 +21,8 @@ export const GameContext = createContext<GameContextType>({
 });
 
 export const GameContextProvider = ({ play, children }: { play: boolean, children: React.ReactNode }) => {
-	const [settings, setSettings] = useState<SettingsType>(structuredClone(defaultSettings));
+	const [isLoading, setIsLoading] = useState(false);
+	const [settings, setSettings] = useState<SettingsType>(structuredClone(DEFAULTSETTINGS));
 	const [questions, setQuestions] = useState([]);
 	const [isUpdateQuestions, setIsUpdateQuestions] = useState(false);
 
@@ -64,14 +67,16 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 
 		if (isUpdateQuestions) updateQuestions();
 	}, [isUpdateQuestions, createQuestionsUrl]);
-	// TODO: add skeleton
+
 	const fetchWithRetry = async (url: string, retries = 3, backoff = 300) => {
+		setIsLoading(true);
 		for (let i = 0; i < retries; i++) {
 			try {
 				const response = await fetch(url);
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
+
 				return await response.json();
 			} catch (error) {
 				if (i < retries - 1) {
@@ -79,6 +84,8 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 				} else {
 					throw error;
 				}
+			} finally {
+				setIsLoading(false);
 			}
 		}
 	};
@@ -109,6 +116,7 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 	return (
 		<GameContext.Provider value={
 			{
+				isLoading,
 				settings,
 				handleSelectOption,
 				setSettings,

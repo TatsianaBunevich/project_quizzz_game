@@ -1,12 +1,13 @@
 import { useContext, useState, useCallback } from 'react';
 import { GameContext } from '../../context/GameContext';
-import styles from './Settings.module.css';
+import SettingSkeleton from '../SettingSkeleton/SettingSkeleton';
 import Setting from '../Setting/Setting';
 import Button from '../Button/Button';
+import styles from './Settings.module.css';
 import { debounce } from 'lodash';
 
 const Settings = () => {
-	const { settings, handleSelectOption } = useContext(GameContext);
+	const { isLoading, settings, handleSelectOption } = useContext(GameContext);
 	const [categoryClass, setCategoryClass] = useState('');
 	const [rangeValue, setRangeValue] = useState(settings.amount);
 
@@ -20,6 +21,14 @@ const Settings = () => {
 		const value = Number(event.target.value);
 		setRangeValue(value);
 		debounceFn(value);
+	}
+
+	if (isLoading) {
+		return (
+			<div className={styles.settings}>
+				<SettingSkeleton />
+			</div>
+		)
 	}
 
 	return (
