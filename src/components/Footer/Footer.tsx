@@ -17,7 +17,7 @@ type FooterProps = {
 }
 
 const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
-	const { isLoading, setSettings, setIsUpdateQuestions } = useContext(GameContext);
+	const { isLoading, settings, setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
 		updateSortedQuestions,
 		isCountdown,
@@ -95,6 +95,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 
 	const openModal = () => {
 		setIsModalShown(true);
+		// TODO: stop roundTimeCounter
 	}
 
 	const renderQuizButtons = () => {
@@ -112,7 +113,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 			} else if (!isLoading) {
 				return (
 					<>
-						<SubmitButton className={styles.footerButton} onClick={handlePrevButton}>
+						<SubmitButton className={styles.footerButton} onClick={handlePrevButton} disabled={settings.timer > 0 && activeQuestionId > 0}>
 							{activeQuestionId === 0 ? 'Back' : <FontAwesomeIcon icon={faChevronLeft} />}
 						</SubmitButton>
 						<SubmitButton className={styles.footerButton} onClick={handleNextButton}>

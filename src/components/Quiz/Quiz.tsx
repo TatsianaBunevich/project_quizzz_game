@@ -24,6 +24,7 @@ const Quiz = ({ setPage }: QuizProps) => {
 		isModalShown,
 		setIsModalShown,
 		isAnswersShown,
+		clearQuizState,
 		calculateScore
 	} = useContext(QuizContext);
 	const progress = useRef<HTMLDivElement>(null);
@@ -49,6 +50,7 @@ const Quiz = ({ setPage }: QuizProps) => {
 
 	const handleSettings = () => {
 		setIsModalShown(false);
+		clearQuizState();
 		setPage('settings');
 	};
 

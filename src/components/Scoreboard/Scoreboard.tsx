@@ -5,6 +5,7 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import { Score } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownShortWide, faArrowDownWideShort } from '@fortawesome/free-solid-svg-icons';
+import { secondsToHms } from '../../helpers';
 
 const Scoreboard = () => {
 	const { scores } = useContext(QuizContext);
@@ -39,6 +40,10 @@ const Scoreboard = () => {
 					Score
 					{sortConfig.key === 'total' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
 				</div>
+				<div onClick={() => updateSortConfig('time')}>
+					Time
+					{sortConfig.key === 'time' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
+				</div>
 			</div>
 			{sortedScore.map((score, index) => (
 				<div key={index} className={styles.tableRow}>
@@ -46,6 +51,7 @@ const Scoreboard = () => {
 					<div>
 						<ProgressBar score={score.total} status={score.status} />
 					</div>
+					<div>{score.time > 0 && secondsToHms(score.time)}</div>
 				</div>
 			))}
 		</div>

@@ -94,8 +94,8 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 		setSettings(prev => {
 			const newPrev = {...prev};
 
-			if (setting === 'amount') {
-				newPrev.amount = optionId as number;
+			if (setting === 'amount' || setting === 'timer') {
+				newPrev[setting] = optionId as number;
 			} else {
 				const settingsArray = newPrev[setting] as SettingType[];
 				const foundItem = settingsArray.find((item: SettingType) => item.id === optionId);
@@ -110,8 +110,6 @@ export const GameContextProvider = ({ play, children }: { play: boolean, childre
 			return newPrev;
 		});
 	};
-
-	// TODO: Add timer
 
 	return (
 		<GameContext.Provider value={

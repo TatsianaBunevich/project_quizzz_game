@@ -47,5 +47,6 @@ export const DEFAULTSETTINGS: SettingsType = {
 			isSelect: false
 		}
 	],
-	amount: 10
+	amount: 10,
+	timer: 0
 }

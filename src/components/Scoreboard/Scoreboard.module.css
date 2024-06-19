@@ -17,18 +17,20 @@
 
 .tableRow {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1.25fr 3fr 2fr;
   align-items: center;
   justify-items: stretch;
   font-weight: 700;
   text-align: center;
-  gap: 2em;
+  gap: 1em;
 }
-
+/* FIXME: is sticky? */
 .tableHeader {
   position: sticky;
   top: -1px;
-  padding: 1em 0;
+  padding: 0 0 1em;
+  margin-top: 1em;
+  border-radius: 1.25em;
   background-color: var(--background-color);
   box-shadow: var(--background-color) 10px 20px 10px;
   z-index: 1;
@@ -41,12 +43,13 @@
   font-size: 1.5em;
   padding: 1em 0;
   background-color: var(--button-bg-color);
-  border-radius: 2em;
+  border-radius: 0.75em;
   cursor: pointer;
   position: relative;
 }
 
 .sortIcon {
+  font-size: 0.5em;
   position: absolute;
   right: 1em;
   top: 50%;
@@ -57,14 +60,11 @@
   content: "#";
 }
 
-@media (max-width: 991px) {
-  .sortIcon {
-    font-size: 0.7em;
-  }
-}
-
 @media (min-width: 992px) {
   .tableHeader > div:first-child:before {
     content: "Round";
+  }
+  .sortIcon {
+    font-size: 1em;
   }
 }

@@ -20,17 +20,18 @@ export enum TypeItem {
 
 export type IdType = string | DifficultyType | TypeItem;
 
-export type SettingType = {
+export interface SettingType {
 	id: IdType;
 	name: string;
 	isSelect: boolean;
-};
+}
 
-export type SettingsType = {
+export interface SettingsType {
 	category: SettingType[];
 	difficulty: SettingType[];
 	type: SettingType[];
 	amount: number;
+	timer: number;
 }
 
 export interface SelectedAnswer {
@@ -57,6 +58,7 @@ export interface Answer {
 export interface sortedQuestionsType {
 	question: string;
 	answers: Answer[];
+	timer: number;
 }
 
 export enum Status {
@@ -69,4 +71,5 @@ export interface Score {
 	index: number;
 	total: number;
 	status: Status;
+	time: number;
 }

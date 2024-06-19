@@ -1,10 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { QuizContext } from '../../context/QuizContext';
 import Button from '../Button/Button';
 import { sortedQuestionsType, SelectedAnswer, Answer } from '../../types';
 import styles from './Question.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { secondsToHms } from '../../helpers';
 
 type QuestionProps = {
     quizItem: sortedQuestionsType;
@@ -14,7 +15,25 @@ type QuestionProps = {
 }
 
 const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProps) => {
-	const { activeQuestionId, isAnswersShown } = useContext(QuizContext);
+	const {
+		activeQuestionId,
+		isAnswersShown,
+		roundTimeCounter,
+		setRoundTimeCounter
+	} = useContext(QuizContext);
+	const [timerCounter, setTimerCounter] = useState(quizItem.timer);
+
+	useEffect(() => {
+		if (quizItem.timer > 0 && activeQuestionId === id && !isAnswersShown) {
+			if (timerCounter === 0) {
+				return;
+			}
+			setTimeout(() => {
+				setTimerCounter(timerCounter - 1);
+				setRoundTimeCounter(roundTimeCounter + 1);
+			}, 1000);
+		}
+	}, [activeQuestionId, id, isAnswersShown, quizItem.timer, roundTimeCounter, setRoundTimeCounter, timerCounter]);
 
 	const questionClasses = () => {
 		if (activeQuestionId === id && !isAnswersShown) {
@@ -68,6 +87,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 
 	return (
 		<div className={`${styles.question} ${questionClasses()}`}>
+			<div className={styles.questionTimer}>{timerCounter > 0 && secondsToHms(timerCounter)}</div>
 			<div className={styles.questionNumber}>{id+1}</div>
 			<h2 className={styles.questionTitle}>
 				<span className={styles.questionShownNumber}>{id+1}</span>

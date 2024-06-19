@@ -80,6 +80,13 @@
   }
 }
 
+.roundTimeCounter {
+  font-family: "Karla", sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+  margin-top: 1em;
+}
+
 @media (min-width: 992px) {
   .circularProgress {
     --size: 350px;

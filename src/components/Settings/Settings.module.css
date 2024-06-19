@@ -77,6 +77,60 @@
   margin-top: 1em;
 }
 
+.slider:disabled {
+  opacity: 0.4;
+}
+
+.slider:disabled + .sliderValue {
+  opacity: 0;
+}
+
+.checkbox {
+  --s: 2.5em;
+  height: calc(var(--s) + var(--s) / 5);
+  width: auto;
+  aspect-ratio: 2.25;
+  border-radius: var(--s);
+  margin: 0 auto 2em;
+  display: grid;
+  cursor: pointer;
+  background-color: var(--bad-color);
+  box-sizing: content-box;
+  overflow: hidden;
+  transition: 0.3s 0.1s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.checkbox:before {
+  content: "";
+  padding: calc(var(--s) / 10);
+  --_g: radial-gradient(
+    circle closest-side at calc(100% - var(--s) / 2) 50%,
+    #000 96%,
+    #0000
+  );
+  background: var(--_g) 0 / var(--_p, var(--s)) 100% no-repeat content-box,
+    var(--_g) var(--_p, 0) / var(--s) 100% no-repeat content-box, #fff;
+  mix-blend-mode: darken;
+  filter: blur(calc(var(--s) / 12)) contrast(11);
+  transition: 0.4s, background-position 0.4s 0.1s,
+    padding
+      cubic-bezier(0, calc(var(--_i, -1) * 200), 1, calc(var(--_i, -1) * 200))
+      0.25s 0.1s;
+}
+
+.checkbox:checked {
+  background-color: var(--good-color);
+}
+
+.checkbox:checked:before {
+  padding: calc(var(--s) / 10 + 0.05px) calc(var(--s) / 10);
+  --_p: 100%;
+  --_i: 1;
+}
+
 @media (min-width: 992px) {
   .category {
     height: auto;

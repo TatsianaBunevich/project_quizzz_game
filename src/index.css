@@ -12,7 +12,7 @@
   --good-color: #91c483;
   --bad-color: #fd9091;
   --progress-color: #dddddd;
-
+  /* TODO: add green and red colors */
   font-family: "Inter", sans-serif;
   line-height: 1;
   font-weight: 400;

@@ -22,6 +22,8 @@ type QuizContextType = {
 	roundStatus: Status;
 	scores: Score[];
 	clearScores: () => void;
+	roundTimeCounter: number;
+	setRoundTimeCounter: (roundTimeCounter: number) => void;
 }
 
 export const QuizContext = createContext<QuizContextType>({
@@ -43,11 +45,13 @@ export const QuizContext = createContext<QuizContextType>({
 	roundScore: 0,
 	roundStatus: Status.NORMAL,
 	scores: [],
-	clearScores: () => {}
+	clearScores: () => {},
+	roundTimeCounter: 0,
+	setRoundTimeCounter: () => {}
 });
 
 export const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
-	const { questions } = useContext(GameContext);
+	const { questions, settings } = useContext(GameContext);
 	const [sortedQuestions, setSortedQuestions] = useState<sortedQuestionsType[]>([]);
 	const [activeQuestionId, setActiveQuestionId] = useState(0);
 	const [isCountdown, setIsCountdown] = useState(false);
@@ -58,7 +62,8 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	const [roundScore, setRoundScore] = useState(0);
 	const [roundStatus, setRoundStatus] = useState(Status.NORMAL);
 	const [scores, setScores] = useState<Score[]>([]);
-
+	const [roundTimeCounter, setRoundTimeCounter] = useState(0);
+	// FIXME: check roundTimeCounter on Result and Scoreboard pages
 	useEffect(() => {
 		const mappedQuestions = questions.map(q => ({
 			question: q.question,
@@ -71,12 +76,13 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 					answer: a,
 					isCorrect: false
 				}))
-			]
+			],
+			timer: settings.timer
 		}));
 
 		setSortedQuestions(sortAnswers(mappedQuestions));
 
-	}, [questions]);
+	}, [questions, settings.timer]);
 
 	const updateSortedQuestions = () => {
 		setSortedQuestions(sortAnswers(sortedQuestions));
@@ -114,6 +120,7 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 		setSelectedAnswers([]);
 		setCalculatedScore(0);
 		setRoundScore(0);
+		setRoundTimeCounter(0);
 	}
 
 	const calculateScore = () => {
@@ -139,17 +146,18 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 		setCalculatedScore(points);
 		setRoundScore(total);
 		setRoundStatus(calculateStatus(percentage));
-		setTotalScore(total, calculateStatus(percentage));
+		setTotalScore(total, calculateStatus(percentage), roundTimeCounter);
 	};
 
-	const setTotalScore = (total: number, status: Status) => {
+	const setTotalScore = (total: number, status: Status, roundTimeCounter: number) => {
 		setScores(prev => {
 			return [
 				...prev,
 				{
 					index: prev.length + 1,
 					total,
-					status
+					status,
+					time: roundTimeCounter
 				}
 			];
 		});
@@ -180,7 +188,9 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 				roundScore,
 				roundStatus,
 				scores,
-				clearScores
+				clearScores,
+				roundTimeCounter,
+				setRoundTimeCounter,
 			}
 		}>
 			{children}

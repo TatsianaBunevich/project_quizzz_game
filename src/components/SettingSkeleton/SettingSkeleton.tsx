@@ -1,6 +1,6 @@
 import Skeleton from '../Skeleton/Skeleton';
 import styles from './SettingSkeleton.module.css';
-
+// TODO: display as buttons
 const SettingSkeleton = () => {
 	return (
 		<div className={styles.setting}>
