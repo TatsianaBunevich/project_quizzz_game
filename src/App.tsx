@@ -26,7 +26,7 @@ const App = () => {
 		const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
 		setTheme(newTheme);
 	}
-	// FIXME: check container width
+
 	return (
 		<div className={styles.app} data-theme={theme}>
 			<Blobs play={isPlaying} />

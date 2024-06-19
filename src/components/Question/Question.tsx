@@ -1,12 +1,11 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { QuizContext } from '../../context/QuizContext';
-import { ControlsContext } from '../../context/ControlsContext';
+import QuestionTimer from '../QuestionTimer/QuestionTimer';
 import Button from '../Button/Button';
 import { sortedQuestionsType, SelectedAnswer, Answer } from '../../types';
 import styles from './Question.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { secondsToHms } from '../../helpers';
 
 type QuestionProps = {
     quizItem: sortedQuestionsType;
@@ -16,46 +15,11 @@ type QuestionProps = {
 }
 
 const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProps) => {
-	const {
-		activeQuestionId,
-		isAnswersShown,
-		roundTimeCounter,
-		setRoundTimeCounter,
-		isModalShown
-	} = useContext(QuizContext);
-	const { handleNextButton } = useContext(ControlsContext);
-	const [timerCounter, setTimerCounter] = useState(quizItem.timer);
-
-	useEffect(() => {
-		if (quizItem.timer > 0 && activeQuestionId === id && !isAnswersShown) {
-			if (timerCounter === 0) {
-				handleNextButton();
-				return;
-			}
-
-			const timer = setTimeout(() => {
-				setTimerCounter(timerCounter => timerCounter - 1);
-				setRoundTimeCounter((counter: number) => counter + 1);
-			}, 1000);
-
-			if (isModalShown) clearTimeout(timer);
-
-			return () => clearTimeout(timer);
-		}
-	}, [
-		activeQuestionId,
-		id,
-		isAnswersShown,
-		quizItem.timer,
-		roundTimeCounter,
-		setRoundTimeCounter,
-		timerCounter,
-		handleNextButton,
-		isModalShown
-	]);
+	const { activeQuestionId, isAnswersShown } = useContext(QuizContext);
+	const isActive = activeQuestionId === id && !isAnswersShown;
 
 	const questionClasses = () => {
-		if (activeQuestionId === id && !isAnswersShown) {
+		if (isActive) {
 			return styles.active;
 		}
 		return isAnswersShown ? [styles.active, styles.allShown].join(' ') : '';
@@ -106,7 +70,7 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 
 	return (
 		<div className={`${styles.question} ${questionClasses()}`}>
-			<div className={styles.questionTimer}>{timerCounter > 0 && secondsToHms(timerCounter)}</div>
+			{quizItem.timer > 0 && isActive && <QuestionTimer timer={quizItem.timer} />}
 			<div className={styles.questionNumber}>{id+1}</div>
 			<h2 className={styles.questionTitle}>
 				<span className={styles.questionShownNumber}>{id+1}</span>

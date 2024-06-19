@@ -16,13 +16,13 @@ const Result = () => {
 		}
 	}, [roundScore]);
 
-	const switchResult = () => {
+	const handleSwitchResult = () => {
 		setResult(!result);
 	}
 
 	return (
 		<div className={styles.result} ref={progress}>
-			<svg className={styles.circularProgress} onClick={switchResult}>
+			<svg className={styles.circularProgress} onClick={handleSwitchResult}>
 				<circle className={styles.background}></circle>
 				<circle className={`${styles.foreground} ${statusClass}`}></circle>
 				<text x="50%" y="50%" textAnchor="middle" className={styles.circularProgressValue} dy=".3em">

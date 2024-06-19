@@ -22,17 +22,6 @@
   }
 }
 
-.questionTimer {
-  position: absolute;
-  top: 1em;
-  right: 0;
-  font-family: "Karla", sans-serif;
-  font-size: 1.5em;
-  font-weight: 700;
-  color: var(--red-color);
-  filter: brightness(80%);
-}
-
 .questionNumber {
   font-family: "Karla", sans-serif;
   font-size: 3em;
@@ -56,7 +45,6 @@
   border-bottom: 1px solid var(--border-color);
 }
 
-.question.allShown .questionTimer,
 .question.allShown .questionNumber {
   display: none;
 }
