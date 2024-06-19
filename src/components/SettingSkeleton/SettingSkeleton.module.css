@@ -17,4 +17,7 @@
 
 .option {
   flex: 1 1 auto;
+  border-radius: 0.75em;
+  border: 1px solid var(--skeleton-color);
+  padding: 0.5em 1.25em;
 }

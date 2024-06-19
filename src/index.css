@@ -37,7 +37,7 @@
   --border-color: #72cce3;
   --button-color: var(--color);
   --blob-color: #fffaa8;
-  --skeleton-color: #e8e8e8;
+  --skeleton-color: #d0d0d0;
 }
 
 [data-theme="dark"] {
@@ -92,7 +92,7 @@ h2 {
     --border-color: #72cce3;
     --button-color: var(--color);
     --blob-color: #fffaa8;
-    --skeleton-color: #e8e8e8;
+    --skeleton-color: #d0d0d0;
   }
 }
 
