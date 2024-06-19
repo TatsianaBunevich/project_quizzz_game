@@ -63,7 +63,7 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	const [roundStatus, setRoundStatus] = useState(Status.NORMAL);
 	const [scores, setScores] = useState<Score[]>([]);
 	const [roundTimeCounter, setRoundTimeCounter] = useState(0);
-	// FIXME: check roundTimeCounter on Result and Scoreboard pages
+
 	useEffect(() => {
 		const mappedQuestions = questions.map(q => ({
 			question: q.question,

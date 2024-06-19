@@ -32,7 +32,7 @@ const PageContainer = ({ play, setPlay }: PageContainerProps) => {
 				return null;
 		}
 	}
-	// TODO: add provider
+
 	return (
 		<ControlsContextProvider setPlay={setPlay} setPage={setPage}>
 			<main>

@@ -78,7 +78,7 @@ export const ControlsContextProvider = ({ setPlay, setPage, children }: Controls
 
 	const handleCheckAnswers = () => {
 		calculateScore();
-		setIsModalShown(false); // TODO: need condition?
+		setIsModalShown(false);
 		setPage('result');
 	}
 
@@ -109,7 +109,7 @@ export const ControlsContextProvider = ({ setPlay, setPage, children }: Controls
 
 	const handleOpenSettings = () => {
 		clearQuizState();
-		setIsModalShown(false); // TODO: need condition?
+		setIsModalShown(false);
 		setPage('settings');
 	}
 
@@ -130,12 +130,10 @@ export const ControlsContextProvider = ({ setPlay, setPage, children }: Controls
 	}
 
 	const handleOpenModal = () => {
-		// TODO: stop roundTimeCounter
 		setIsModalShown(true);
 	}
 
 	const handleCloseModal = () => {
-		// TODO: run roundTimeCounter
 		setIsModalShown(false);
 	}
 

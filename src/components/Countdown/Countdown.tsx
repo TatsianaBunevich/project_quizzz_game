@@ -10,9 +10,12 @@ const Countdown = ({ setIsCountdown }: { setIsCountdown: (isCountdown: boolean) 
 			setIsCountdown(false);
 			return;
 		}
-		setTimeout(() => {
-			setCounter(counter - 1);
+
+		const countdown = setTimeout(() => {
+			setCounter(counter => counter - 1);
 		}, 1000);
+
+		return () => clearTimeout(countdown);
 	}, [counter, setIsCountdown]);
 
 	useEffect(() => {

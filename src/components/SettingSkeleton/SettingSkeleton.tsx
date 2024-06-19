@@ -1,6 +1,6 @@
 import Skeleton from '../Skeleton/Skeleton';
 import styles from './SettingSkeleton.module.css';
-// FIXME: don't change width on every render? + is it enough (or we need more settings?)
+
 const SettingSkeleton = () => {
 	return (
 		<div className={styles.setting}>

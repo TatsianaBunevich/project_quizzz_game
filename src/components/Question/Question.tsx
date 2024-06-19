@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { QuizContext } from '../../context/QuizContext';
+import { ControlsContext } from '../../context/ControlsContext';
 import Button from '../Button/Button';
 import { sortedQuestionsType, SelectedAnswer, Answer } from '../../types';
 import styles from './Question.module.css';
@@ -19,21 +20,39 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 		activeQuestionId,
 		isAnswersShown,
 		roundTimeCounter,
-		setRoundTimeCounter
+		setRoundTimeCounter,
+		isModalShown
 	} = useContext(QuizContext);
+	const { handleNextButton } = useContext(ControlsContext);
 	const [timerCounter, setTimerCounter] = useState(quizItem.timer);
 
 	useEffect(() => {
 		if (quizItem.timer > 0 && activeQuestionId === id && !isAnswersShown) {
 			if (timerCounter === 0) {
+				handleNextButton();
 				return;
 			}
-			setTimeout(() => {
-				setTimerCounter(timerCounter - 1);
-				setRoundTimeCounter(roundTimeCounter + 1);
+
+			const timer = setTimeout(() => {
+				setTimerCounter(timerCounter => timerCounter - 1);
+				setRoundTimeCounter((counter: number) => counter + 1);
 			}, 1000);
+
+			if (isModalShown) clearTimeout(timer);
+
+			return () => clearTimeout(timer);
 		}
-	}, [activeQuestionId, id, isAnswersShown, quizItem.timer, roundTimeCounter, setRoundTimeCounter, timerCounter]);
+	}, [
+		activeQuestionId,
+		id,
+		isAnswersShown,
+		quizItem.timer,
+		roundTimeCounter,
+		setRoundTimeCounter,
+		timerCounter,
+		handleNextButton,
+		isModalShown
+	]);
 
 	const questionClasses = () => {
 		if (activeQuestionId === id && !isAnswersShown) {
