@@ -94,7 +94,7 @@
   margin: 0 auto 2em;
   display: grid;
   cursor: pointer;
-  background-color: var(--bad-color);
+  background-color: var(--red-color);
   box-sizing: content-box;
   overflow: hidden;
   transition: 0.3s 0.1s;
@@ -122,7 +122,7 @@
 }
 
 .checkbox:checked {
-  background-color: var(--good-color);
+  background-color: var(--green-color);
 }
 
 .checkbox:checked:before {

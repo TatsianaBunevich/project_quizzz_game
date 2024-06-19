@@ -49,7 +49,7 @@ export const QuizContext = createContext<QuizContextType>({
 	roundTimeCounter: 0,
 	setRoundTimeCounter: () => {}
 });
-
+// TODO: add reducer + optimize render
 export const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const { questions, settings } = useContext(GameContext);
 	const [sortedQuestions, setSortedQuestions] = useState<sortedQuestionsType[]>([]);

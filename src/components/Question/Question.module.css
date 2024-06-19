@@ -29,7 +29,7 @@
   font-family: "Karla", sans-serif;
   font-size: 1.5em;
   font-weight: 700;
-  color: var(--bad-color);
+  color: var(--red-color);
   filter: brightness(80%);
 }
 
@@ -101,11 +101,11 @@
 }
 
 .answers .boolean.true {
-  color: var(--good-color);
+  color: var(--green-color);
 }
 
 .answers .boolean.false {
-  color: var(--bad-color);
+  color: var(--red-color);
 }
 
 .allShown .answers .boolean {
