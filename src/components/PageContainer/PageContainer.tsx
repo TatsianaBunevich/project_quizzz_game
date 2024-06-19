@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ControlsContextProvider } from '../../context/ControlsContext';
 import Quiz from '../Quiz/Quiz';
 import Scoreboard from '../Scoreboard/Scoreboard';
 import Result from '../Result/Result';
@@ -22,7 +23,7 @@ const PageContainer = ({ play, setPlay }: PageContainerProps) => {
 			case 'settings':
 				return <Settings />;
 			case 'quiz':
-				return <Quiz setPage={setPage} />;
+				return <Quiz />;
 			case 'result':
 				return <Result />;
 			case 'scoreboard':
@@ -33,15 +34,15 @@ const PageContainer = ({ play, setPlay }: PageContainerProps) => {
 	}
 	// TODO: add provider
 	return (
-		<>
+		<ControlsContextProvider setPlay={setPlay} setPage={setPage}>
 			<main>
 				{play ?
 					switchPage(page) :
 					<h1>Quizzz Game</h1>
 				}
 			</main>
-			<Footer play={play} setPlay={setPlay} page={page} setPage={setPage} />
-		</>
+			<Footer play={play} page={page} />
+		</ControlsContextProvider>
 	);
 };
 

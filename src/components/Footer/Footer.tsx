@@ -1,106 +1,46 @@
 import { useContext } from 'react';
 import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
+import { ControlsContext } from '../../context/ControlsContext';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import Skeleton from '../Skeleton/Skeleton';
 import styles from './Footer.module.css';
 import { Page } from '../../types';
-import { DEFAULTSETTINGS } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 type FooterProps = {
 	play: boolean;
-	setPlay: (play: boolean) => void;
 	page: Page;
-	setPage: (page: Page) => void;
 }
 
-const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
-	const { isLoading, settings, setSettings, setIsUpdateQuestions } = useContext(GameContext);
+const Footer = ({ play, page }: FooterProps) => {
+	const { isLoading, settings } = useContext(GameContext);
 	const {
-		updateSortedQuestions,
 		isCountdown,
-		setIsCountdown,
-		setIsModalShown,
-		setIsAnswersShown,
 		isAnswersShown,
 		sortedQuestions,
 		activeQuestionId,
-		setActiveQuestionId,
-		clearQuizState,
-		calculateScore,
 		clearScores
 	} = useContext(QuizContext);
-
-	const handleSettings = () => {
-		setPlay(true);
-		setPage('settings');
-	}
-
-	const handleStartQuiz = () => {
-		setIsUpdateQuestions(true);
-		setPage('quiz');
-		setIsCountdown(true);
-	}
-
-	const handleEndQuiz = () => {
-		setPlay(false);
-		clearScores();
-		setSettings(structuredClone(DEFAULTSETTINGS));
-	}
-
-	const handleCheckAnswers = () => {
-		calculateScore();
-		setPage('result');
-	}
-
-	const handleShowAnswers = () => {
-		setIsAnswersShown(true);
-		setPage('quiz');
-	}
-
-	const handleBackToResult = () => {
-		setIsAnswersShown(false);
-		setPage('result');
-	}
-
-	const handleNewTry = () => {
-		clearQuizState();
-		updateSortedQuestions();
-		setIsCountdown(true);
-		setPage('quiz');
-	}
-
-	const handleOpenSettings = () => {
-		clearQuizState();
-		setPage('settings');
-	}
-
-	const handlePrevButton = () => {
-		if (activeQuestionId === 0) {
-			handleOpenSettings();
-		} else {
-			setActiveQuestionId(activeQuestionId - 1);
-		}
-	}
-
-	const handleNextButton = () => {
-		if (activeQuestionId === sortedQuestions.length - 1) {
-			handleCheckAnswers();
-		} else {
-			setActiveQuestionId(activeQuestionId + 1);
-		}
-	}
-
-	const openModal = () => {
-		setIsModalShown(true);
-		// TODO: stop roundTimeCounter
-	}
+	const {
+		handleSettings,
+		handleStartQuiz,
+		handleEndQuiz,
+		handleShowAnswers,
+		handleAnswersToResult,
+		handleShowScoreboard,
+		handleScoreboardToResult,
+		handleNewTry,
+		handleOpenSettings,
+		handlePrevButton,
+		handleNextButton,
+		handleOpenModal
+	} = useContext(ControlsContext);
 
 	const renderQuizButtons = () => {
 		if (isAnswersShown) {
-			return <SubmitButton className={styles.footerButton} onClick={handleBackToResult}>Back</SubmitButton>
+			return <SubmitButton className={styles.footerButton} onClick={handleAnswersToResult}>Back</SubmitButton>
 		} else if (!isCountdown) {
 			if (isLoading) {
 				return (
@@ -119,7 +59,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 						<SubmitButton className={styles.footerButton} onClick={handleNextButton}>
 							{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <FontAwesomeIcon icon={faChevronRight} />}
 						</SubmitButton>
-						<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={openModal}>Stop</SubmitButton>
+						<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={handleOpenModal}>Stop</SubmitButton>
 					</>
 				)
 			}
@@ -145,7 +85,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 				return (
 					<>
 						<SubmitButton className={styles.footerButton} onClick={handleShowAnswers}>Answers</SubmitButton>
-						<SubmitButton className={styles.footerButton} onClick={() => setPage('scoreboard')}>Scores</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={handleShowScoreboard}>Scores</SubmitButton>
 						<SubmitButton className={styles.footerButton} onClick={handleNewTry}>Try again</SubmitButton>
 						<SubmitButton className={styles.footerButton} onClick={handleOpenSettings}>Settings</SubmitButton>
 					</>
@@ -154,7 +94,7 @@ const Footer = ({ play, setPlay, page, setPage }: FooterProps) => {
 				return (
 					<>
 						<SubmitButton className={styles.footerButton} onClick={clearScores}>Clear</SubmitButton>
-						<SubmitButton className={styles.footerButton} onClick={() => setPage('result')}>Back</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={handleScoreboardToResult}>Back</SubmitButton>
 					</>
 				);
 			default:

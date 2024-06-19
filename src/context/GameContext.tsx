@@ -2,6 +2,11 @@ import { useState, useEffect, createContext, useCallback } from 'react';
 import { SettingsType, SettingType, IdType, Question } from '../types';
 import { DEFAULTSETTINGS } from '../constants';
 
+type GameContextProviderProps = {
+	play: boolean;
+	children: React.ReactNode;
+}
+
 type GameContextType = {
 	isLoading: boolean;
 	settings: SettingsType;
@@ -20,7 +25,7 @@ export const GameContext = createContext<GameContextType>({
 	questions: []
 });
 
-export const GameContextProvider = ({ play, children }: { play: boolean, children: React.ReactNode }) => {
+export const GameContextProvider = ({ play, children }: GameContextProviderProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [settings, setSettings] = useState<SettingsType>(structuredClone(DEFAULTSETTINGS));
 	const [questions, setQuestions] = useState([]);
