@@ -124,11 +124,10 @@ export const QuizContextProvider = ({ children }: { children: React.ReactNode })
 	}
 
 	const calculateScore = () => {
-		const goal = sortedQuestions.length;
 		const points = selectedAnswers.reduce((acc, item) => {
 			return item.isCorrect ? acc + 1 : acc;
 		}, 0);
-
+		const goal = sortedQuestions.length;
 		const percentage = (points / goal) * 100;
 		const total = Number(percentage.toFixed(0));
 

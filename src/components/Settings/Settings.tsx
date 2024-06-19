@@ -1,4 +1,4 @@
-import { useContext, useState, useCallback } from 'react';
+import { useContext, useState, useMemo } from 'react';
 import { SettingsType } from '../../types';
 import { GameContext } from '../../context/GameContext';
 import SettingSkeleton from '../SettingSkeleton/SettingSkeleton';
@@ -19,25 +19,23 @@ const Settings = () => {
 		setCategoryClass(styles.overflowHidden);
 	};
 
-	const debounceFn = useCallback(debounce((value: number, setting: keyof SettingsType) => handleSelectOption(value, setting), 300), [handleSelectOption]);
+	const debounceFn = useMemo(() => debounce((value: number, setting: keyof SettingsType) => handleSelectOption(value, setting), 300), [handleSelectOption]);
 
-	const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>, type: keyof SettingsType) => {
 		const value = Number(event.target.value);
-		setRangeValue(value);
-		debounceFn(value, 'amount');
-	}
+		if (type === 'amount') {
+			setRangeValue(value);
+		} else {
+			setTimerValue(value);
+		}
+		debounceFn(value, type);
+	};
 
-	const handleTimer = () => {
+	const handleCheckboxChange = () => {
 		const newTimerValue = isTimer ? 0 : 10;
 		setTimerValue(newTimerValue);
 		debounceFn(newTimerValue, 'timer');
 		setIsTimer(!isTimer);
-	}
-
-	const handleTimerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const value = Number(event.target.value);
-		setTimerValue(value);
-		debounceFn(value, 'timer');
 	}
 
 	if (isLoading) {
@@ -80,14 +78,14 @@ const Settings = () => {
 			</Setting>
 			<Setting title="Number of Questions">
 				<div className={styles.sliderContainer}>
-					<input id="amount" type="range" min="1" max="50" value={rangeValue} className={styles.slider} onChange={handleAmountChange} />
+					<input id="amount" type="range" min="1" max="50" value={rangeValue} className={styles.slider} onChange={(e) => handleSliderChange(e, 'amount')} />
 					<div className={styles.sliderValue}>{rangeValue}</div>
 				</div>
 			</Setting>
 			<Setting title="Timer (per question)">
 				<div className={styles.sliderContainer}>
-					<input id="timerCheckbox" type="checkbox" checked={isTimer} className={styles.checkbox} onChange={handleTimer} />
-					<input id="timer" type="range" disabled={!isTimer} min="10" max="120" value={timerValue} step="10" className={styles.slider} onChange={handleTimerChange} />
+					<input id="timerCheckbox" type="checkbox" checked={isTimer} className={styles.checkbox} onChange={handleCheckboxChange} />
+					<input id="timer" type="range" disabled={!isTimer} min="10" max="120" value={timerValue} step="10" className={styles.slider} onChange={(e) => handleSliderChange(e, 'timer')} />
 					<div className={styles.sliderValue}>{secondsToHms(timerValue)}</div>
 				</div>
 			</Setting>
