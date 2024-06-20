@@ -31,7 +31,7 @@ const QuestionTimer = ({ timer }: { timer: sortedQuestionsType['timer'] }) => {
 		isModalShown
 	]);
 
-	return <div className={styles.questionTimer}>{secondsToHms(timerCounter)}</div>;
+	return <div className={styles.questionTimer}><span>{secondsToHms(timerCounter)}</span></div>;
 };
 
 export default QuestionTimer;

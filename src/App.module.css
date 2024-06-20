@@ -15,8 +15,8 @@
   justify-content: space-between;
   place-items: stretch;
   margin: 2.5em auto;
-  padding: 0 1.25em;
-  max-width: 400px;
+  padding: 0 var(--c-gap);
+  max-width: var(--c-width);
   width: 100%;
 }
 
@@ -26,11 +26,4 @@
   z-index: 1;
   max-width: 100%;
   margin: 0;
-}
-
-@media (min-width: 992px) {
-  .container {
-    max-width: 1200px;
-    padding: 0 3em;
-  }
 }

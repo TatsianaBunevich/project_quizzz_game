@@ -2,7 +2,6 @@
   text-align: center;
   display: none;
   padding: 1em 0;
-  position: relative;
 }
 
 .question.active {
@@ -85,7 +84,6 @@
 .answers .boolean {
   font-size: 1.5em;
   margin: auto;
-  filter: brightness(80%);
 }
 
 .answers .boolean.true {

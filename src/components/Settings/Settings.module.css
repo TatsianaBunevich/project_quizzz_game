@@ -87,6 +87,8 @@
 
 .checkbox {
   --s: 2.5em;
+  --green-l: 64%;
+  --red-l: 78%;
   height: calc(var(--s) + var(--s) / 5);
   width: auto;
   aspect-ratio: 2.25;
@@ -94,7 +96,7 @@
   margin: 0 auto 2em;
   display: grid;
   cursor: pointer;
-  background-color: var(--red-color);
+  background-color: hsl(var(--red-hs), var(--red-l));
   box-sizing: content-box;
   overflow: hidden;
   transition: 0.3s 0.1s;
@@ -122,7 +124,7 @@
 }
 
 .checkbox:checked {
-  background-color: var(--green-color);
+  background-color: hsl(var(--green-hs), var(--green-l));
 }
 
 .checkbox:checked:before {
