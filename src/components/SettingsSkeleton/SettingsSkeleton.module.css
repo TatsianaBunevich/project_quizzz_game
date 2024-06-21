@@ -1,0 +1,6 @@
+@value button from '../Button/Button.module.css';
+
+.option {
+  composes: button;
+  border-color: var(--skeleton-color) !important;
+}

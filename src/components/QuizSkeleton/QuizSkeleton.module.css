@@ -1,0 +1,17 @@
+.question {
+  display: grid;
+}
+
+.questionTitle {
+  border: 1px solid var(--skeleton-color);
+}
+
+.skeleton .answer {
+  gap: 0;
+  border-radius: 0.75em;
+  border: 1px solid var(--skeleton-color);
+}
+
+.skeleton .answer::before {
+  content: "";
+}

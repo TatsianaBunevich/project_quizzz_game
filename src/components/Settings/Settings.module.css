@@ -30,7 +30,7 @@
   flex: 1 1 auto;
 }
 
-.selected {
+.option.selected {
   border-color: transparent;
   background-color: var(--button-bg-color);
 }

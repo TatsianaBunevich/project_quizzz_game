@@ -1,4 +1,4 @@
-import styles from './Blobs.module.css'
+import styles from './Blobs.module.css';
 
 export const Blobs = ({ play }: { play: boolean }) => {
 	if (play) {

@@ -3,7 +3,7 @@ import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
 import { ControlsContext } from '../../context/ControlsContext';
 import SubmitButton from '../SubmitButton/SubmitButton';
-import Skeleton from '../Skeleton/Skeleton';
+import FooterQuizSkeleton from '../FooterQuizSkeleton/FooterQuizSkeleton';
 import styles from './Footer.module.css';
 import { Page } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -42,16 +42,8 @@ const Footer = ({ play, page }: FooterProps) => {
 		if (isAnswersShown) {
 			return <SubmitButton className={styles.footerButton} onClick={handleAnswersToResult}>Back</SubmitButton>
 		} else if (!isCountdown) {
-			if (isLoading) {
-				return (
-					<>
-						<Skeleton className={styles.footerButton} width="12em" height="4em" />
-						<Skeleton className={styles.footerButton} width="12em" height="4em" />
-						<Skeleton className={`${styles.footerButton} ${styles.stopButton}`} width="12em" height="4em" />
-					</>
-				)
-			} else if (!isLoading) {
-				return (
+			return (
+				isLoading ? <FooterQuizSkeleton /> :
 					<>
 						<SubmitButton className={styles.footerButton} onClick={handlePrevButton} disabled={settings.timer > 0 && activeQuestionId > 0}>
 							{activeQuestionId === 0 ? 'Back' : <FontAwesomeIcon icon={faChevronLeft} />}
@@ -61,8 +53,7 @@ const Footer = ({ play, page }: FooterProps) => {
 						</SubmitButton>
 						<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={handleOpenModal}>Stop</SubmitButton>
 					</>
-				)
-			}
+			)
 		}
 	}
 

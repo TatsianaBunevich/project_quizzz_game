@@ -1,21 +1,15 @@
 import { useContext, useRef, useEffect } from 'react';
-import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
 import { ControlsContext } from '../../context/ControlsContext';
-import Countdown from '../Countdown/Countdown';
-import QuestionSkeleton from '../QuestionSkeleton/QuestionSkeleton';
 import Question from '../Question/Question';
 import Modal from '../Modal/Modal';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import styles from './Quiz.module.css';
 
 const Quiz = () => {
-	const { isLoading } = useContext(GameContext);
 	const {
 		sortedQuestions,
 		activeQuestionId,
-		isCountdown,
-		setIsCountdown,
 		selectedAnswers,
 		handleSelectAnswer,
 		isModalShown,
@@ -36,16 +30,6 @@ const Quiz = () => {
 			oldLength.current = newLength;
 		}
 	}, [newLength]);
-
-	if (isCountdown) {
-		return <Countdown setIsCountdown={setIsCountdown} />;
-	} else if (isLoading) {
-		return (
-			<div className={styles.quiz}>
-				<QuestionSkeleton />
-			</div>
-		)
-	}
 
 	return (
 		<>

@@ -1,7 +1,6 @@
 import { useContext, useState, useMemo } from 'react';
 import { SettingsType } from '../../types';
 import { GameContext } from '../../context/GameContext';
-import SettingSkeleton from '../SettingSkeleton/SettingSkeleton';
 import Setting from '../Setting/Setting';
 import Button from '../Button/Button';
 import { secondsToHms } from '../../helpers';
@@ -9,7 +8,7 @@ import styles from './Settings.module.css';
 import { debounce } from 'lodash';
 
 const Settings = () => {
-	const { isLoading, settings, handleSelectOption } = useContext(GameContext);
+	const { settings, handleSelectOption } = useContext(GameContext);
 	const [categoryClass, setCategoryClass] = useState('');
 	const [rangeValue, setRangeValue] = useState(settings.amount);
 	const [timerValue, setTimerValue] = useState(settings.timer);
@@ -36,14 +35,6 @@ const Settings = () => {
 		setTimerValue(newTimerValue);
 		debounceFn(newTimerValue, 'timer');
 		setIsTimer(!isTimer);
-	}
-
-	if (isLoading) {
-		return (
-			<div className={styles.settings}>
-				<SettingSkeleton />
-			</div>
-		)
 	}
 
 	return (
