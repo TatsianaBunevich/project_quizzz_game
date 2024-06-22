@@ -19,11 +19,6 @@
   background-color: var(--button-bg-color);
 }
 
-.button:focus,
-.button:focus-visible {
-  outline: none;
-}
-
 .button:disabled {
   color: #808080;
   border-color: #808080;

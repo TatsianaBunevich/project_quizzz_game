@@ -40,6 +40,12 @@ const App = () => {
 					</QuizContextProvider>
 				</GameContextProvider>
 			</div>
+			{!isPlaying && (
+				<div className={styles.contacts}>
+					<p>Feeling fun? Got an idea?</p>
+					<p><a className={styles.contactLink} href="https://www.linkedin.com/in/tatsiana-bunevich/" target="_blank">contact the creator</a></p>
+				</div>
+			)}
 		</div>
 	);
 };

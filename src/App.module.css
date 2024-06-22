@@ -27,3 +27,57 @@
   max-width: 100%;
   margin: 0;
 }
+
+.contacts {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Karla", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.25;
+  margin-bottom: 1em;
+  z-index: 1;
+}
+
+.contacts p {
+  margin: 0;
+}
+
+.contacts > :first-child {
+  display: none;
+}
+
+.contactLink {
+	text-decoration: none;
+	color: var(--color);
+	font-weight: 700;
+  position: relative;
+}
+
+.contactLink::before,
+.contactLink:visited::before {
+  content: '';
+  background-color: var(--button-bg-color);
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 100%;
+  height: 5px;
+  z-index: -1;
+  transition: all .3s ease-in-out;
+}
+
+.contactLink:hover::before,
+.contactLink:active::before,
+.contactLink:focus::before {
+  bottom: 0;
+  height: 100%;
+}
+
+@media (min-width: 992px) {
+  .contacts > :first-child {
+    display: block;
+  }
+}
