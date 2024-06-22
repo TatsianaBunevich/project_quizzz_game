@@ -1,30 +1,60 @@
-# React + TypeScript + Vite
+# Quizzz Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the magical ✨Quizzz Game✨! This project is a fun and interactive web-based quiz application that tests your knowledge on various topics. The game is designed to be user-friendly and interactive, providing an enjoyable experience for all ages.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Quizzz Game](#quizzz-game)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Screenshots](#screenshots)
+  - [How to Play](#how-to-play)
+  - [Technologies Used](#technologies-used)
+  - [Contact](#contact)
 
-## Expanding the ESLint configuration
+## Introduction
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+✨Quizzz Game✨ challenges users with a series of questions on different subjects. Users can select a Category, Difficulty, answer Multiple Choice or True/False questions, choose Number of Questions and see their scores at the end of the quiz. They can also set a Timer to challenge themselves and see the total time at the end.
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Multiple-choice questions on various topics
+- Feedback on correct and incorrect answers at the end of each round
+- Intuitive scoring system to track your progress
+- Option to restart the quiz for another round of fun and learning
+- Responsive design that works well on various devices
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Screenshots
+
+![Quizzz-Game_light](docs/images/Quizzz-Game_light.png)
+![Quizzz-Game_quiz](docs/images/Quizzz-Game_quiz.png)
+![Quizzz-Game_scores](docs/images/Quizzz-Game_scores.png)
+
+## How to Play
+
+See instructions [here](docs/how-to-play.md).
+
+> [!TIP]
+> Improve your browsing experience by switching themes using the animated switch icon at the top of the page.
+
+## Technologies Used
+
+- HTML5
+- CSS3
+- React
+- TypeScript
+- JavaScript (ES6+)
+- CSS Modules
+- Vite
+- Vitest
+
+## Contact
+
+If you have any questions or feedback, please feel free to contact me by:
+
+- Email: <tatsiana.bunevich@gmail.com>
+- GitHub: [TatsianaBunevich](https://github.com/TatsianaBunevich)
+- Linkedin: [Tatsiana Bunevich](https://www.linkedin.com/in/tatsiana-bunevich/)
+
+Happy quizzing! 🎉
