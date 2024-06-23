@@ -11,6 +11,7 @@ Welcome to the magical ✨Quizzz Game✨! This project is a fun and interactive 
   - [Screenshots](#screenshots)
   - [How to Play](#how-to-play)
   - [Technologies Used](#technologies-used)
+  - [License](#license)
   - [Contact](#contact)
 
 ## Introduction
@@ -48,6 +49,10 @@ See instructions [here](docs/how-to-play.md).
 - CSS Modules
 - Vite
 - Vitest
+
+## License
+
+Quizzz Game is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
