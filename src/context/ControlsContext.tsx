@@ -1,16 +1,17 @@
+import useBoundStore from '../store/useBoundStore';
+import { useShallow } from 'zustand/react/shallow';
 import { createContext, useContext } from 'react';
 import { GameContext } from './GameContext';
 import { QuizContext } from './QuizContext';
 import { Page } from '../types';
 import { DEFAULTSETTINGS } from '../constants';
 
-type ControlsContextProviderProps = {
-	setPlay: (play: boolean) => void;
+interface ControlsContextProviderProps {
 	setPage: (page: Page) => void;
 	children: React.ReactNode;
 }
 
-type ControlsContextType = {
+interface ControlsContextType {
 	handleSettings: () => void;
 	handleStartQuiz: () => void;
 	handleEndQuiz: () => void;
@@ -44,7 +45,7 @@ export const ControlsContext = createContext<ControlsContextType>({
 	handleCloseModal: () => {}
 });
 
-export const ControlsContextProvider = ({ setPlay, setPage, children }: ControlsContextProviderProps) => {
+export const ControlsContextProvider = ({ setPage, children }: ControlsContextProviderProps) => {
 	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
 		updateSortedQuestions,
@@ -58,6 +59,10 @@ export const ControlsContextProvider = ({ setPlay, setPage, children }: Controls
 		calculateScore,
 		clearScores
 	} = useContext(QuizContext);
+
+	const { setPlay } = useBoundStore(
+		useShallow((state) => ({ setPlay: state.setPlay }))
+	);
 
 	const handleSettings = () => {
 		setPlay(true);

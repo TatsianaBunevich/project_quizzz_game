@@ -1,3 +1,5 @@
+import useBoundStore from '../../store/useBoundStore';
+import { useShallow } from 'zustand/react/shallow';
 import { useState, useContext } from 'react';
 import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
@@ -12,15 +14,14 @@ import Settings from '../Settings/Settings';
 import Footer from '../Footer/Footer';
 import { Page } from '../../types';
 
-type PageContainerProps = {
-	play: boolean;
-	setPlay: (play: boolean) => void;
-};
-
-const PageContainer = ({ play, setPlay }: PageContainerProps) => {
+const PageContainer = () => {
 	const { isLoading } = useContext(GameContext);
 	const { isCountdown, setIsCountdown } = useContext(QuizContext);
 	const [page, setPage] = useState<Page>(null);
+
+	const { play } = useBoundStore(
+		useShallow((state) => ({ play: state.play }))
+	);
 
 	const switchPage = (page: Page) => {
 		if (!page) {
@@ -41,7 +42,7 @@ const PageContainer = ({ play, setPlay }: PageContainerProps) => {
 	}
 
 	return (
-		<ControlsContextProvider setPlay={setPlay} setPage={setPage}>
+		<ControlsContextProvider setPage={setPage}>
 			<main>
 				{play ?
 					switchPage(page) :

@@ -1,3 +1,5 @@
+import useBoundStore from './store/useBoundStore';
+import { useShallow } from 'zustand/react/shallow';
 import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import Blobs from './components/Blobs/Blobs';
@@ -10,7 +12,10 @@ import { Theme } from './types';
 const App = () => {
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
 	const [theme, setTheme] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
-	const [isPlaying, setIsPlaying] = useState(false);
+
+	const { play } = useBoundStore(
+		useShallow((state) => ({ play: state.play }))
+	);
 
 	useEffect(() => {
 		const handleChange = (e: MediaQueryListEvent) => {
@@ -29,21 +34,21 @@ const App = () => {
 
 	return (
 		<div className={styles.app} data-theme={theme}>
-			<Blobs play={isPlaying} />
-			<div className={`${styles.container} ${isPlaying ? '' : styles.start}`}>
+			<Blobs play={play} />
+			<div className={`${styles.container} ${play ? '' : styles.start}`}>
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
 				</header>
-				<GameContextProvider play={isPlaying}>
+				<GameContextProvider play={play}>
 					<QuizContextProvider>
-						<PageContainer play={isPlaying} setPlay={setIsPlaying} />
+						<PageContainer />
 					</QuizContextProvider>
 				</GameContextProvider>
 			</div>
-			{!isPlaying && (
+			{!play && (
 				<div className={styles.contacts}>
 					<p>Feeling fun? Got an idea?</p>
-					<p><a className={styles.contactLink} href="https://www.linkedin.com/in/tatsiana-bunevich/" target="_blank">contact the creator</a></p>
+					<p><a className={styles.contactLink} href="https://www.linkedin.com/in/tatsiana-bunevich/" target="_blank" rel="noreferrer">contact the creator</a></p>
 				</div>
 			)}
 		</div>
