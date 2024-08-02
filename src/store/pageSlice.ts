@@ -1,4 +1,4 @@
-import { StateCreator } from 'zustand';
+import { SliceWithMiddlewares } from "../typesStore";
 import { Page } from '../types';
 
 interface PageState {
@@ -15,9 +15,13 @@ const initialPageState: PageState = {
 	page: null,
 }
 
-const createPageSlice: StateCreator<PageSlice> = (set) => ({
+const createPageSlice: SliceWithMiddlewares<PageSlice> = (set) => ({
 	...initialPageState,
-	setPage: (newPage) => set({ page: newPage }),
+	setPage: (newPage) => set(
+		{ page: newPage },
+		false,
+		'play/setPage'
+	),
 });
 
 export default createPageSlice;

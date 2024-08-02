@@ -1,4 +1,4 @@
-import { StateCreator } from 'zustand';
+import { SliceWithMiddlewares } from "../typesStore";
 
 interface PlayState {
     play: boolean;
@@ -14,9 +14,13 @@ const initialPlayState: PlayState = {
 	play: false,
 }
 
-const createPlaySlice: StateCreator<PlaySlice> = (set) => ({
+const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
 	...initialPlayState,
-	setPlay: (newPlay) => set({ play: newPlay }),
+	setPlay: (newPlay) => set(
+		{ play: newPlay },
+		false,
+		'play/setPlay'
+	),
 });
 
 export default createPlaySlice;
