@@ -3,11 +3,9 @@ import { useShallow } from 'zustand/react/shallow';
 import { createContext, useContext } from 'react';
 import { GameContext } from './GameContext';
 import { QuizContext } from './QuizContext';
-import { Page } from '../types';
 import { DEFAULTSETTINGS } from '../constants';
 
 interface ControlsContextProviderProps {
-	setPage: (page: Page) => void;
 	children: React.ReactNode;
 }
 
@@ -45,7 +43,7 @@ export const ControlsContext = createContext<ControlsContextType>({
 	handleCloseModal: () => {}
 });
 
-export const ControlsContextProvider = ({ setPage, children }: ControlsContextProviderProps) => {
+export const ControlsContextProvider = ({ children }: ControlsContextProviderProps) => {
 	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
 	const {
 		updateSortedQuestions,
@@ -60,8 +58,8 @@ export const ControlsContextProvider = ({ setPage, children }: ControlsContextPr
 		clearScores
 	} = useContext(QuizContext);
 
-	const { setPlay } = useBoundStore(
-		useShallow((state) => ({ setPlay: state.setPlay }))
+	const { setPlay, setPage } = useBoundStore(
+		useShallow((state) => ({ setPlay: state.setPlay, setPage: state.setPage }))
 	);
 
 	const handleSettings = () => {
