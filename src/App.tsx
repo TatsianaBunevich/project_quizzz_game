@@ -1,4 +1,4 @@
-import useBoundStore from './store/useBoundStore';
+import useBoundStore from './store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useState, useEffect } from 'react';
 import styles from './App.module.css';

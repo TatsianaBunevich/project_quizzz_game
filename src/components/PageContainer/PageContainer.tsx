@@ -1,4 +1,4 @@
-import useBoundStore from '../../store/useBoundStore';
+import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useContext } from 'react';
 import { GameContext } from '../../context/GameContext';

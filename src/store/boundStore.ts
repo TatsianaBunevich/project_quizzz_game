@@ -3,9 +3,9 @@ import { devtools } from "zustand/middleware";
 import { immer } from 'zustand/middleware/immer';
 import createPlaySlice, { PlaySlice } from './playSlice';
 import createPageSlice, { PageSlice } from './pageSlice';
+
 type BoundState = PlaySlice & PageSlice;
 
-type BoundState = PlaySlice;
 const useBoundStore = create<BoundState>()(
 	devtools(
 		immer(
@@ -22,3 +22,4 @@ const useBoundStore = create<BoundState>()(
 );
 
 export default useBoundStore;
+

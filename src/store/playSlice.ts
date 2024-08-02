@@ -16,8 +16,8 @@ const initialPlayState: PlayState = {
 
 const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
 	...initialPlayState,
-	setPlay: (newPlay) => set(
-		{ play: newPlay },
+	setPlay: (play) => set(
+		{ play },
 		false,
 		'play/setPlay'
 	),
