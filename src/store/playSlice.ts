@@ -14,7 +14,7 @@ const initialPlayState: PlayState = {
 	play: false,
 }
 
-const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
+export const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
 	...initialPlayState,
 	setPlay: (play) => set(
 		{ play },
@@ -22,5 +22,3 @@ const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
 		'play/setPlay'
 	)
 });
-
-export default createPlaySlice;

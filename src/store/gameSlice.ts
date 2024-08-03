@@ -36,7 +36,7 @@ const initialGameState: GameState = {
 	isLoading: false,
 }
 
-const createGameSlice: SliceWithMiddlewares<GameSlice> = (set, get) => ({
+export const createGameSlice: SliceWithMiddlewares<GameSlice> = (set, get) => ({
 	...initialGameState,
 	updateSettings: async () => {
 		const data: CategoriesResponse | undefined = await fetchWithRetry(set, 'https://opentdb.com/api_category.php', 3, 300) as CategoriesResponse;
@@ -87,8 +87,6 @@ const createGameSlice: SliceWithMiddlewares<GameSlice> = (set, get) => ({
 		)
 	}
 });
-
-export default createGameSlice;
 
 const fetchWithRetry = async <T extends GameState>(set: (partial: Partial<T>, replace?: boolean, name?: string) => void, url: string, retries: number, backoff: number) => {
 	set({ isLoading: true } as Partial<T>, false, 'game/setIsLoadingTrue');

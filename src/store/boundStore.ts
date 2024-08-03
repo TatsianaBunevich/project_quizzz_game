@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { devtools } from "zustand/middleware";
 import { immer } from 'zustand/middleware/immer';
-import createPlaySlice, { PlaySlice } from './playSlice';
-import createPageSlice, { PageSlice } from './pageSlice';
-import createGameSlice, { GameSlice } from './gameSlice';
+import { PlaySlice, createPlaySlice } from './playSlice';
+import { PageSlice, createPageSlice } from './pageSlice';
+import { GameSlice, createGameSlice } from './gameSlice';
 
 type BoundState = PlaySlice & PageSlice & GameSlice;
 
