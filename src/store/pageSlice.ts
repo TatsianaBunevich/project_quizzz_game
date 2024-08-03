@@ -20,8 +20,8 @@ const createPageSlice: SliceWithMiddlewares<PageSlice> = (set) => ({
 	setPage: (page) => set(
 		{ page },
 		false,
-		'play/setPage'
-	),
+		'page/setPage'
+	)
 });
 
 export default createPageSlice;

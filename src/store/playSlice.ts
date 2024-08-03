@@ -20,7 +20,7 @@ const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
 		{ play },
 		false,
 		'play/setPlay'
-	),
+	)
 });
 
 export default createPlaySlice;
