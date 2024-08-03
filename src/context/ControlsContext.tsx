@@ -1,17 +1,15 @@
 import useBoundStore from '../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
 import { createContext, useContext } from 'react';
-import { GameContext } from './GameContext';
 import { QuizContext } from './QuizContext';
-import { DEFAULTSETTINGS } from '../constants';
 
 interface ControlsContextProviderProps {
 	children: React.ReactNode;
 }
 
 interface ControlsContextType {
-	handleSettings: () => void;
-	handleStartQuiz: () => void;
+	handleSettings: () => Promise<void>;
+	handleStartQuiz: () => Promise<void>;
 	handleEndQuiz: () => void;
 	handleCheckAnswers: () => void;
 	handleShowAnswers: () => void;
@@ -27,8 +25,8 @@ interface ControlsContextType {
 }
 
 export const ControlsContext = createContext<ControlsContextType>({
-	handleSettings: () => {},
-	handleStartQuiz: () => {},
+	handleSettings: () => Promise.resolve(),
+	handleStartQuiz: () => Promise.resolve(),
 	handleEndQuiz: () => {},
 	handleCheckAnswers: () => {},
 	handleShowAnswers: () => {},
@@ -44,7 +42,21 @@ export const ControlsContext = createContext<ControlsContextType>({
 });
 
 export const ControlsContextProvider = ({ children }: ControlsContextProviderProps) => {
-	const { setSettings, setIsUpdateQuestions } = useContext(GameContext);
+	const {
+		setPlay,
+		updateSettings,
+		updateQuestions,
+		resetGameState,
+		setPage
+	} = useBoundStore(
+		useShallow((state) => ({
+			setPlay: state.setPlay,
+			updateSettings: state.updateSettings,
+			updateQuestions: state.updateQuestions,
+			resetGameState: state.resetGameState,
+			setPage: state.setPage
+		}))
+	);
 	const {
 		updateSortedQuestions,
 		setIsCountdown,
@@ -58,17 +70,14 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 		clearScores
 	} = useContext(QuizContext);
 
-	const { setPlay, setPage } = useBoundStore(
-		useShallow((state) => ({ setPlay: state.setPlay, setPage: state.setPage }))
-	);
-
-	const handleSettings = () => {
+	const handleSettings = async () => {
 		setPlay(true);
+		await updateSettings();
 		setPage('settings');
 	}
 
-	const handleStartQuiz = () => {
-		setIsUpdateQuestions(true);
+	const handleStartQuiz = async () => {
+		await updateQuestions();
 		setPage('quiz');
 		setIsCountdown(true);
 	}
@@ -76,7 +85,8 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 	const handleEndQuiz = () => {
 		setPlay(false);
 		clearScores();
-		setSettings(structuredClone(DEFAULTSETTINGS));
+		resetGameState();
+		setPage(null);
 	}
 
 	const handleCheckAnswers = () => {

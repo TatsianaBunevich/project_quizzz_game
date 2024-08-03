@@ -19,6 +19,12 @@ module.exports = {
     ],
     semi: "off",
     indent: ["error", "tab", { SwitchCase: 1, MemberExpression: 1 }],
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        checksVoidReturn: false,
+      },
+    ],
   },
   settings: {
     react: {

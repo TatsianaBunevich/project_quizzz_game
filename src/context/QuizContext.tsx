@@ -1,8 +1,9 @@
-import { useState, useEffect, createContext, useContext } from 'react';
-import { GameContext } from './GameContext';
+import useBoundStore from '../store/boundStore';
+import { useShallow } from 'zustand/react/shallow';
+import { useState, useEffect, createContext } from 'react';
 import { sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../types';
 
-type QuizContextType = {
+interface QuizContextType {
     sortedQuestions: sortedQuestionsType[];
 	updateSortedQuestions: () => void;
 	activeQuestionId: number;
@@ -51,7 +52,9 @@ export const QuizContext = createContext<QuizContextType>({
 });
 
 export const QuizContextProvider = ({ children }: { children: React.ReactNode }) => {
-	const { questions, settings } = useContext(GameContext);
+	const { questions, settings } = useBoundStore(
+		useShallow((state) => ({ questions: state.questions, settings: state.settings }))
+	);
 	const [sortedQuestions, setSortedQuestions] = useState<sortedQuestionsType[]>([]);
 	const [activeQuestionId, setActiveQuestionId] = useState(0);
 	const [isCountdown, setIsCountdown] = useState(false);

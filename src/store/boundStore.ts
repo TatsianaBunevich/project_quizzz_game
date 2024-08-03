@@ -3,8 +3,9 @@ import { devtools } from "zustand/middleware";
 import { immer } from 'zustand/middleware/immer';
 import createPlaySlice, { PlaySlice } from './playSlice';
 import createPageSlice, { PageSlice } from './pageSlice';
+import createGameSlice, { GameSlice } from './gameSlice';
 
-type BoundState = PlaySlice & PageSlice;
+type BoundState = PlaySlice & PageSlice & GameSlice;
 
 const useBoundStore = create<BoundState>()(
 	devtools(
@@ -12,7 +13,8 @@ const useBoundStore = create<BoundState>()(
 			(...api) => ({
 				...createPlaySlice(...api),
 				...createPageSlice(...api),
-			})
+				...createGameSlice(...api),
+			}),
 		),
 		{
 			enabled: true,

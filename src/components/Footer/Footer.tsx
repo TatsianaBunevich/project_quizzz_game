@@ -1,5 +1,6 @@
+import useBoundStore from '../../store/boundStore';
+import { useShallow } from 'zustand/react/shallow';
 import { useContext } from 'react';
-import { GameContext } from '../../context/GameContext';
 import { QuizContext } from '../../context/QuizContext';
 import { ControlsContext } from '../../context/ControlsContext';
 import SubmitButton from '../SubmitButton/SubmitButton';
@@ -9,13 +10,15 @@ import { Page } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-type FooterProps = {
+interface FooterProps {
 	play: boolean;
 	page: Page;
 }
 
 const Footer = ({ play, page }: FooterProps) => {
-	const { isLoading, settings } = useContext(GameContext);
+	const { isLoading, settings } = useBoundStore(
+		useShallow((state) => ({ isLoading: state.isLoading, settings: state.settings }))
+	);
 	const {
 		isCountdown,
 		isAnswersShown,
@@ -66,7 +69,7 @@ const Footer = ({ play, page }: FooterProps) => {
 				if (isLoading) return null;
 				return (
 					<>
-						<SubmitButton className={styles.footerButton} onClick={handleStartQuiz}>Let's go</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={handleStartQuiz}>Let&apos;s go</SubmitButton>
 						<SubmitButton className={styles.footerButton} onClick={handleEndQuiz}>Exit</SubmitButton>
 					</>
 				);

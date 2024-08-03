@@ -1,6 +1,7 @@
-import { useContext, useState, useMemo } from 'react';
+import useBoundStore from '../../store/boundStore';
+import { useShallow } from 'zustand/react/shallow';
+import { useState, useMemo } from 'react';
 import { SettingsType } from '../../types';
-import { GameContext } from '../../context/GameContext';
 import Setting from '../Setting/Setting';
 import Button from '../Button/Button';
 import { secondsToHms } from '../../helpers';
@@ -8,7 +9,9 @@ import styles from './Settings.module.css';
 import { debounce } from 'lodash';
 
 const Settings = () => {
-	const { settings, handleSelectOption } = useContext(GameContext);
+	const { settings, handleSelectOption } = useBoundStore(
+		useShallow((state) => ({ settings: state.settings, handleSelectOption: state.handleSelectOption }))
+	);
 	const [categoryClass, setCategoryClass] = useState('');
 	const [rangeValue, setRangeValue] = useState(settings.amount);
 	const [timerValue, setTimerValue] = useState(settings.timer);

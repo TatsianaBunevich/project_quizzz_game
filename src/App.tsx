@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import Blobs from './components/Blobs/Blobs';
 import Toggle from './components/Toggle/Toggle';
-import { GameContextProvider } from './context/GameContext';
 import { QuizContextProvider } from './context/QuizContext';
 import PageContainer from './components/PageContainer/PageContainer';
 import { Theme } from './types';
@@ -39,11 +38,9 @@ const App = () => {
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
 				</header>
-				<GameContextProvider play={play}>
-					<QuizContextProvider>
-						<PageContainer />
-					</QuizContextProvider>
-				</GameContextProvider>
+				<QuizContextProvider>
+					<PageContainer />
+				</QuizContextProvider>
 			</div>
 			{!play && (
 				<div className={styles.contacts}>
