@@ -1,5 +1,4 @@
 import useBoundStore from './store/boundStore';
-import { useShallow } from 'zustand/react/shallow';
 import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import Blobs from './components/Blobs/Blobs';
@@ -11,10 +10,7 @@ import { Theme } from './types';
 const App = () => {
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
 	const [theme, setTheme] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
-
-	const { play } = useBoundStore(
-		useShallow((state) => ({ play: state.play }))
-	);
+	const play = useBoundStore((state) => state.play);
 
 	useEffect(() => {
 		const handleChange = (e: MediaQueryListEvent) => {
@@ -33,7 +29,7 @@ const App = () => {
 
 	return (
 		<div className={styles.app} data-theme={theme}>
-			<Blobs play={play} />
+			<Blobs />
 			<div className={`${styles.container} ${play ? '' : styles.start}`}>
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />

@@ -46,7 +46,7 @@ const PageContainer = () => {
 					<h1>Quizzz Game</h1>
 				}
 			</main>
-			<Footer play={play} page={page} />
+			<Footer />
 		</ControlsContextProvider>
 	);
 };

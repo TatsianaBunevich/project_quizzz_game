@@ -6,18 +6,22 @@ import { ControlsContext } from '../../context/ControlsContext';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import FooterQuizSkeleton from '../FooterQuizSkeleton/FooterQuizSkeleton';
 import styles from './Footer.module.css';
-import { Page } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-interface FooterProps {
-	play: boolean;
-	page: Page;
-}
-
-const Footer = ({ play, page }: FooterProps) => {
-	const { isLoading, settings } = useBoundStore(
-		useShallow((state) => ({ isLoading: state.isLoading, settings: state.settings }))
+const Footer = () => {
+	const {
+		play,
+		page,
+		isLoading,
+		settings
+	} = useBoundStore(
+		useShallow((state) => ({
+			play: state.play,
+			page: state.page,
+			isLoading: state.isLoading,
+			settings: state.settings
+		}))
 	);
 	const {
 		isCountdown,
