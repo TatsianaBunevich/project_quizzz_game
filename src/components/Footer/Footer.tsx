@@ -14,20 +14,23 @@ const Footer = () => {
 		play,
 		page,
 		isLoading,
-		settings
+		settings,
+		sortedQuestions,
+		activeQuestionId,
+		isAnswersShown
 	} = useBoundStore(
 		useShallow((state) => ({
 			play: state.play,
 			page: state.page,
 			isLoading: state.isLoading,
-			settings: state.settings
+			settings: state.settings,
+			sortedQuestions: state.sortedQuestions,
+			activeQuestionId: state.activeQuestionId,
+			isAnswersShown: state.isAnswersShown
 		}))
 	);
 	const {
 		isCountdown,
-		isAnswersShown,
-		sortedQuestions,
-		activeQuestionId,
 		clearScores
 	} = useContext(QuizContext);
 	const {

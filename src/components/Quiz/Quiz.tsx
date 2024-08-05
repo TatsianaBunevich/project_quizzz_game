@@ -1,3 +1,5 @@
+import useBoundStore from '../../store/boundStore';
+import { useShallow } from 'zustand/react/shallow';
 import { useContext, useRef, useEffect } from 'react';
 import { QuizContext } from '../../context/QuizContext';
 import { ControlsContext } from '../../context/ControlsContext';
@@ -8,13 +10,21 @@ import styles from './Quiz.module.css';
 
 const Quiz = () => {
 	const {
+		isModalShown,
+	} = useContext(QuizContext);
+
+	const {
 		sortedQuestions,
 		activeQuestionId,
-		selectedAnswers,
-		handleSelectAnswer,
-		isModalShown,
-		isAnswersShown,
-	} = useContext(QuizContext);
+		isAnswersShown
+	} = useBoundStore(
+		useShallow((state) => ({
+			sortedQuestions: state.sortedQuestions,
+			activeQuestionId: state.activeQuestionId,
+			isAnswersShown: state.isAnswersShown
+		}))
+	);
+
 	const { handleCheckAnswers, handleOpenSettings, handleCloseModal } = useContext(ControlsContext);
 	const progress = useRef<HTMLDivElement>(null);
 	const oldLength = useRef(0);
@@ -36,13 +46,7 @@ const Quiz = () => {
 			{!isAnswersShown && <div className={styles.quizProgress} ref={progress}></div>}
 			<div className={`${styles.quiz} ${isAnswersShown ? styles.allShown : ''}`}>
 				{sortedQuestions.map((q, index) => {
-					return <Question
-						key={index}
-						quizItem={q}
-						id={index}
-						selectedAnswer={selectedAnswers.find(item => item.question === q.question)}
-						onSelectAnswer={handleSelectAnswer}
-					/>
+					return <Question key={index} quizItem={q} id={index} />
 				})}
 			</div>
 			<Modal isOpen={isModalShown}>

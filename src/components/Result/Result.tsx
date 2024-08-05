@@ -1,3 +1,5 @@
+import useBoundStore from '../../store/boundStore';
+import { useShallow } from 'zustand/react/shallow';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Status } from '../../types';
 import { QuizContext } from '../../context/QuizContext';
@@ -5,7 +7,16 @@ import styles from './Result.module.css';
 import { secondsToHms } from '../../helpers';
 
 const Result = () => {
-	const { roundScore, calculatedScore, sortedQuestions, roundStatus, roundTimeCounter } = useContext(QuizContext);
+	const { roundScore, calculatedScore, roundStatus, roundTimeCounter } = useContext(QuizContext);
+
+	const {
+		sortedQuestions
+	} = useBoundStore(
+		useShallow((state) => ({
+			sortedQuestions: state.sortedQuestions
+		}))
+	);
+
 	const progress = useRef<HTMLDivElement>(null);
 	const [result, setResult] = useState(true);
 	const statusClass = roundStatus === Status.GOOD ? styles.good : roundStatus === Status.NORMAL ? styles.normal : styles.bad;

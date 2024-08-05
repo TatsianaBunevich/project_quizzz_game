@@ -1,21 +1,35 @@
-import { useContext } from 'react';
-import { QuizContext } from '../../context/QuizContext';
+import useBoundStore from '../../store/boundStore';
+import { useShallow } from 'zustand/react/shallow';
 import QuestionTimer from '../QuestionTimer/QuestionTimer';
 import Button from '../Button/Button';
-import { sortedQuestionsType, SelectedAnswer, Answer } from '../../types';
+import { sortedQuestionsType, SelectedAnswer } from '../../types';
 import styles from './Question.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-type QuestionProps = {
+type OptionalSelectedAnswer = SelectedAnswer | undefined;
+
+interface QuestionProps {
     quizItem: sortedQuestionsType;
 	id: number;
-    selectedAnswer: SelectedAnswer | undefined;
-    onSelectAnswer: (questionId: string, answer: Answer) => void;
 }
 
-const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProps) => {
-	const { activeQuestionId, isAnswersShown } = useContext(QuizContext);
+const Question = ({ quizItem, id }: QuestionProps) => {
+	const {
+		handleSelectAnswer,
+		selectedAnswers,
+		activeQuestionId,
+		isAnswersShown
+	} = useBoundStore(
+		useShallow((state) => ({
+			handleSelectAnswer: state.handleSelectAnswer,
+			selectedAnswers: state.selectedAnswers,
+			activeQuestionId: state.activeQuestionId,
+			isAnswersShown: state.isAnswersShown
+		}))
+	);
+
+	const selectedAnswer: OptionalSelectedAnswer = selectedAnswers.find(item => item?.question === quizItem.question);
 	const isActive = activeQuestionId === id && !isAnswersShown;
 
 	const questionClasses = () => {
@@ -43,18 +57,18 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 		}
 	}
 
-	const selectAnswers = (selectedAnswer: SelectedAnswer | undefined, answer: string) => {
+	const selectAnswers = (selectedAnswer: OptionalSelectedAnswer, answer: string) => {
 		return selectedAnswer?.answer === answer ? styles.selected : '';
 	};
 
-	const blurUnselectedAnswers = (selectedAnswer: SelectedAnswer | undefined) => {
+	const blurUnselectedAnswers = (selectedAnswer: OptionalSelectedAnswer) => {
 		return selectedAnswer === undefined ? styles.shown : '';
 	};
 
 	const blurClasses = isAnswersShown ? blurUnselectedAnswers(selectedAnswer) : '';
 
-	const showAnswers = (selectedAnswer: SelectedAnswer | undefined) => {
-		return quizItem.answers.reduce((acc: { [key: string]: string }, item) => {
+	const showAnswers = (selectedAnswer: OptionalSelectedAnswer) => {
+		return quizItem.answers.reduce((acc: Record<string, string>, item) => {
 			if (item.isCorrect) {
 				acc[item.answer] = styles.correct;
 			} else if (item.answer === selectedAnswer?.answer && !item.isCorrect) {
@@ -78,14 +92,14 @@ const Question = ({ quizItem, id, selectedAnswer, onSelectAnswer }: QuestionProp
 			</h2>
 			<div className={styles.answers}>
 				<div className={`${styles.blur} ${blurClasses}`}>
-					<p>You didn't answer this question</p>
+					<p>You didn&apos;t answer this question</p>
 				</div>
 				{quizItem.answers.map((a) => (
 					<Button
 						key={a.answer}
 						disabled={isAnswersShown}
 						className={`${styles.answer} ${selectAnswers(selectedAnswer, a.answer)} ${answerClasses[a.answer] || ''}`}
-						onClick={() => onSelectAnswer(quizItem.question, a)}
+						onClick={() => handleSelectAnswer(quizItem.question, a)}
 					>
 						{displayAnswer(a.answer)}
 					</Button>

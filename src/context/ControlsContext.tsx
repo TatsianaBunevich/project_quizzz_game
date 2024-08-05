@@ -43,50 +43,59 @@ export const ControlsContext = createContext<ControlsContextType>({
 
 export const ControlsContextProvider = ({ children }: ControlsContextProviderProps) => {
 	const {
-		setPlay,
+		togglePlay,
+		setPage,
 		updateSettings,
-		updateQuestions,
-		resetGameState,
-		setPage
+		getQuestions,
+		createSortedQuestions,
+		sortedQuestions,
+		activeQuestionId,
+		updateSortedQuestions,
+		incActiveQuestionId,
+		decActiveQuestionId,
+		setIsAnswersShown
 	} = useBoundStore(
 		useShallow((state) => ({
-			setPlay: state.setPlay,
+			togglePlay: state.togglePlay,
+			setPage: state.setPage,
 			updateSettings: state.updateSettings,
-			updateQuestions: state.updateQuestions,
-			resetGameState: state.resetGameState,
-			setPage: state.setPage
+			getQuestions: state.getQuestions,
+			createSortedQuestions: state.createSortedQuestions,
+			sortedQuestions: state.sortedQuestions,
+			activeQuestionId: state.activeQuestionId,
+			updateSortedQuestions: state.updateSortedQuestions,
+			incActiveQuestionId: state.incActiveQuestionId,
+			decActiveQuestionId: state.decActiveQuestionId,
+			setIsAnswersShown: state.setIsAnswersShown
 		}))
 	);
 	const {
-		updateSortedQuestions,
 		setIsCountdown,
 		setIsModalShown,
-		setIsAnswersShown,
-		sortedQuestions,
-		activeQuestionId,
-		setActiveQuestionId,
 		clearQuizState,
 		calculateScore,
 		clearScores
 	} = useContext(QuizContext);
 
 	const handleSettings = async () => {
-		setPlay(true);
+		togglePlay();
 		await updateSettings();
 		setPage('settings');
 	}
 
 	const handleStartQuiz = async () => {
-		await updateQuestions();
+		await getQuestions();
+		createSortedQuestions();
 		setPage('quiz');
 		setIsCountdown(true);
 	}
 
 	const handleEndQuiz = () => {
-		setPlay(false);
+		togglePlay();
 		clearScores();
-		resetGameState();
+		// resetGameState();
 		setPage(null);
+		// TODO: resetStoreState
 	}
 
 	const handleCheckAnswers = () => {
@@ -130,7 +139,7 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 		if (activeQuestionId === 0) {
 			handleOpenSettings();
 		} else {
-			setActiveQuestionId(activeQuestionId - 1);
+			decActiveQuestionId();
 		}
 	}
 
@@ -138,7 +147,7 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 		if (activeQuestionId === sortedQuestions.length - 1) {
 			handleCheckAnswers();
 		} else {
-			setActiveQuestionId(activeQuestionId + 1);
+			incActiveQuestionId();
 		}
 	}
 

@@ -1,11 +1,13 @@
 import { create } from 'zustand';
-import { devtools } from "zustand/middleware";
+import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { PlaySlice, createPlaySlice } from './playSlice';
 import { PageSlice, createPageSlice } from './pageSlice';
-import { GameSlice, createGameSlice } from './gameSlice';
+import { SettingsSlice, createSettingsSlice } from './settingsSlice';
+import { QuizSlice, createQuizSlice } from './quizSlice';
+import { UtilsSlice, createUtilsSlice } from './utilsSlice';
 
-type BoundState = PlaySlice & PageSlice & GameSlice;
+type BoundState = PlaySlice & PageSlice & SettingsSlice & QuizSlice & UtilsSlice;
 
 const useBoundStore = create<BoundState>()(
 	devtools(
@@ -13,12 +15,17 @@ const useBoundStore = create<BoundState>()(
 			(...api) => ({
 				...createPlaySlice(...api),
 				...createPageSlice(...api),
-				...createGameSlice(...api),
+				...createSettingsSlice(...api),
+				...createQuizSlice(...api),
+				...createUtilsSlice(...api),
 			}),
 		),
 		{
 			enabled: true,
 			name: "bound store",
+			serialize: {
+				options: false
+			}
 		}
 	)
 );

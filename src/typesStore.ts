@@ -1,8 +1,8 @@
-import { StateCreator } from "zustand";
+import { StateCreator } from 'zustand';
 
-export type SliceWithMiddlewares<T> = StateCreator<
+export type SliceWithMiddlewares<T, S = T> = StateCreator<
     T,
     [["zustand/devtools", never], ["zustand/immer", never]],
     [],
-    T
+    S extends T ? T : S
 >;

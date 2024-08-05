@@ -5,6 +5,19 @@ export enum Theme {
 
 export type Page = string | null;
 
+interface Category {
+	id: number;
+	name: string;
+}
+
+export interface CategoriesResponse {
+	trivia_categories: Category[];
+}
+
+export interface QuestionsResponse {
+	results: Question[];
+}
+
 export enum DifficultyType {
 	ANY = 'any',
 	EASY = 'easy',

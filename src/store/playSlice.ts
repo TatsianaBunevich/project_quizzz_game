@@ -1,11 +1,11 @@
-import { SliceWithMiddlewares } from "../typesStore";
+import { SliceWithMiddlewares } from '../typesStore';
 
 interface PlayState {
     play: boolean;
 }
 
 interface PlayActions {
-    setPlay: (play: boolean) => void;
+    togglePlay: () => void;
 }
 
 export type PlaySlice = PlayState & PlayActions;
@@ -16,9 +16,10 @@ const initialPlayState: PlayState = {
 
 export const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
 	...initialPlayState,
-	setPlay: (play) => set(
-		{ play },
-		false,
-		'play/setPlay'
+	togglePlay: () => set((state) => ({
+		play: !state.play
+	}),
+	false,
+	'play/togglePlay'
 	)
 });
