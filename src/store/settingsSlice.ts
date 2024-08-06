@@ -25,24 +25,24 @@ SettingsSlice
 	...initialSettingsState,
 	updateSettings: async () => {
 		const data = await get().fetchWithRetry('https://opentdb.com/api_category.php', 3, 300) as CategoriesResponse | undefined;
-		set((draft) => {
+		set((state) => {
 			const triviaCategories = (data?.trivia_categories ?? []).map((category) => ({
 				id: category.id.toString(),
 				name: category.name,
 				isSelect: false,
 			}));
-			draft.settings.category.push(...triviaCategories);
+			state.settings.category.push(...triviaCategories);
 		},
 		false,
 		'settings/updateSettings'
 		);
 	},
 	handleSelectOption: (optionId: IdType | number, setting: keyof SettingsType) => {
-		set((draft) => {
+		set((state) => {
 			if (setting === 'amount' || setting === 'timer') {
-				draft.settings[setting] = optionId as number;
+				state.settings[setting] = optionId as number;
 			} else {
-				const settingsArray = draft.settings[setting];
+				const settingsArray = state.settings[setting];
 				const foundItem = settingsArray.find((item) => item.id === optionId);
 
 				settingsArray.forEach((item) => {

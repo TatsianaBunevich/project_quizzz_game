@@ -1,3 +1,5 @@
+import useBoundStore from '../../store/boundStore';
+import { useShallow } from 'zustand/react/shallow';
 import { useContext, useState, useEffect } from 'react';
 import { QuizContext } from '../../context/QuizContext';
 import { ControlsContext } from '../../context/ControlsContext';
@@ -6,7 +8,14 @@ import { secondsToHms } from '../../helpers';
 import styles from './QuestionTimer.module.css';
 
 const QuestionTimer = ({ timer }: { timer: sortedQuestionsType['timer'] }) => {
-	const { isModalShown, setRoundTimeCounter } = useContext(QuizContext);
+	const { isModalShown } = useContext(QuizContext);
+	const {
+		incRoundTimeCounter
+	} = useBoundStore(
+		useShallow((state) => ({
+			incRoundTimeCounter: state.incRoundTimeCounter
+		}))
+	);
 	const { handleNextButton } = useContext(ControlsContext);
 	const [timerCounter, setTimerCounter] = useState(timer);
 
@@ -18,14 +27,14 @@ const QuestionTimer = ({ timer }: { timer: sortedQuestionsType['timer'] }) => {
 
 		const timer = setTimeout(() => {
 			setTimerCounter(timerCounter => timerCounter - 1);
-			setRoundTimeCounter((counter: number) => counter + 1);
+			incRoundTimeCounter();
 		}, 1000);
 
 		if (isModalShown) clearTimeout(timer);
 
 		return () => clearTimeout(timer);
 	}, [
-		setRoundTimeCounter,
+		incRoundTimeCounter,
 		timerCounter,
 		handleNextButton,
 		isModalShown

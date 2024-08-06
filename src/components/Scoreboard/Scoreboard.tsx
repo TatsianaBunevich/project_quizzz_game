@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
-import { QuizContext } from '../../context/QuizContext';
+import useBoundStore from '../../store/boundStore';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './Scoreboard.module.css';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { Score } from '../../types';
@@ -8,7 +8,7 @@ import { faArrowDownShortWide, faArrowDownWideShort } from '@fortawesome/free-so
 import { secondsToHms } from '../../helpers';
 
 const Scoreboard = () => {
-	const { scores } = useContext(QuizContext);
+	const scores = useBoundStore((state) => state.scores);
 	const [sortedScore, setSortedScore] = useState<Score[]>([]);
 	const [sortConfig, setSortConfig] = useState<{ key: keyof Score, ascending: boolean }>({ key: 'index', ascending: true });
 

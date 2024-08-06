@@ -17,7 +17,8 @@ const Footer = () => {
 		settings,
 		sortedQuestions,
 		activeQuestionId,
-		isAnswersShown
+		isAnswersShown,
+		resetScores
 	} = useBoundStore(
 		useShallow((state) => ({
 			play: state.play,
@@ -26,12 +27,12 @@ const Footer = () => {
 			settings: state.settings,
 			sortedQuestions: state.sortedQuestions,
 			activeQuestionId: state.activeQuestionId,
-			isAnswersShown: state.isAnswersShown
+			isAnswersShown: state.isAnswersShown,
+			resetScores: state.resetScores
 		}))
 	);
 	const {
 		isCountdown,
-		clearScores
 	} = useContext(QuizContext);
 	const {
 		handleSettings,
@@ -94,7 +95,7 @@ const Footer = () => {
 			case 'scoreboard':
 				return (
 					<>
-						<SubmitButton className={styles.footerButton} onClick={clearScores}>Clear</SubmitButton>
+						<SubmitButton className={styles.footerButton} onClick={resetScores}>Clear</SubmitButton>
 						<SubmitButton className={styles.footerButton} onClick={handleScoreboardToResult}>Back</SubmitButton>
 					</>
 				);
