@@ -53,7 +53,8 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 		updateSortedQuestions,
 		incActiveQuestionId,
 		decActiveQuestionId,
-		setIsAnswersShown
+		setIsAnswersShown,
+		resetBoundStore
 	} = useBoundStore(
 		useShallow((state) => ({
 			togglePlay: state.togglePlay,
@@ -66,7 +67,8 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 			updateSortedQuestions: state.updateSortedQuestions,
 			incActiveQuestionId: state.incActiveQuestionId,
 			decActiveQuestionId: state.decActiveQuestionId,
-			setIsAnswersShown: state.setIsAnswersShown
+			setIsAnswersShown: state.setIsAnswersShown,
+			resetBoundStore: state.resetBoundStore
 		}))
 	);
 	const {
@@ -91,11 +93,11 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 	}
 
 	const handleEndQuiz = () => {
-		togglePlay();
-		clearScores();
+		// togglePlay();
+		// clearScores();
 		// resetGameState();
-		setPage(null);
-		// TODO: resetStoreState
+		// setPage(null);
+		resetBoundStore();
 	}
 
 	const handleCheckAnswers = () => {

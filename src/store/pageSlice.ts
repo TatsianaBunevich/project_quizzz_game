@@ -9,9 +9,9 @@ interface PageActions {
     setPage: (page: Page) => void;
 }
 
-export type PageSlice = PageState & PageActions;
+export interface PageSlice extends PageState, PageActions {}
 
-const initialPageState: PageState = {
+export const initialPageState: PageState = {
 	page: null,
 }
 

@@ -8,9 +8,9 @@ interface PlayActions {
     togglePlay: () => void;
 }
 
-export type PlaySlice = PlayState & PlayActions;
+export interface PlaySlice extends PlayState, PlayActions {}
 
-const initialPlayState: PlayState = {
+export const initialPlayState: PlayState = {
 	play: false,
 }
 

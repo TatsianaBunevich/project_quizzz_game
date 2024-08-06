@@ -24,7 +24,7 @@ interface QuizActions {
 	setIsAnswersShown: (isAnswersShown: boolean) => void;
 }
 
-export type QuizSlice = QuizState & QuizActions;
+export interface QuizSlice extends QuizState, QuizActions {}
 
 export const initialQuizState: QuizState = {
 	questions: [],

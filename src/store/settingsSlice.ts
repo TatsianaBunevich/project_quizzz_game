@@ -12,9 +12,9 @@ interface SettingsActions {
 	handleSelectOption: (optionId: IdType | number, setting: keyof SettingsType) => void;
 }
 
-export type SettingsSlice = SettingsState & SettingsActions;
+export interface SettingsSlice extends SettingsState, SettingsActions {}
 
-const initialSettingsState: SettingsState = {
+export const initialSettingsState: SettingsState = {
 	settings: structuredClone(DEFAULTSETTINGS),
 }
 

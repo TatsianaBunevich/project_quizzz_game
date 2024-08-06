@@ -9,9 +9,9 @@ interface UtilsActions {
 	fetchWithRetry: (url: string, retries: number, backoff: number) => Promise<CategoriesResponse | QuestionsResponse | undefined>;
 }
 
-export type UtilsSlice = UtilsState & UtilsActions;
+export interface UtilsSlice extends UtilsState, UtilsActions {}
 
-const initialUtilsState: UtilsState = {
+export const initialUtilsState: UtilsState = {
 	isLoading: false,
 }
 
