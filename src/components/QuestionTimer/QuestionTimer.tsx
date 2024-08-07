@@ -1,7 +1,6 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
-import { useContext, useState, useEffect } from 'react';
-import { ControlsContext } from '../../context/ControlsContext';
+import { useState, useEffect } from 'react';
 import { sortedQuestionsType } from '../../types';
 import { secondsToHms } from '../../helpers';
 import styles from './QuestionTimer.module.css';
@@ -9,14 +8,15 @@ import styles from './QuestionTimer.module.css';
 const QuestionTimer = ({ timer }: { timer: sortedQuestionsType['timer'] }) => {
 	const {
 		incRoundTimeCounter,
-		isModal
+		isModal,
+		handleNextButton
 	} = useBoundStore(
 		useShallow((state) => ({
 			incRoundTimeCounter: state.incRoundTimeCounter,
-			isModal: state.isModal
+			isModal: state.isModal,
+			handleNextButton: state.handleNextButton
 		}))
 	);
-	const { handleNextButton } = useContext(ControlsContext);
 	const [timerCounter, setTimerCounter] = useState(timer);
 
 	useEffect(() => {

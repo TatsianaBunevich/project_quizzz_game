@@ -1,7 +1,5 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
-import { useContext } from 'react';
-import { ControlsContext } from '../../context/ControlsContext';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import FooterQuizSkeleton from '../FooterQuizSkeleton/FooterQuizSkeleton';
 import styles from './Footer.module.css';
@@ -18,21 +16,7 @@ const Footer = () => {
 		activeQuestionId,
 		isAnswersShown,
 		resetScores,
-		isCountdown
-	} = useBoundStore(
-		useShallow((state) => ({
-			play: state.play,
-			page: state.page,
-			isLoading: state.isLoading,
-			settings: state.settings,
-			sortedQuestions: state.sortedQuestions,
-			activeQuestionId: state.activeQuestionId,
-			isAnswersShown: state.isAnswersShown,
-			resetScores: state.resetScores,
-			isCountdown: state.isCountdown
-		}))
-	);
-	const {
+		isCountdown,
 		handleSettings,
 		handleStartQuiz,
 		handleEndQuiz,
@@ -45,7 +29,31 @@ const Footer = () => {
 		handlePrevButton,
 		handleNextButton,
 		handleOpenModal
-	} = useContext(ControlsContext);
+	} = useBoundStore(
+		useShallow((state) => ({
+			play: state.play,
+			page: state.page,
+			isLoading: state.isLoading,
+			settings: state.settings,
+			sortedQuestions: state.sortedQuestions,
+			activeQuestionId: state.activeQuestionId,
+			isAnswersShown: state.isAnswersShown,
+			resetScores: state.resetScores,
+			isCountdown: state.isCountdown,
+			handleSettings: state.handleSettings,
+			handleStartQuiz: state.handleStartQuiz,
+			handleEndQuiz: state.handleEndQuiz,
+			handleShowAnswers: state.handleShowAnswers,
+			handleAnswersToResult: state.handleAnswersToResult,
+			handleShowScoreboard: state.handleShowScoreboard,
+			handleScoreboardToResult: state.handleScoreboardToResult,
+			handleNewTry: state.handleNewTry,
+			handleOpenSettings: state.handleOpenSettings,
+			handlePrevButton: state.handlePrevButton,
+			handleNextButton: state.handleNextButton,
+			handleOpenModal: state.handleOpenModal
+		}))
+	);
 
 	const renderQuizButtons = () => {
 		if (isAnswersShown) {

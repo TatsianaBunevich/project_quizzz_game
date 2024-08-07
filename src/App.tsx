@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import Blobs from './components/Blobs/Blobs';
 import Toggle from './components/Toggle/Toggle';
-import { QuizContextProvider } from './context/QuizContext';
 import PageContainer from './components/PageContainer/PageContainer';
 import { Theme } from './types';
 

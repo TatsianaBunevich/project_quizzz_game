@@ -175,10 +175,8 @@ QuizSlice
 		set((state) => {
 			const newState = Object.entries(initialQuizState).reduce((acc, [key, value]) => {
 				if (!exceptParams.includes(key as keyof QuizState)) {
-					state[key] = initialQuizState[key as keyof QuizState];
 					acc[key as keyof QuizState] = value as QuizState[keyof QuizState];
 				}
-			});
 				return acc;
 			}, {} as Partial<QuizState>);
 
@@ -186,10 +184,8 @@ QuizSlice
 
 		},
 		false,
-		'quiz/resetQuizStateExcept'
 		'quiz/resetPartialQuizState'
 		);
-	},
 	}
 });
 
@@ -202,4 +198,3 @@ const createQuestionsUrl = (settings: SettingsType) => {
 
 	return `https://opentdb.com/api.php?${params}`;
 };
-

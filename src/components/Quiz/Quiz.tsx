@@ -1,7 +1,6 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
-import { useContext, useRef, useEffect } from 'react';
-import { ControlsContext } from '../../context/ControlsContext';
+import { useRef, useEffect } from 'react';
 import Question from '../Question/Question';
 import Modal from '../Modal/Modal';
 import SubmitButton from '../SubmitButton/SubmitButton';
@@ -11,16 +10,20 @@ const Quiz = () => {
 	const {
 		sortedQuestions,
 		activeQuestionId,
-		isAnswersShown
+		isAnswersShown,
+		handleCheckAnswers,
+		handleOpenSettings,
+		handleCloseModal
 	} = useBoundStore(
 		useShallow((state) => ({
 			sortedQuestions: state.sortedQuestions,
 			activeQuestionId: state.activeQuestionId,
-			isAnswersShown: state.isAnswersShown
+			isAnswersShown: state.isAnswersShown,
+			handleCheckAnswers: state.handleCheckAnswers,
+			handleOpenSettings: state.handleOpenSettings,
+			handleCloseModal: state.handleCloseModal
 		}))
 	);
-
-	const { handleCheckAnswers, handleOpenSettings, handleCloseModal } = useContext(ControlsContext);
 	const progress = useRef<HTMLDivElement>(null);
 	const oldLength = useRef(0);
 	const newLength = (activeQuestionId ) / (sortedQuestions.length - 1) * 100;

@@ -1,6 +1,5 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
-import { ControlsContextProvider } from '../../context/ControlsContext';
 import SettingsSkeleton from '../SettingsSkeleton/SettingsSkeleton';
 import Countdown from '../Countdown/Countdown';
 import QuizSkeleton from '../QuizSkeleton/QuizSkeleton';
@@ -45,7 +44,7 @@ const PageContainer = () => {
 	}
 
 	return (
-		<ControlsContextProvider>
+		<>
 			<main>
 				{play ?
 					switchPage(page) :
@@ -53,9 +52,8 @@ const PageContainer = () => {
 				}
 			</main>
 			<Footer />
-		</ControlsContextProvider>
+		</>
 	);
 };
 
 export default PageContainer;
-
