@@ -11,7 +11,7 @@ const SettingsSkeleton = () => {
 					<Skeleton width="10em" height="1.5em" />
 				</h2>
 				<div className={stylesSetting.options}>
-					{[...Array(10)].map((_, index) => {
+					{Array.from({ length: 10 }).map((_, index) => {
 						const width = Math.random() * (50 - 10) + 10;
 						return (
 							<div key={index} style={{width: `${width}%`}} className={`${stylesSettings.option} ${styles.option}`}>

@@ -15,7 +15,7 @@ const QuizSkeleton = () => {
 					<Skeleton width="100%" height="1em" />
 				</h2>
 				<div className={stylesQuestion.answers}>
-					{[...Array(4)].map((_, index) => (
+					{Array.from({ length: 4 }).map((_, index) => (
 						<div key={index} className={`${stylesQuestion.answer} ${styles.answer}`}>
 							<Skeleton width="100%" height="1em" />
 						</div>

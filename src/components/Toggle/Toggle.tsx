@@ -1,10 +1,10 @@
 import styles from './Toggle.module.css';
 import { Theme } from '../../types';
 
-type ToggleProps = {
+interface ToggleProps {
 	theme: Theme;
 	onSwitchTheme: (theme: Theme) => void;
-};
+}
 
 const Toggle = ({ theme, onSwitchTheme }: ToggleProps) => {
 
