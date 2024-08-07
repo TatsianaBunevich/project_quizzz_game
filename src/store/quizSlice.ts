@@ -1,10 +1,7 @@
 import { SliceWithMiddlewares } from '../typesStore';
 import { UtilsSlice } from './utilsSlice';
 import { SettingsSlice } from './settingsSlice';
-import { SettingsType, SettingType, QuestionsResponse, Question } from '../types';
-
-import { useState, useEffect } from 'react';
-import { sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../types';
+import { SettingsType, SettingType, QuestionsResponse, Question, sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../types';
 
 interface QuizState {
 	questions: Question[];
@@ -21,8 +18,7 @@ interface QuizState {
 
 interface QuizActions {
 	getQuestions: () => Promise<void>;
-	createSortedQuestions: () => void;
-	updateSortedQuestions: () => void;
+	sortQuestions: () => void;
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	incActiveQuestionId: () => void;
 	decActiveQuestionId: () => void;
@@ -30,7 +26,7 @@ interface QuizActions {
 	incRoundTimeCounter: () => void;
 	calculateScore: () => void;
 	resetScores: () => void;
-	resetQuizStateExcept: (...exceptParams: (keyof QuizState)[]) => void;
+	resetPartialQuizState: (...exceptParams: (keyof QuizState)[]) => void;
 }
 
 export interface QuizSlice extends QuizState, QuizActions {}
@@ -53,6 +49,7 @@ QuizSlice & UtilsSlice & SettingsSlice,
 QuizSlice
 > = (set, get) => ({
 	...initialQuizState,
+
 	getQuestions: async () => {
 		const data = await get().fetchWithRetry(createQuestionsUrl(get().settings), 3, 300) as QuestionsResponse | undefined;
 		set({ questions: data?.results ?? [] },
@@ -60,34 +57,35 @@ QuizSlice
 			'quiz/getQuestions'
 		);
 	},
-	createSortedQuestions: () => {
-		const mappedQuestions: sortedQuestionsType[] = get().questions.map(q => ({
-			question: q.question,
-			answers: [
-				{
-					answer: q.correct_answer,
-					isCorrect: true
-				},
-				...q.incorrect_answers.map(a => ({
-					answer: a,
-					isCorrect: false
-				}))
-			],
-			timer: get().settings.timer
-		}));
 
-		set({ sortedQuestions: sortAnswers(mappedQuestions) },
-			false,
-			'quiz/createSortedQuestions'
+	sortQuestions: () => {
+		set((state) => {
+			const mappedQuestions: sortedQuestionsType[] = state.questions.map(q => ({
+				question: q.question,
+				answers: [
+					{
+						answer: q.correct_answer,
+						isCorrect: true
+					},
+					...q.incorrect_answers.map(a => ({
+						answer: a,
+						isCorrect: false
+					}))
+				],
+				timer: state.settings.timer
+			}));
+			const initialQuestions = state.sortedQuestions;
+			const settedQuestions = !initialQuestions.length ? mappedQuestions : initialQuestions;
+
+			settedQuestions.sort(() => Math.random() - 0.5).forEach(item => item.answers.sort(() => Math.random() - 0.5));
+			state.sortedQuestions = settedQuestions;
+		},
+		false,
+		'quiz/sortQuestions'
 		);
 	},
-	updateSortedQuestions: () => {
-		set({ sortedQuestions: sortAnswers(get().sortedQuestions) },
-			false,
-			'quiz/updateSortedQuestions'
-		);
-	},
-	handleSelectAnswer: (question: string, a: Answer) => {
+
+	handleSelectAnswer: (question, a) => {
 		set((state) => {
 			const foundIndex = state.selectedAnswers.findIndex(item => item.question === question);
 			if (foundIndex === -1) {
@@ -107,6 +105,7 @@ QuizSlice
 		'quiz/handleSelectAnswer'
 		);
 	},
+
 	incActiveQuestionId: () => {
 		set((state) => {
 			state.activeQuestionId += 1
@@ -115,6 +114,7 @@ QuizSlice
 		'quiz/incActiveQuestionId'
 		);
 	},
+
 	decActiveQuestionId: () => {
 		set((state) => {
 			state.activeQuestionId -= 1
@@ -123,12 +123,14 @@ QuizSlice
 		'quiz/decActiveQuestionId'
 		);
 	},
+
 	setIsAnswersShown: (isAnswersShown) => {
 		set( { isAnswersShown },
 			false,
 			'quiz/setIsAnswersShown'
 		);
 	},
+
 	incRoundTimeCounter: () => {
 		set((state) => {
 			state.roundTimeCounter += 1
@@ -137,53 +139,58 @@ QuizSlice
 		'quiz/incActiveQuestionId'
 		);
 	},
-	calculateScore: () => {
-		const points = get().selectedAnswers.reduce((acc, item) => item.isCorrect ? acc + 1 : acc, 0);
-		const goal = get().sortedQuestions.length;
-		const percentage = (points / goal) * 100;
-		const total = Number(percentage.toFixed(0));
-		const step = 100 / 3;
-		const status = percentage >= step * 2 ? Status.GOOD : percentage >= step ? Status.NORMAL : Status.BAD;
 
-		set({
-			calculatedScore: points,
-			roundScore: total,
-			roundStatus: status
+	calculateScore: () => {
+		set((state) => {
+			const points = state.selectedAnswers.reduce((acc, item) => (item.isCorrect ? acc + 1 : acc), 0);
+			const goal = state.sortedQuestions.length;
+			const percentage = (points / goal) * 100;
+			const total = Number(percentage.toFixed(0));
+			const step = 100 / 3;
+			const status = (percentage >= step * 2) ? Status.GOOD : (percentage >= step ? Status.NORMAL : Status.BAD);
+
+			state.calculatedScore = points;
+			state.roundScore = total;
+			state.roundStatus = status;
+			state.scores.push({
+				index: state.scores.length + 1,
+				total,
+				status,
+				time: state.roundTimeCounter
+			});
 		},
 		false,
 		'quiz/calculateScore'
 		);
-
-		set((state) => {
-			state.scores.push({
-				index: get().scores.length + 1,
-				total,
-				status: status,
-				time: get().roundTimeCounter
-			})
-		},
-		false,
-		'quiz/updateTotalScore'
-		);
 	},
+
 	resetScores: () => {
 		set({ scores: initialQuizState.scores },
 			false,
 			'quiz/resetScores'
 		);
 	},
-	resetQuizStateExcept: (...exceptParams) => {
+
+	resetPartialQuizState: (...exceptParams) => {
 		set((state) => {
-			Object.keys(initialQuizState).forEach((key) => {
+			const newState = Object.entries(initialQuizState).reduce((acc, [key, value]) => {
 				if (!exceptParams.includes(key as keyof QuizState)) {
 					state[key] = initialQuizState[key as keyof QuizState];
+					acc[key as keyof QuizState] = value as QuizState[keyof QuizState];
 				}
 			});
+				return acc;
+			}, {} as Partial<QuizState>);
+
+			Object.assign(state, newState);
+
 		},
 		false,
 		'quiz/resetQuizStateExcept'
+		'quiz/resetPartialQuizState'
 		);
 	},
+	}
 });
 
 const createQuestionsUrl = (settings: SettingsType) => {
@@ -194,12 +201,5 @@ const createQuestionsUrl = (settings: SettingsType) => {
 	const params = `amount=${settings.amount}&category=${createSettingId(settings.category)}&difficulty=${createSettingId(settings.difficulty)}&type=${createSettingId(settings.type)}`;
 
 	return `https://opentdb.com/api.php?${params}`;
-};
-
-const sortAnswers = (questions: sortedQuestionsType[]) => {
-	return structuredClone(questions).map(item => ({
-		...item,
-		answers: item.answers.sort(() => Math.random() - 0.5)
-	}));
 };
 

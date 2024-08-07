@@ -46,39 +46,37 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 		togglePlay,
 		setPage,
 		updateSettings,
-		getQuestions,
-		createSortedQuestions,
 		sortedQuestions,
 		activeQuestionId,
-		updateSortedQuestions,
+		getQuestions,
+		sortQuestions,
 		incActiveQuestionId,
 		decActiveQuestionId,
 		setIsAnswersShown,
 		calculateScore,
-		resetQuizStateExcept,
+		resetPartialQuizState,
+		toggleCountdown,
+		setIsModal,
 		resetBoundStore
 	} = useBoundStore(
 		useShallow((state) => ({
 			togglePlay: state.togglePlay,
 			setPage: state.setPage,
 			updateSettings: state.updateSettings,
-			getQuestions: state.getQuestions,
-			createSortedQuestions: state.createSortedQuestions,
 			sortedQuestions: state.sortedQuestions,
 			activeQuestionId: state.activeQuestionId,
-			updateSortedQuestions: state.updateSortedQuestions,
+			getQuestions: state.getQuestions,
+			sortQuestions: state.sortQuestions,
 			incActiveQuestionId: state.incActiveQuestionId,
 			decActiveQuestionId: state.decActiveQuestionId,
 			setIsAnswersShown: state.setIsAnswersShown,
 			calculateScore: state.calculateScore,
-			resetQuizStateExcept: state.resetQuizStateExcept,
+			resetPartialQuizState: state.resetPartialQuizState,
+			toggleCountdown: state.toggleCountdown,
+			setIsModal: state.setIsModal,
 			resetBoundStore: state.resetBoundStore
 		}))
 	);
-	const {
-		setIsCountdown,
-		setIsModalShown,
-	} = useContext(QuizContext);
 
 	const handleSettings = async () => {
 		togglePlay();
@@ -88,9 +86,9 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 
 	const handleStartQuiz = async () => {
 		setPage('quiz');
-		setIsCountdown(true);
+		toggleCountdown();
 		await getQuestions();
-		createSortedQuestions();
+		sortQuestions();
 	}
 
 	const handleEndQuiz = () => {
@@ -99,7 +97,7 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 
 	const handleCheckAnswers = () => {
 		calculateScore();
-		setIsModalShown(false);
+		setIsModal(false);
 		setPage('result');
 	}
 
@@ -122,15 +120,15 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 	}
 
 	const handleNewTry = () => {
-		resetQuizStateExcept('questions', 'sortedQuestions', 'scores');
-		updateSortedQuestions();
-		setIsCountdown(true);
+		resetPartialQuizState('questions', 'sortedQuestions', 'scores');
+		sortQuestions();
 		setPage('quiz');
+		toggleCountdown();
 	}
 
 	const handleOpenSettings = () => {
-		resetQuizStateExcept('scores');
-		setIsModalShown(false);
+		resetPartialQuizState('scores');
+		setIsModal(false);
 		setPage('settings');
 	}
 
@@ -151,11 +149,11 @@ export const ControlsContextProvider = ({ children }: ControlsContextProviderPro
 	}
 
 	const handleOpenModal = () => {
-		setIsModalShown(true);
+		setIsModal(true);
 	}
 
 	const handleCloseModal = () => {
-		setIsModalShown(false);
+		setIsModal(false);
 	}
 
 	return (

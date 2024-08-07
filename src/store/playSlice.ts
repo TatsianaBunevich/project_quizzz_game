@@ -16,10 +16,7 @@ export const initialPlayState: PlayState = {
 
 export const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
 	...initialPlayState,
-	togglePlay: () => set((state) => ({
-		play: !state.play
-	}),
-	false,
-	'play/togglePlay'
-	)
+	togglePlay: () => {
+		set((state) => ({ play: !state.play }), false, 'play/togglePlay');
+	}
 });

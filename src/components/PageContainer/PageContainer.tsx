@@ -1,7 +1,5 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
-import { useContext } from 'react';
-import { QuizContext } from '../../context/QuizContext';
 import { ControlsContextProvider } from '../../context/ControlsContext';
 import SettingsSkeleton from '../SettingsSkeleton/SettingsSkeleton';
 import Countdown from '../Countdown/Countdown';
@@ -14,10 +12,18 @@ import Footer from '../Footer/Footer';
 import { Page } from '../../types';
 
 const PageContainer = () => {
-	const { isCountdown, setIsCountdown } = useContext(QuizContext);
-
-	const { play, page, isLoading } = useBoundStore(
-		useShallow((state) => ({ play: state.play, page: state.page, isLoading: state.isLoading }))
+	const {
+		play,
+		page,
+		isLoading,
+		isCountdown
+	} = useBoundStore(
+		useShallow((state) => ({
+			play: state.play,
+			page: state.page,
+			isLoading: state.isLoading,
+			isCountdown: state.isCountdown
+		}))
 	);
 
 	const switchPage = (page: Page) => {
@@ -28,7 +34,7 @@ const PageContainer = () => {
 			case 'settings':
 				return isLoading ? <SettingsSkeleton /> : <Settings />;
 			case 'quiz':
-				return isCountdown ? <Countdown setIsCountdown={setIsCountdown} /> : isLoading ? <QuizSkeleton /> : <Quiz />;
+				return isCountdown ? <Countdown /> : isLoading ? <QuizSkeleton /> : <Quiz />;
 			case 'result':
 				return <Result />;
 			case 'scoreboard':
@@ -52,3 +58,4 @@ const PageContainer = () => {
 };
 
 export default PageContainer;
+

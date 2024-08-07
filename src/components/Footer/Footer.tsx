@@ -1,7 +1,6 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useContext } from 'react';
-import { QuizContext } from '../../context/QuizContext';
 import { ControlsContext } from '../../context/ControlsContext';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import FooterQuizSkeleton from '../FooterQuizSkeleton/FooterQuizSkeleton';
@@ -18,7 +17,8 @@ const Footer = () => {
 		sortedQuestions,
 		activeQuestionId,
 		isAnswersShown,
-		resetScores
+		resetScores,
+		isCountdown
 	} = useBoundStore(
 		useShallow((state) => ({
 			play: state.play,
@@ -28,12 +28,10 @@ const Footer = () => {
 			sortedQuestions: state.sortedQuestions,
 			activeQuestionId: state.activeQuestionId,
 			isAnswersShown: state.isAnswersShown,
-			resetScores: state.resetScores
+			resetScores: state.resetScores,
+			isCountdown: state.isCountdown
 		}))
 	);
-	const {
-		isCountdown,
-	} = useContext(QuizContext);
 	const {
 		handleSettings,
 		handleStartQuiz,

@@ -27,12 +27,14 @@ const useBoundStore = create<BoundState>()(
 				...createQuizSlice(set, get, api),
 				...createUtilsSlice(set, get, api),
 				resetBoundStore: () => {
-					set(initialPlayState, false, 'store/resetPlayState');
-					set(initialPageState, false, 'store/resetPageState');
-					set(initialSettingsState, false, 'store/resetSettingsState');
-					set(initialQuizState, false, 'store/resetQuizState');
-					set(initialUtilsState, false, 'store/resetUtilsState');
-				},
+					set({
+						...initialPlayState,
+						...initialPageState,
+						...initialSettingsState,
+						...initialQuizState,
+						...initialUtilsState,
+					}, false, 'store/resetBoundStore');
+				}
 			}),
 		),
 		{

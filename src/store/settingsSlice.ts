@@ -23,6 +23,7 @@ SettingsSlice & UtilsSlice,
 SettingsSlice
 > = (set, get) => ({
 	...initialSettingsState,
+
 	updateSettings: async () => {
 		const data = await get().fetchWithRetry('https://opentdb.com/api_category.php', 3, 300) as CategoriesResponse | undefined;
 		set((state) => {
@@ -34,20 +35,18 @@ SettingsSlice
 			state.settings.category.push(...triviaCategories);
 		},
 		false,
-		'settings/updateSettings'
-		);
+		'settings/updateSettings');
 	},
-	handleSelectOption: (optionId: IdType | number, setting: keyof SettingsType) => {
+
+	handleSelectOption: (optionId, setting) => {
 		set((state) => {
 			if (setting === 'amount' || setting === 'timer') {
 				state.settings[setting] = optionId as number;
 			} else {
 				const settingsArray = state.settings[setting];
-				const foundItem = settingsArray.find((item) => item.id === optionId);
+				const foundItem = settingsArray.find(item => item.id === optionId);
 
-				settingsArray.forEach((item) => {
-					item.isSelect = false;
-				});
+				settingsArray.forEach(item => item.isSelect = false);
 
 				if (foundItem) {
 					foundItem.isSelect = true;
@@ -55,7 +54,6 @@ SettingsSlice
 			}
 		},
 		false,
-		'settings/handleSelectOption'
-		);
+		'settings/handleSelectOption');
 	}
 });

@@ -1,7 +1,6 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useContext, useRef, useEffect } from 'react';
-import { QuizContext } from '../../context/QuizContext';
 import { ControlsContext } from '../../context/ControlsContext';
 import Question from '../Question/Question';
 import Modal from '../Modal/Modal';
@@ -9,10 +8,6 @@ import SubmitButton from '../SubmitButton/SubmitButton';
 import styles from './Quiz.module.css';
 
 const Quiz = () => {
-	const {
-		isModalShown,
-	} = useContext(QuizContext);
-
 	const {
 		sortedQuestions,
 		activeQuestionId,
@@ -49,7 +44,7 @@ const Quiz = () => {
 					return <Question key={index} quizItem={q} id={index} />
 				})}
 			</div>
-			<Modal isOpen={isModalShown}>
+			<Modal>
 				<h2>Do you want to</h2>
 				<SubmitButton className={styles.modalButton} onClick={handleCloseModal}>Back to the game</SubmitButton>
 				<SubmitButton className={styles.modalButton} onClick={handleCheckAnswers}>See the result</SubmitButton>

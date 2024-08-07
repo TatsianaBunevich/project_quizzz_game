@@ -1,5 +1,5 @@
 import useBoundStore from '../../store/boundStore';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Scoreboard.module.css';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { Score } from '../../types';
@@ -12,7 +12,7 @@ const Scoreboard = () => {
 	const [sortedScore, setSortedScore] = useState<Score[]>([]);
 	const [sortConfig, setSortConfig] = useState<{ key: keyof Score, ascending: boolean }>({ key: 'index', ascending: true });
 
-	const scoresCallback = useCallback(() => {
+	useEffect(() => {
 		const key = sortConfig.key;
 		const sorted = [...scores].sort((a, b) => {
 			if (a[key] < b[key]) return sortConfig.ascending ? -1 : 1;
@@ -21,10 +21,6 @@ const Scoreboard = () => {
 		});
 		setSortedScore(sorted);
 	}, [scores, sortConfig.key, sortConfig.ascending]);
-
-	useEffect(() => {
-		scoresCallback();
-	}, [scoresCallback]);
 
 	const updateSortConfig = (key: keyof Score) => {
 		setSortConfig({ key, ascending: !sortConfig.ascending });

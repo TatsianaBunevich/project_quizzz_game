@@ -17,9 +17,7 @@ export const initialPageState: PageState = {
 
 export const createPageSlice: SliceWithMiddlewares<PageSlice> = (set) => ({
 	...initialPageState,
-	setPage: (page) => set(
-		{ page },
-		false,
-		'page/setPage'
-	)
+	setPage: (page) => {
+		set({ page }, false, 'page/setPage');
+	}
 });

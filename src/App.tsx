@@ -34,9 +34,7 @@ const App = () => {
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
 				</header>
-				<QuizContextProvider>
-					<PageContainer />
-				</QuizContextProvider>
+				<PageContainer />
 			</div>
 			{!play && (
 				<div className={styles.contacts}>
