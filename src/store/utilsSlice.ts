@@ -72,7 +72,14 @@ UtilsSlice
 			get().intervalId = setInterval(() => {
 				set((state) => { state.timeLeft -= 1; }, false, 'quiz/decTimeLeft');
 				if (get().timeLeft === 0) {
-					get().settings.timer && get().handleNextButton();
+					if (get().settings.timer && !get().isCountdown) {
+						get().handleNextButton();
+					}
+				} else if (get().timeLeft === -1) {
+					if (get().isCountdown) {
+						get().toggleCountdown();
+						get().clearIntervalId();
+					}
 				}
 			}, 1000);
 		}

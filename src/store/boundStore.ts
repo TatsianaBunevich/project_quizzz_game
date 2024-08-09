@@ -52,8 +52,8 @@ const useBoundStore = create<BoundState>()(
 				handleStartQuiz: async () => {
 					get().setPage('quiz');
 					get().toggleCountdown();
-					await get().getQuestions();
-					get().sortQuestions();
+					get().runIntervalId(4);
+					await get().getQuestions().then(() => get().sortQuestions());
 					await new Promise((resolve) => setTimeout(resolve, 5000));
 					get().settings.timer && get().runIntervalId(get().settings.timer);
 				},
@@ -87,6 +87,7 @@ const useBoundStore = create<BoundState>()(
 					get().resetPartialQuizState('questions', 'sortedQuestions', 'scores');
 					get().setPage('quiz');
 					get().toggleCountdown();
+					get().runIntervalId(4);
 					get().sortQuestions();
 					await new Promise((resolve) => setTimeout(resolve, 5000));
 					get().settings.timer && get().runIntervalId(get().settings.timer);
