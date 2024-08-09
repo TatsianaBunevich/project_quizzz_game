@@ -7,13 +7,7 @@ import { SettingsSlice, initialSettingsState, createSettingsSlice } from './sett
 import { QuizSlice, initialQuizState, createQuizSlice } from './quizSlice';
 import { UtilsSlice, initialUtilsState, createUtilsSlice } from './utilsSlice';
 
-export interface BoundState extends
-PlaySlice,
-PageSlice,
-SettingsSlice,
-QuizSlice,
-UtilsSlice
-{
+export interface BoundActions {
 	handleSettings: () => Promise<void>;
 	handleStartQuiz: () => Promise<void>;
 	handleCheckAnswers: () => void;
@@ -21,7 +15,7 @@ UtilsSlice
 	handleAnswersToResult: () => void;
 	handleShowScoreboard: () => void;
 	handleScoreboardToResult: () => void;
-	handleNewTry: () => void;
+	handleNewTry: () => Promise<void>;
 	handleOpenSettings: () => void;
 	handlePrevButton: () => void;
 	handleNextButton: () => void;
@@ -30,6 +24,14 @@ UtilsSlice
 	handleEndQuiz: () => void;
 	resetBoundStore: () => void;
 }
+
+export interface BoundState extends
+PlaySlice,
+PageSlice,
+SettingsSlice,
+QuizSlice,
+UtilsSlice,
+BoundActions {}
 
 const useBoundStore = create<BoundState>()(
 	devtools(
@@ -52,9 +54,12 @@ const useBoundStore = create<BoundState>()(
 					get().toggleCountdown();
 					await get().getQuestions();
 					get().sortQuestions();
+					await new Promise((resolve) => setTimeout(resolve, 5000));
+					get().settings.timer && get().runIntervalId(get().settings.timer);
 				},
 
 				handleCheckAnswers: () => {
+					get().settings.timer && get().incRoundTimeCounter(get().settings.timer - get().timeLeft);
 					get().calculateScore();
 					get().isModal && get().setIsModal(false);
 					get().setPage('result');
@@ -78,11 +83,13 @@ const useBoundStore = create<BoundState>()(
 					get().setPage('result');
 				},
 
-				handleNewTry: () => {
+				handleNewTry: async () => {
 					get().resetPartialQuizState('questions', 'sortedQuestions', 'scores');
 					get().setPage('quiz');
 					get().toggleCountdown();
 					get().sortQuestions();
+					await new Promise((resolve) => setTimeout(resolve, 5000));
+					get().settings.timer && get().runIntervalId(get().settings.timer);
 				},
 
 				handleOpenSettings: () => {
@@ -100,19 +107,24 @@ const useBoundStore = create<BoundState>()(
 				},
 
 				handleNextButton: () => {
+					get().settings.timer && get().clearIntervalId();
 					if (get().activeQuestionId === get().sortedQuestions.length - 1) {
 						get().handleCheckAnswers();
 					} else {
+						get().settings.timer && get().incRoundTimeCounter(get().settings.timer - get().timeLeft);
 						get().incActiveQuestionId();
+						get().settings.timer && get().runIntervalId(get().settings.timer);
 					}
 				},
 
 				handleOpenModal: () => {
+					get().settings.timer && get().clearIntervalId();
 					get().setIsModal(true);
 				},
 
 				handleCloseModal: () => {
 					get().setIsModal(false);
+					get().settings.timer && get().runIntervalId(get().timeLeft);
 				},
 
 				handleEndQuiz: () => {

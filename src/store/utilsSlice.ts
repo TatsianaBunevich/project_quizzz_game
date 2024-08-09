@@ -1,16 +1,22 @@
 import { SliceWithMiddlewares } from '../typesStore';
-import {  CategoriesResponse, QuestionsResponse } from '../types';
+import { SettingsSlice } from './settingsSlice';
+import { BoundActions } from './boundStore';
+import { CategoriesResponse, QuestionsResponse } from '../types';
 
 interface UtilsState {
 	isLoading: boolean;
 	isCountdown: boolean;
 	isModal: boolean;
+	timeLeft: number;
+	intervalId: number | null;
 }
 
 interface UtilsActions {
 	fetchWithRetry: (url: string, retries: number, backoff: number) => Promise<CategoriesResponse | QuestionsResponse | undefined>;
 	toggleCountdown: () => void;
 	setIsModal: (isModal: boolean) => void;
+	runIntervalId: (timer: number) => void;
+	clearIntervalId: () => void;
 }
 
 export interface UtilsSlice extends UtilsState, UtilsActions {}
@@ -19,9 +25,14 @@ export const initialUtilsState: UtilsState = {
 	isLoading: false,
 	isCountdown: false,
 	isModal: false,
+	timeLeft: 0,
+	intervalId: null,
 }
 
-export const createUtilsSlice: SliceWithMiddlewares<UtilsSlice> = (set) => ({
+export const createUtilsSlice: SliceWithMiddlewares<
+UtilsSlice & SettingsSlice & BoundActions,
+UtilsSlice
+> = (set, get) => ({
 	...initialUtilsState,
 
 	fetchWithRetry: async (url, retries, backoff) => {
@@ -52,5 +63,28 @@ export const createUtilsSlice: SliceWithMiddlewares<UtilsSlice> = (set) => ({
 
 	setIsModal: (isModal) => {
 		set({ isModal }, false, 'utils/setIsModal');
+	},
+
+	runIntervalId: (timer) => {
+		if (get().intervalId === null) {
+			set({ timeLeft: timer }, false, 'quiz/setInitTimeLeft');
+
+			get().intervalId = setInterval(() => {
+				set((state) => { state.timeLeft -= 1; }, false, 'quiz/decTimeLeft');
+				if (get().timeLeft === 0) {
+					get().settings.timer && get().handleNextButton();
+				}
+			}, 1000);
+		}
+	},
+
+	clearIntervalId: () => {
+		set((state) => {
+			if (state.intervalId !== null) {
+				clearInterval(state.intervalId);
+				state.intervalId = null;
+			}
+		},
+		false, 'quiz/clearIntervalId');
 	}
 });

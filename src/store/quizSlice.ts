@@ -23,7 +23,7 @@ interface QuizActions {
 	incActiveQuestionId: () => void;
 	decActiveQuestionId: () => void;
 	setIsAnswersShown: (isAnswersShown: boolean) => void;
-	incRoundTimeCounter: () => void;
+	incRoundTimeCounter: (counter: number) => void;
 	calculateScore: () => void;
 	resetScores: () => void;
 	resetPartialQuizState: (...exceptParams: (keyof QuizState)[]) => void;
@@ -54,8 +54,7 @@ QuizSlice
 		const data = await get().fetchWithRetry(createQuestionsUrl(get().settings), 3, 300) as QuestionsResponse | undefined;
 		set({ questions: data?.results ?? [] },
 			false,
-			'quiz/getQuestions'
-		);
+			'quiz/getQuestions');
 	},
 
 	sortQuestions: () => {
@@ -71,8 +70,7 @@ QuizSlice
 						answer: a,
 						isCorrect: false
 					}))
-				],
-				timer: state.settings.timer
+				]
 			}));
 			const initialQuestions = state.sortedQuestions;
 			const settedQuestions = !initialQuestions.length ? mappedQuestions : initialQuestions;
@@ -81,8 +79,7 @@ QuizSlice
 			state.sortedQuestions = settedQuestions;
 		},
 		false,
-		'quiz/sortQuestions'
-		);
+		'quiz/sortQuestions');
 	},
 
 	handleSelectAnswer: (question, a) => {
@@ -102,8 +99,7 @@ QuizSlice
 			}
 		},
 		false,
-		'quiz/handleSelectAnswer'
-		);
+		'quiz/handleSelectAnswer');
 	},
 
 	incActiveQuestionId: () => {
@@ -111,8 +107,7 @@ QuizSlice
 			state.activeQuestionId += 1
 		},
 		false,
-		'quiz/incActiveQuestionId'
-		);
+		'quiz/incActiveQuestionId');
 	},
 
 	decActiveQuestionId: () => {
@@ -120,24 +115,21 @@ QuizSlice
 			state.activeQuestionId -= 1
 		},
 		false,
-		'quiz/decActiveQuestionId'
-		);
+		'quiz/decActiveQuestionId');
 	},
 
 	setIsAnswersShown: (isAnswersShown) => {
 		set( { isAnswersShown },
 			false,
-			'quiz/setIsAnswersShown'
-		);
+			'quiz/setIsAnswersShown');
 	},
 
-	incRoundTimeCounter: () => {
+	incRoundTimeCounter: (counter) => {
 		set((state) => {
-			state.roundTimeCounter += 1
+			state.roundTimeCounter += counter
 		},
 		false,
-		'quiz/incActiveQuestionId'
-		);
+		'quiz/incRoundTimeCounter');
 	},
 
 	calculateScore: () => {
@@ -160,15 +152,13 @@ QuizSlice
 			});
 		},
 		false,
-		'quiz/calculateScore'
-		);
+		'quiz/calculateScore');
 	},
 
 	resetScores: () => {
 		set({ scores: initialQuizState.scores },
 			false,
-			'quiz/resetScores'
-		);
+			'quiz/resetScores');
 	},
 
 	resetPartialQuizState: (...exceptParams) => {
@@ -184,8 +174,7 @@ QuizSlice
 
 		},
 		false,
-		'quiz/resetPartialQuizState'
-		);
+		'quiz/resetPartialQuizState');
 	}
 });
 

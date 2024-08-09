@@ -1,25 +1,10 @@
 .question {
   text-align: center;
-  display: none;
+  display: grid;
   padding: 1em 0;
 }
 
-.question.active {
-  display: grid;
-}
-
-.question:not(.allShown).active {
-  animation: show 1s;
-}
-
-@keyframes show {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+/* TODO: make animation on every render */
 
 .questionNumber {
   font-family: "Karla", sans-serif;

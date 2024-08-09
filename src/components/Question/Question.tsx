@@ -1,6 +1,5 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
-import QuestionTimer from '../QuestionTimer/QuestionTimer';
 import Button from '../Button/Button';
 import { sortedQuestionsType, SelectedAnswer } from '../../types';
 import styles from './Question.module.css';
@@ -18,26 +17,16 @@ const Question = ({ quizItem, id }: QuestionProps) => {
 	const {
 		handleSelectAnswer,
 		selectedAnswers,
-		activeQuestionId,
 		isAnswersShown
 	} = useBoundStore(
 		useShallow((state) => ({
 			handleSelectAnswer: state.handleSelectAnswer,
 			selectedAnswers: state.selectedAnswers,
-			activeQuestionId: state.activeQuestionId,
 			isAnswersShown: state.isAnswersShown
 		}))
 	);
 
 	const selectedAnswer: OptionalSelectedAnswer = selectedAnswers.find(item => item?.question === quizItem.question);
-	const isActive = activeQuestionId === id && !isAnswersShown;
-
-	const questionClasses = () => {
-		if (isActive) {
-			return styles.active;
-		}
-		return isAnswersShown ? [styles.active, styles.allShown].join(' ') : '';
-	};
 
 	const decodeHtmlEntities = (text: string) => {
 		const parser = new DOMParser();
@@ -83,8 +72,7 @@ const Question = ({ quizItem, id }: QuestionProps) => {
 	const answerClasses = isAnswersShown ? showAnswers(selectedAnswer) : {};
 
 	return (
-		<div className={`${styles.question} ${questionClasses()}`}>
-			{quizItem.timer > 0 && isActive && <QuestionTimer timer={quizItem.timer} />}
+		<div className={`${styles.question} ${isAnswersShown ? styles.allShown : ''}`}>
 			<div className={styles.questionNumber}>{id+1}</div>
 			<h2 className={styles.questionTitle}>
 				<span className={styles.questionShownNumber}>{id+1}</span>

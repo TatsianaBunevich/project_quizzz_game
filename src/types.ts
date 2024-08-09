@@ -71,7 +71,6 @@ export interface Answer {
 export interface sortedQuestionsType {
 	question: string;
 	answers: Answer[];
-	timer: number;
 }
 
 export enum Status {

@@ -25,7 +25,7 @@ const Result = () => {
 	const progress = useRef<HTMLDivElement>(null);
 	const [result, setResult] = useState(true);
 	const statusClass = roundStatus === Status.GOOD ? styles.good : roundStatus === Status.NORMAL ? styles.normal : styles.bad;
-
+	// TODO: fix animation
 	useEffect(() => {
 		if (progress.current) {
 			progress.current.style.setProperty("--score", `${roundScore}`);
