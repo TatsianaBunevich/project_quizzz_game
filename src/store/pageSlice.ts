@@ -1,23 +1,11 @@
-import { SliceWithMiddlewares } from "../typesStore";
-import { Page } from '../types';
-
-interface PageState {
-    page: Page;
-}
-
-interface PageActions {
-    setPage: (page: Page) => void;
-}
-
-export interface PageSlice extends PageState, PageActions {}
+import { ActionsWithMiddlewares, PageState, PageActions } from './types';
 
 export const initialPageState: PageState = {
 	page: null,
 }
 
-export const createPageSlice: SliceWithMiddlewares<PageSlice> = (set) => ({
-	...initialPageState,
+export const createPageActions: ActionsWithMiddlewares<PageState, PageActions> = (set) => ({
 	setPage: (page) => {
-		set({ page }, false, 'page/setPage');
+		set({ page }, undefined, 'page/setPage');
 	}
 });

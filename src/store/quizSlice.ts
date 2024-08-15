@@ -1,35 +1,5 @@
-import { SliceWithMiddlewares } from '../typesStore';
-import { UtilsSlice } from './utilsSlice';
-import { SettingsSlice } from './settingsSlice';
-import { SettingsType, SettingType, QuestionsResponse, Question, sortedQuestionsType, Answer, SelectedAnswer, Score, Status } from '../types';
-
-interface QuizState {
-	questions: Question[];
-	sortedQuestions: sortedQuestionsType[];
-	selectedAnswers: SelectedAnswer[];
-	activeQuestionId: number;
-	isAnswersShown: boolean;
-	calculatedScore: number;
-	roundScore: number;
-	roundStatus: Status;
-	roundTimeCounter: number;
-	scores: Score[];
-}
-
-interface QuizActions {
-	getQuestions: () => Promise<void>;
-	sortQuestions: () => void;
-	handleSelectAnswer: (question: string, a: Answer) => void;
-	incActiveQuestionId: () => void;
-	decActiveQuestionId: () => void;
-	setIsAnswersShown: (isAnswersShown: boolean) => void;
-	incRoundTimeCounter: (counter: number) => void;
-	calculateScore: () => void;
-	resetScores: () => void;
-	resetPartialQuizState: (...exceptParams: (keyof QuizState)[]) => void;
-}
-
-export interface QuizSlice extends QuizState, QuizActions {}
+import { ActionsWithMiddlewares, QuizState, QuizActions, SettingsState, UtilsActions } from './types';
+import { SettingsType, SettingType, QuestionsResponse, sortedQuestionsType, Status } from '../types';
 
 export const initialQuizState: QuizState = {
 	questions: [],
@@ -44,16 +14,14 @@ export const initialQuizState: QuizState = {
 	scores: [],
 }
 
-export const createQuizSlice: SliceWithMiddlewares<
-QuizSlice & UtilsSlice & SettingsSlice,
-QuizSlice
+export const createQuizActions: ActionsWithMiddlewares<
+QuizState & Pick<UtilsActions, 'fetchWithRetry'> & SettingsState,
+QuizActions
 > = (set, get) => ({
-	...initialQuizState,
-
 	getQuestions: async () => {
 		const data = await get().fetchWithRetry(createQuestionsUrl(get().settings), 3, 300) as QuestionsResponse | undefined;
 		set({ questions: data?.results ?? [] },
-			false,
+			undefined,
 			'quiz/getQuestions');
 	},
 
@@ -78,7 +46,7 @@ QuizSlice
 			settedQuestions.sort(() => Math.random() - 0.5).forEach(item => item.answers.sort(() => Math.random() - 0.5));
 			state.sortedQuestions = settedQuestions;
 		},
-		false,
+		undefined,
 		'quiz/sortQuestions');
 	},
 
@@ -98,7 +66,7 @@ QuizSlice
 				state.selectedAnswers[foundIndex].isCorrect = a.isCorrect;
 			}
 		},
-		false,
+		undefined,
 		'quiz/handleSelectAnswer');
 	},
 
@@ -106,7 +74,7 @@ QuizSlice
 		set((state) => {
 			state.activeQuestionId += 1
 		},
-		false,
+		undefined,
 		'quiz/incActiveQuestionId');
 	},
 
@@ -114,13 +82,13 @@ QuizSlice
 		set((state) => {
 			state.activeQuestionId -= 1
 		},
-		false,
+		undefined,
 		'quiz/decActiveQuestionId');
 	},
 
 	setIsAnswersShown: (isAnswersShown) => {
 		set( { isAnswersShown },
-			false,
+			undefined,
 			'quiz/setIsAnswersShown');
 	},
 
@@ -128,7 +96,7 @@ QuizSlice
 		set((state) => {
 			state.roundTimeCounter += counter
 		},
-		false,
+		undefined,
 		'quiz/incRoundTimeCounter');
 	},
 
@@ -151,13 +119,13 @@ QuizSlice
 				time: state.roundTimeCounter
 			});
 		},
-		false,
+		undefined,
 		'quiz/calculateScore');
 	},
 
 	resetScores: () => {
 		set({ scores: initialQuizState.scores },
-			false,
+			undefined,
 			'quiz/resetScores');
 	},
 
@@ -165,15 +133,14 @@ QuizSlice
 		set((state) => {
 			const newState = Object.entries(initialQuizState).reduce((acc, [key, value]) => {
 				if (!exceptParams.includes(key as keyof QuizState)) {
-					acc[key as keyof QuizState] = value as QuizState[keyof QuizState];
+					acc[key] = value as QuizState[keyof QuizState];
 				}
 				return acc;
-			}, {} as Partial<QuizState>);
+			}, {} as Record<string, QuizState[keyof QuizState]>);
 
 			Object.assign(state, newState);
-
 		},
-		false,
+		undefined,
 		'quiz/resetPartialQuizState');
 	}
 });

@@ -1,29 +1,15 @@
-import { SliceWithMiddlewares } from '../typesStore';
-import { UtilsSlice } from './utilsSlice';
-import { CategoriesResponse, SettingsType, IdType } from '../types';
+import { ActionsWithMiddlewares, SettingsState, SettingsActions, UtilsActions } from './types';
+import { CategoriesResponse } from '../types';
 import { DEFAULTSETTINGS } from '../constants';
-
-interface SettingsState {
-	settings: SettingsType;
-}
-
-interface SettingsActions {
-	updateSettings: () => Promise<void>;
-	handleSelectOption: (optionId: IdType | number, setting: keyof SettingsType) => void;
-}
-
-export interface SettingsSlice extends SettingsState, SettingsActions {}
 
 export const initialSettingsState: SettingsState = {
 	settings: structuredClone(DEFAULTSETTINGS),
 }
 
-export const createSettingsSlice: SliceWithMiddlewares<
-SettingsSlice & UtilsSlice,
-SettingsSlice
+export const createSettingsActions: ActionsWithMiddlewares<
+SettingsState & Pick<UtilsActions, 'fetchWithRetry'>,
+SettingsActions
 > = (set, get) => ({
-	...initialSettingsState,
-
 	updateSettings: async () => {
 		const data = await get().fetchWithRetry('https://opentdb.com/api_category.php', 3, 300) as CategoriesResponse | undefined;
 		set((state) => {
@@ -34,7 +20,7 @@ SettingsSlice
 			}));
 			state.settings.category.push(...triviaCategories);
 		},
-		false,
+		undefined,
 		'settings/updateSettings');
 	},
 
@@ -53,7 +39,7 @@ SettingsSlice
 				}
 			}
 		},
-		false,
+		undefined,
 		'settings/handleSelectOption');
 	}
 });

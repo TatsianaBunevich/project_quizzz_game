@@ -1,22 +1,11 @@
-import { SliceWithMiddlewares } from '../typesStore';
-
-interface PlayState {
-    play: boolean;
-}
-
-interface PlayActions {
-    togglePlay: () => void;
-}
-
-export interface PlaySlice extends PlayState, PlayActions {}
+import { ActionsWithMiddlewares, PlayState, PlayActions } from './types';
 
 export const initialPlayState: PlayState = {
 	play: false,
 }
 
-export const createPlaySlice: SliceWithMiddlewares<PlaySlice> = (set) => ({
-	...initialPlayState,
+export const createPlayActions: ActionsWithMiddlewares<PlayState, PlayActions> = (set) => ({
 	togglePlay: () => {
-		set((state) => ({ play: !state.play }), false, 'play/togglePlay');
+		set((state) => ({ play: !state.play }), undefined, 'play/togglePlay');
 	}
 });
