@@ -72,9 +72,12 @@ export interface QuizActions {
 
 export interface UtilsActions {
 	fetchWithRetry: (url: string, retries: number, backoff: number) => Promise<CategoriesResponse | QuestionsResponse | undefined>;
-	toggleCountdown: () => void;
+	controlCountdown: () => Promise<void>;
+	setIsCountdown: (isCountdown: boolean) => void;
+	runQuestionTimer: (timer?: number) => void;
 	setIsModal: (isModal: boolean) => void;
-	runIntervalId: (timer: number) => void;
+	setTimeLeft: (timeLeft: number) => void;
+	runIntervalId: (callback: () => void) => void;
 	clearIntervalId: () => void;
 }
 

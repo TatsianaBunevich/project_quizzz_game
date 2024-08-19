@@ -10,7 +10,7 @@ export const initialUtilsState: UtilsState = {
 }
 
 export const createUtilsActions: ActionsWithMiddlewares<
-UtilsState & Pick<UtilsActions, 'toggleCountdown' | 'clearIntervalId'> & SettingsState & Pick<ControlsActions, 'handleNextButton'>,
+UtilsState & Pick<UtilsActions, 'setIsCountdown' | 'setTimeLeft' | 'runIntervalId' | 'clearIntervalId'> & SettingsState & Pick<ControlsActions, 'handleNextButton'>,
 UtilsActions
 > = (set, get) => ({
 	fetchWithRetry: async (url, retries, backoff) => {
@@ -35,10 +35,24 @@ UtilsActions
 		}
 	},
 
-	toggleCountdown: () => {
-		set((state) => ({ isCountdown: !state.isCountdown }),
+	controlCountdown: async () => {
+		get().setIsCountdown(true);
+		get().setTimeLeft(5);
+		await new Promise<void>((resolve) => {
+			get().runIntervalId(resolve);
+		});
+		get().setIsCountdown(false);
+	},
+
+	setIsCountdown: (isCountdown) => {
+		set({ isCountdown },
 			undefined,
-			'utils/toggleCountdown');
+			'utils/setIsCountdown');
+	},
+
+	runQuestionTimer: (timer) => {
+		get().setTimeLeft(timer ?? get().settings.timer);
+		get().runIntervalId(get().handleNextButton);
 	},
 
 	setIsModal: (isModal) => {
@@ -47,21 +61,19 @@ UtilsActions
 			'utils/setIsModal');
 	},
 
-	runIntervalId: (timer) => {
-		if (get().intervalId === null) {
-			set({ timeLeft: timer }, undefined, 'quiz/setInitTimeLeft');
+	setTimeLeft: (timeLeft) => {
+		set({ timeLeft },
+			undefined,
+			'quiz/setTimeLeft');
+	},
 
+	runIntervalId: (callback) => {
+		if (get().intervalId === null) {
 			get().intervalId = setInterval(() => {
-				set((state) => { state.timeLeft -= 1; }, undefined, 'quiz/decTimeLeft');
+				set((state) => { state.timeLeft -= 1 }, undefined, 'quiz/decTimeLeft');
 				if (get().timeLeft === 0) {
-					if (get().settings.timer && !get().isCountdown) {
-						get().handleNextButton();
-					}
-				} else if (get().timeLeft === -1) {
-					if (get().isCountdown) {
-						get().toggleCountdown();
-						get().clearIntervalId();
-					}
+					get().clearIntervalId();
+					callback();
 				}
 			}, 1000);
 		}

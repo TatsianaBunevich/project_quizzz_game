@@ -12,11 +12,8 @@ ControlsActions
 
 	handleStartQuiz: async () => {
 		get().setPage('quiz');
-		get().toggleCountdown();
-		get().runIntervalId(4);
-		await get().getQuestions().then(() => get().sortQuestions());
-		await new Promise((resolve) => setTimeout(resolve, 5000));
-		get().settings.timer && get().runIntervalId(get().settings.timer);
+		await Promise.all([get().controlCountdown(), get().getQuestions().then(() => get().sortQuestions())]);
+		get().settings.timer && get().runQuestionTimer();
 	},
 
 	handleCheckAnswers: () => {
@@ -45,11 +42,9 @@ ControlsActions
 	handleNewTry: async () => {
 		get().resetPartialQuizState('questions', 'sortedQuestions', 'scores');
 		get().setPage('quiz');
-		get().toggleCountdown();
-		get().runIntervalId(4);
 		get().sortQuestions();
-		await new Promise((resolve) => setTimeout(resolve, 5000));
-		get().settings.timer && get().runIntervalId(get().settings.timer);
+		await get().controlCountdown();
+		get().settings.timer && get().runQuestionTimer();
 	},
 
 	handleOpenSettings: () => {
@@ -67,13 +62,13 @@ ControlsActions
 	},
 
 	handleNextButton: () => {
-		get().settings.timer && get().clearIntervalId();
+		get().settings.timer && get().intervalId !== null && get().clearIntervalId();
 		if (get().activeQuestionId === get().sortedQuestions.length - 1) {
 			get().handleCheckAnswers();
 		} else {
 			get().settings.timer && get().incRoundTimeCounter(get().settings.timer - get().timeLeft);
 			get().incActiveQuestionId();
-			get().settings.timer && get().runIntervalId(get().settings.timer);
+			get().settings.timer && get().runQuestionTimer();
 		}
 	},
 
@@ -84,7 +79,7 @@ ControlsActions
 
 	handleCloseModal: () => {
 		get().setIsModal(false);
-		get().settings.timer && get().runIntervalId(get().timeLeft);
+		get().settings.timer && get().runQuestionTimer(get().timeLeft);
 	},
 
 	handleEndQuiz: () => {
