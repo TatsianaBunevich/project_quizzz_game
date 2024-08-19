@@ -27,12 +27,10 @@ ControlsActions
 	},
 
 	handleShowAnswers: () => {
-		get().setIsAnswersShown(true);
-		get().setPage('quiz');
+		get().setPage('answers');
 	},
 
 	handleAnswersToResult: () => {
-		get().setIsAnswersShown(false);
 		get().setPage('result');
 	},
 

@@ -53,6 +53,8 @@ export interface SelectedAnswer {
 	isCorrect: boolean;
 }
 
+export type OptionalSelectedAnswer = SelectedAnswer | undefined;
+
 export interface Question {
 	category: string;
 	type: string;

@@ -6,7 +6,6 @@ export const initialQuizState: QuizState = {
 	sortedQuestions: [],
 	selectedAnswers: [],
 	activeQuestionId: 0,
-	isAnswersShown: false,
 	calculatedScore: 0,
 	roundScore: 0,
 	roundStatus: Status.BAD,
@@ -84,12 +83,6 @@ QuizActions
 		},
 		undefined,
 		'quiz/decActiveQuestionId');
-	},
-
-	setIsAnswersShown: (isAnswersShown) => {
-		set( { isAnswersShown },
-			undefined,
-			'quiz/setIsAnswersShown');
 	},
 
 	incRoundTimeCounter: (counter) => {

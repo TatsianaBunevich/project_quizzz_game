@@ -30,7 +30,6 @@ export interface QuizState {
 	sortedQuestions: sortedQuestionsType[];
 	selectedAnswers: SelectedAnswer[];
 	activeQuestionId: number;
-	isAnswersShown: boolean;
 	calculatedScore: number;
 	roundScore: number;
 	roundStatus: Status;
@@ -65,7 +64,6 @@ export interface QuizActions {
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	incActiveQuestionId: () => void;
 	decActiveQuestionId: () => void;
-	setIsAnswersShown: (isAnswersShown: boolean) => void;
 	incRoundTimeCounter: (counter: number) => void;
 	calculateScore: () => void;
 	resetScores: () => void;

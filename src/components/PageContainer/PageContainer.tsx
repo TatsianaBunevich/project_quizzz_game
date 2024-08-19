@@ -6,6 +6,7 @@ import QuizSkeleton from '../QuizSkeleton/QuizSkeleton';
 import Quiz from '../Quiz/Quiz';
 import Scoreboard from '../Scoreboard/Scoreboard';
 import Result from '../Result/Result';
+import Answers from '../Answers/Answers';
 import Settings from '../Settings/Settings';
 import Footer from '../Footer/Footer';
 import { Page } from '../../types';
@@ -36,6 +37,8 @@ const PageContainer = () => {
 				return isCountdown ? <Countdown /> : isLoading ? <QuizSkeleton /> : <Quiz />;
 			case 'result':
 				return <Result />;
+			case 'answers':
+				return <Answers />;
 			case 'scoreboard':
 				return <Scoreboard />;
 			default:

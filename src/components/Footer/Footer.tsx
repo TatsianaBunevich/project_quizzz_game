@@ -14,7 +14,6 @@ const Footer = () => {
 		settings,
 		sortedQuestions,
 		activeQuestionId,
-		isAnswersShown,
 		resetScores,
 		isCountdown,
 		handleSettings,
@@ -37,7 +36,6 @@ const Footer = () => {
 			settings: state.settings,
 			sortedQuestions: state.sortedQuestions,
 			activeQuestionId: state.activeQuestionId,
-			isAnswersShown: state.isAnswersShown,
 			resetScores: state.resetScores,
 			isCountdown: state.isCountdown,
 			handleSettings: state.handleSettings,
@@ -56,9 +54,7 @@ const Footer = () => {
 	);
 
 	const renderQuizButtons = () => {
-		if (isAnswersShown) {
-			return <SubmitButton className={styles.footerButton} onClick={handleAnswersToResult}>Back</SubmitButton>
-		} else if (!isCountdown) {
+		if (!isCountdown) {
 			return (
 				isLoading ? <FooterQuizSkeleton /> :
 					<>
@@ -98,6 +94,8 @@ const Footer = () => {
 						<SubmitButton className={styles.footerButton} onClick={handleOpenSettings}>Settings</SubmitButton>
 					</>
 				);
+			case 'answers':
+				return <SubmitButton className={styles.footerButton} onClick={handleAnswersToResult}>Back</SubmitButton>;
 			case 'scoreboard':
 				return (
 					<>
@@ -113,9 +111,9 @@ const Footer = () => {
 	const footerClasses = () => {
 		const startClass = !play ? [styles.start, styles.footerCentered].join(' ') : '';
 		const quizClass = page === 'quiz' ? styles.quiz : '';
-		const allShownClass = isAnswersShown ? [styles.allShown, styles.footerCentered].join(' ') : '';
+		const answersClass = page === 'answers' ? [styles.answers, styles.footerCentered].join(' ') : '';
 
-		return `${startClass} ${quizClass} ${allShownClass}`;
+		return `${startClass} ${quizClass} ${answersClass}`;
 	}
 
 	return (

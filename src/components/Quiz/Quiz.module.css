@@ -3,23 +3,9 @@
   flex-direction: column;
 }
 
-.allShown {
-  margin-bottom: 5em;
-}
-
-.allShown::after {
-  content: "";
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  height: 10em;
-  width: 100%;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    var(--background-color) 30%
-  );
-  z-index: 1;
+.quiz .selected {
+  border-color: transparent;
+  background-color: var(--button-bg-color);
 }
 
 .modalButton {
