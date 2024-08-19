@@ -1,9 +1,8 @@
 import styles from './Skeleton.module.css';
 
-interface SkeletonProps {
+interface SkeletonProps extends React.ComponentProps<'span'> {
     width: string;
     height: string;
-    className?: string;
 }
 
 const Skeleton = ({ width, height, className }: SkeletonProps) => {
@@ -14,7 +13,7 @@ const Skeleton = ({ width, height, className }: SkeletonProps) => {
 
 	return (
 		<span
-			className={`${className} ${styles.skeleton}`}
+			className={`${className ?? ''} ${styles.skeleton}`}
 			style={style}>
 		</span>
 	);

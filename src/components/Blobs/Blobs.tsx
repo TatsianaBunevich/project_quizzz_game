@@ -1,8 +1,6 @@
-import useBoundStore from '../../store/boundStore';
 import styles from './Blobs.module.css';
 
-export const Blobs = () => {
-	const play = useBoundStore((state) => state.play);
+export const Blobs = ({ play }: { play: boolean }) => {
 	if (play) {
 		return (
 			<>

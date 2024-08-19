@@ -28,7 +28,7 @@ const App = () => {
 
 	return (
 		<div className={styles.app} data-theme={theme}>
-			<Blobs />
+			<Blobs play={play} />
 			<div className={`${styles.container} ${play ? '' : styles.start}`}>
 				<header>
 					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />

@@ -4,7 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import styles from './DisplayedAnswer.module.css';
 
-const DisplayedAnswer = ({text, className}: {text: string; className?: string;}) => {
+interface DisplayedAnswerProps {
+	text: string;
+}
+
+const DisplayedAnswer = ({ text, className }: DisplayedAnswerProps & (React.ComponentProps<'svg'> | React.ComponentProps<'span'>)) => {
 	switch (text) {
 		case 'True':
 			return <FontAwesomeIcon className={`${styles.boolean} ${styles.true} ${className ?? ''}`} icon={faCheck} />;

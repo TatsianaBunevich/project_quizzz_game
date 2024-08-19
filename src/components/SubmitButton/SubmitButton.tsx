@@ -9,7 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const SubmitButton = ({ onClick, children, className, ...rest }: ButtonProps) => {
 	return (
-		<Button className={`${styles.submitButton} ${className}`} onClick={onClick} {...rest}>
+		<Button className={`${styles.submitButton} ${className ?? ''}`} onClick={onClick} {...rest}>
 			{children}
 		</Button>
 	);

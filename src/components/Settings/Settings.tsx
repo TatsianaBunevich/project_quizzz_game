@@ -50,47 +50,38 @@ const Settings = () => {
 					onClick={() => handleSelectOption(option.id, 'category')}>{option.name}
 				</Button>
 			))}
-		</>
-	, [handleSelectOption, settings.category]);
+		</>, [handleSelectOption, settings.category]);
 
 	const memoizedDifficulty = useMemo(() =>
-		<>
-			{settings.difficulty.map((option) => (
-				<Button
-					key={option.id}
-					className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
-					onClick={() => handleSelectOption(option.id, 'difficulty')}>{option.name}
-				</Button>
-			))}
-		</>
-	, [handleSelectOption, settings.difficulty]);
+		settings.difficulty.map((option) => (
+			<Button
+				key={option.id}
+				className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
+				onClick={() => handleSelectOption(option.id, 'difficulty')}>{option.name}
+			</Button>
+		)), [handleSelectOption, settings.difficulty]);
 
 	const memoizedType = useMemo(() =>
-		<>
-			{settings.type.map((option) => (
-				<Button
-					key={option.id}
-					className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
-					onClick={() => handleSelectOption(option.id, 'type')}>{option.name}
-				</Button>
-			))}
-		</>
-	, [handleSelectOption, settings.type]);
+		settings.type.map((option) => (
+			<Button
+				key={option.id}
+				className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
+				onClick={() => handleSelectOption(option.id, 'type')}>{option.name}
+			</Button>
+		)), [handleSelectOption, settings.type]);
 
 	const memoizedAmount = useMemo(() =>
 		<div className={styles.sliderContainer}>
 			<input id="amount" type="range" min="1" max="50" value={rangeValue} className={styles.slider} onChange={(e) => handleSliderChange(e, 'amount')} />
 			<div className={styles.sliderValue}>{rangeValue}</div>
-		</div>
-	, [handleSliderChange, rangeValue]);
+		</div>, [handleSliderChange, rangeValue]);
 
 	const memoizedTimer = useMemo(() =>
 		<div className={styles.sliderContainer}>
 			<input id="timerCheckbox" type="checkbox" checked={isTimer} className={styles.checkbox} onChange={handleCheckboxChange} />
 			<input id="timer" type="range" disabled={!isTimer} min="10" max="120" value={timerValue} step="10" className={styles.slider} onChange={(e) => handleSliderChange(e, 'timer')} />
 			<div className={styles.sliderValue}>{secondsToHms(timerValue)}</div>
-		</div>
-	, [handleCheckboxChange, handleSliderChange, isTimer, timerValue]);
+		</div>, [handleCheckboxChange, handleSliderChange, isTimer, timerValue]);
 
 	return (
 		<div className={styles.settings}>

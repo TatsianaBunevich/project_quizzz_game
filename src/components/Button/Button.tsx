@@ -8,7 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ onClick, children, className, ...rest }: ButtonProps) => {
 	return (
-		<button className={`${styles.button} ${className}`} onClick={onClick} {...rest}>
+		<button className={`${styles.button} ${className ?? ''}`} onClick={onClick} {...rest}>
 			{children}
 		</button>
 	);
