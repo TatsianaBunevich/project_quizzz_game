@@ -34,7 +34,8 @@ const useBoundStore = create<BoundState & BoundActions>()(
 			}),
 		),
 		{
-			enabled: true, // Enable/Disable Redux DevTools
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+			enabled: process.env.NODE_ENV !== 'production', // Enable/Disable Redux DevTools
 			name: "bound store",
 			serialize: {
 				options: false
