@@ -1,8 +1,6 @@
 import { ActionsWithMiddlewares, UtilsState, UtilsActions, SettingsState, ControlsActions } from './types';
-import { CategoriesResponse, QuestionsResponse } from '../types';
 
 export const initialUtilsState: UtilsState = {
-	isLoading: false,
 	isCountdown: false,
 	isModal: false,
 	timeLeft: 0,
@@ -13,28 +11,6 @@ export const createUtilsActions: ActionsWithMiddlewares<
 UtilsState & Pick<UtilsActions, 'setIsCountdown' | 'setTimeLeft' | 'runIntervalId' | 'clearIntervalId'> & SettingsState & Pick<ControlsActions, 'handleNextButton'>,
 UtilsActions
 > = (set, get) => ({
-	fetchWithRetry: async (url, retries, backoff) => {
-		set({ isLoading: true }, undefined, 'utils/setIsLoadingTrue');
-		for (let i = 0; i < retries; i++) {
-			try {
-				const response = await fetch(url);
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
-
-				return await response.json() as CategoriesResponse | QuestionsResponse;
-			} catch (error) {
-				if (i < retries - 1) {
-					await new Promise(res => setTimeout(res, backoff * (i + 1)));
-				} else {
-					throw error;
-				}
-			} finally {
-				set({ isLoading: false }, undefined, 'utils/setIsLoadingFalse');
-			}
-		}
-	},
-
 	controlCountdown: async () => {
 		get().setIsCountdown(true);
 		get().setTimeLeft(5);

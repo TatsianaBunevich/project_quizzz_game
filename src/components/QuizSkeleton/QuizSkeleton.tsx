@@ -1,6 +1,7 @@
 import Skeleton from '../Skeleton/Skeleton';
 import stylesQuiz from '../Quiz/Quiz.module.css';
 import stylesQuestion from '../Question/Question.module.css';
+import stylesAnswerButton from '../AnswerButton/AnswerButton.module.css';
 import styles from './QuizSkeleton.module.css';
 
 const QuizSkeleton = () => {
@@ -16,7 +17,7 @@ const QuizSkeleton = () => {
 				</h2>
 				<div className={stylesQuestion.answers}>
 					{Array.from({ length: 4 }).map((_, index) => (
-						<div key={index} className={`${stylesQuestion.answer} ${styles.answer}`}>
+						<div key={index} className={`${stylesAnswerButton.answerButton} ${styles.answer}`}>
 							<Skeleton width="100%" height="1em" />
 						</div>
 					))}

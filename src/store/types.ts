@@ -38,7 +38,6 @@ export interface QuizState {
 }
 
 export interface UtilsState {
-	isLoading: boolean;
 	isCountdown: boolean;
 	isModal: boolean;
 	timeLeft: number;
@@ -54,12 +53,12 @@ export interface PageActions {
 }
 
 export interface SettingsActions {
-	updateSettings: () => Promise<void>;
+	updateSettings: (data: CategoriesResponse) => void;
 	handleSelectOption: (optionId: IdType | number, setting: keyof SettingsType) => void;
 }
 
 export interface QuizActions {
-	getQuestions: () => Promise<void>;
+	getQuestions: (data: QuestionsResponse) => void;
 	sortQuestions: () => void;
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	incActiveQuestionId: () => void;
@@ -71,7 +70,6 @@ export interface QuizActions {
 }
 
 export interface UtilsActions {
-	fetchWithRetry: (url: string, retries: number, backoff: number) => Promise<CategoriesResponse | QuestionsResponse | undefined>;
 	controlCountdown: () => Promise<void>;
 	setIsCountdown: (isCountdown: boolean) => void;
 	runQuestionTimer: (timer?: number) => void;
@@ -82,7 +80,7 @@ export interface UtilsActions {
 }
 
 export interface ControlsActions {
-	handleSettings: () => Promise<void>;
+	handleSettings: () => void;
 	handleStartQuiz: () => Promise<void>;
 	handleCheckAnswers: () => void;
 	handleShowAnswers: () => void;

@@ -1,5 +1,5 @@
-import { ActionsWithMiddlewares, QuizState, QuizActions, SettingsState, UtilsActions } from './types';
-import { SettingsType, SettingType, QuestionsResponse, sortedQuestionsType, Status } from '../types';
+import { ActionsWithMiddlewares, QuizState, QuizActions } from './types';
+import { sortedQuestionsType, Status } from '../types';
 
 export const initialQuizState: QuizState = {
 	questions: [],
@@ -14,12 +14,11 @@ export const initialQuizState: QuizState = {
 }
 
 export const createQuizActions: ActionsWithMiddlewares<
-QuizState & Pick<UtilsActions, 'fetchWithRetry'> & SettingsState,
+QuizState,
 QuizActions
-> = (set, get) => ({
-	getQuestions: async () => {
-		const data = await get().fetchWithRetry(createQuestionsUrl(get().settings), 3, 300) as QuestionsResponse | undefined;
-		set({ questions: data?.results ?? [] },
+> = (set) => ({
+	getQuestions: (data) => {
+		set({ questions: data.results },
 			undefined,
 			'quiz/getQuestions');
 	},
@@ -137,13 +136,3 @@ QuizActions
 		'quiz/resetPartialQuizState');
 	}
 });
-
-const createQuestionsUrl = (settings: SettingsType) => {
-	const createSettingId = (setting: SettingType[]) => {
-		const foundItem = setting.find((item: SettingType) => item.isSelect === true);
-		return foundItem?.id === 'any' ? '' : foundItem?.id;
-	}
-	const params = `amount=${settings.amount}&category=${createSettingId(settings.category)}&difficulty=${createSettingId(settings.difficulty)}&type=${createSettingId(settings.type)}`;
-
-	return `https://opentdb.com/api.php?${params}`;
-};

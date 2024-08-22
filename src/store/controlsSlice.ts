@@ -4,16 +4,14 @@ export const createControlsActions: ActionsWithMiddlewares<
 BoundState & BoundActions,
 ControlsActions
 > = (set, get) => ({
-	handleSettings: async () => {
+	handleSettings: () => {
 		get().togglePlay();
 		get().setPage('settings');
-		await get().updateSettings();
 	},
 
 	handleStartQuiz: async () => {
 		get().setPage('quiz');
-		await Promise.all([get().controlCountdown(), get().getQuestions().then(() => get().sortQuestions())]);
-		get().settings.timer && get().runQuestionTimer();
+		await get().controlCountdown();
 	},
 
 	handleCheckAnswers: () => {
@@ -42,9 +40,8 @@ ControlsActions
 	handleNewTry: async () => {
 		get().resetPartialQuizState('questions', 'sortedQuestions', 'scores');
 		get().setPage('quiz');
-		get().sortQuestions();
 		await get().controlCountdown();
-		get().settings.timer && get().runQuestionTimer();
+		get().sortQuestions();
 	},
 
 	handleOpenSettings: () => {

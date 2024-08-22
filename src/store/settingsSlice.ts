@@ -1,5 +1,4 @@
-import { ActionsWithMiddlewares, SettingsState, SettingsActions, UtilsActions } from './types';
-import { CategoriesResponse } from '../types';
+import { ActionsWithMiddlewares, SettingsState, SettingsActions } from './types';
 import { DEFAULTSETTINGS } from '../constants';
 
 export const initialSettingsState: SettingsState = {
@@ -7,13 +6,12 @@ export const initialSettingsState: SettingsState = {
 }
 
 export const createSettingsActions: ActionsWithMiddlewares<
-SettingsState & Pick<UtilsActions, 'fetchWithRetry'>,
+SettingsState,
 SettingsActions
-> = (set, get) => ({
-	updateSettings: async () => {
-		const data = await get().fetchWithRetry('https://opentdb.com/api_category.php', 3, 300) as CategoriesResponse | undefined;
+> = (set) => ({
+	updateSettings: (data) => {
 		set((state) => {
-			const triviaCategories = (data?.trivia_categories ?? []).map((category) => ({
+			const triviaCategories = data.trivia_categories.map((category) => ({
 				id: category.id.toString(),
 				name: category.name,
 				isSelect: false,

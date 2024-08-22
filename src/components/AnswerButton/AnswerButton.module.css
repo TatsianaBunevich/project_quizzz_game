@@ -1,7 +1,7 @@
 .answerButton {
   display: inline-grid;
   align-items: center;
-  padding: 1.5em 1em;
+  padding: 1.5em 1em !important;
   counter-increment: answer_counter;
   position: relative;
   gap: 0.5em;

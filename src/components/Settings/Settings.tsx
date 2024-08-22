@@ -1,7 +1,9 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
-import { useCallback, useState, useMemo } from 'react';
-import { SettingsType } from '../../types';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useState, useMemo, useCallback } from 'react';
+import { CategoriesResponse, SettingsType } from '../../types';
 import Setting from '../Setting/Setting';
 import Button from '../Button/Button';
 import { secondsToHms } from '../../helpers';
@@ -9,13 +11,34 @@ import styles from './Settings.module.css';
 import { debounce } from 'lodash';
 
 const Settings = () => {
-	const { settings, handleSelectOption } = useBoundStore(
-		useShallow((state) => ({ settings: state.settings, handleSelectOption: state.handleSelectOption }))
+	const {
+		settings,
+		updateSettings,
+		handleSelectOption
+	} = useBoundStore(
+		useShallow((state) => ({
+			settings: state.settings,
+			updateSettings: state.updateSettings,
+			handleSelectOption: state.handleSelectOption
+		}))
 	);
+	const queryClient = useQueryClient();
 	const [categoryClass, setCategoryClass] = useState('');
 	const [rangeValue, setRangeValue] = useState(settings.amount);
 	const [timerValue, setTimerValue] = useState(settings.timer);
 	const [isTimer, setIsTimer] = useState(settings.timer === 0 ? false : true);
+
+	queryClient.removeQueries({ queryKey: ['questions'] });
+
+	useSuspenseQuery({
+		queryKey: ['settings'],
+		queryFn: async () => {
+			const response = await axios.get<CategoriesResponse>('https://opentdb.com/api_category.php');
+			return response.data;
+		},
+		select: settings.category.length === 1 ? updateSettings : undefined,
+		staleTime: Infinity,
+	});
 
 	const handleOverflow = () => {
 		setCategoryClass(styles.overflowHidden);

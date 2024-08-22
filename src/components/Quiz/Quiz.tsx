@@ -1,7 +1,9 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { useRef, useEffect } from 'react';
-import { OptionalSelectedAnswer } from '../../types';
+import { SettingsType, SettingType, QuestionsResponse, OptionalSelectedAnswer } from '../../types';
 import QuestionTimer from '../QuestionTimer/QuestionTimer';
 import Question from '../Question/Question';
 import AnswerButton from '../AnswerButton/AnswerButton';
@@ -12,21 +14,33 @@ import styles from './Quiz.module.css';
 
 const Quiz = () => {
 	const {
+		settings,
 		timer,
+		questions,
 		sortedQuestions,
 		selectedAnswers,
 		activeQuestionId,
+		getQuestions,
+		sortQuestions,
 		handleSelectAnswer,
+		isCountdown,
+		runQuestionTimer,
 		handleCheckAnswers,
 		handleOpenSettings,
 		handleCloseModal
 	} = useBoundStore(
 		useShallow((state) => ({
+			settings: state.settings,
 			timer: state.settings.timer,
+			questions: state.questions,
 			sortedQuestions: state.sortedQuestions,
 			selectedAnswers: state.selectedAnswers,
 			activeQuestionId: state.activeQuestionId,
+			getQuestions: state.getQuestions,
+			sortQuestions: state.sortQuestions,
 			handleSelectAnswer: state.handleSelectAnswer,
+			isCountdown: state.isCountdown,
+			runQuestionTimer: state.runQuestionTimer,
 			handleCheckAnswers: state.handleCheckAnswers,
 			handleOpenSettings: state.handleOpenSettings,
 			handleCloseModal: state.handleCloseModal
@@ -36,6 +50,37 @@ const Quiz = () => {
 	const progress = useRef<HTMLDivElement>(null);
 	const oldLength = useRef(0);
 	const newLength = (activeQuestionId ) / (sortedQuestions.length - 1) * 100;
+
+	const createQuestionsUrl = (settings: SettingsType) => {
+		const createSettingId = (setting: SettingType[]) => {
+			const foundItem = setting.find((item: SettingType) => item.isSelect === true);
+			return foundItem?.id === 'any' ? '' : foundItem?.id;
+		}
+		const params = `amount=${settings.amount}&category=${createSettingId(settings.category)}&difficulty=${createSettingId(settings.difficulty)}&type=${createSettingId(settings.type)}`;
+
+		return `https://opentdb.com/api.php?${params}`;
+	};
+
+	const getQuizData = (data: QuestionsResponse) => {
+		getQuestions(data);
+		sortQuestions();
+	};
+
+	useSuspenseQuery({
+		queryKey: ['questions'],
+		queryFn: async () => {
+			const response = await axios.get<QuestionsResponse>(createQuestionsUrl(settings));
+			return response.data;
+		},
+		select: !questions.length ? getQuizData : undefined,
+		staleTime: Infinity,
+	});
+
+	useEffect(() => {
+		if (!isCountdown) {
+			settings.timer && runQuestionTimer();
+		}
+	}, [isCountdown, runQuestionTimer, settings.timer]);
 
 	useEffect(() => {
 		if (progress.current) {

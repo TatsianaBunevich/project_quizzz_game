@@ -10,7 +10,6 @@ const Footer = () => {
 	const {
 		play,
 		page,
-		isLoading,
 		settings,
 		sortedQuestions,
 		activeQuestionId,
@@ -32,7 +31,6 @@ const Footer = () => {
 		useShallow((state) => ({
 			play: state.play,
 			page: state.page,
-			isLoading: state.isLoading,
 			settings: state.settings,
 			sortedQuestions: state.sortedQuestions,
 			activeQuestionId: state.activeQuestionId,
@@ -54,9 +52,9 @@ const Footer = () => {
 	);
 
 	const renderQuizButtons = () => {
-		if (!isCountdown) {
-			return (
-				isLoading ? <FooterQuizSkeleton /> :
+		return (
+			!isCountdown ?
+				!sortedQuestions.length ? <FooterQuizSkeleton /> :
 					<>
 						<SubmitButton className={styles.footerButton} onClick={handlePrevButton} disabled={settings.timer > 0 && activeQuestionId > 0}>
 							{activeQuestionId === 0 ? 'Back' : <FontAwesomeIcon icon={faChevronLeft} />}
@@ -65,9 +63,8 @@ const Footer = () => {
 							{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <FontAwesomeIcon icon={faChevronRight} />}
 						</SubmitButton>
 						<SubmitButton className={`${styles.footerButton} ${styles.stopButton}`} onClick={handleOpenModal}>Stop</SubmitButton>
-					</>
-			)
-		}
+					</> : null
+		)
 	}
 
 	const renderSubmitElement = () => {
@@ -75,14 +72,15 @@ const Footer = () => {
 			return <SubmitButton className={styles.footerButton} onClick={handleSettings}>START</SubmitButton>
 		}
 		switch(page) {
-			case 'settings':
-				if (isLoading) return null;
+			case 'settings': {
+				if (settings.category.length === 1) return null;
 				return (
 					<>
 						<SubmitButton className={styles.footerButton} onClick={handleStartQuiz}>Let&apos;s go</SubmitButton>
 						<SubmitButton className={styles.footerButton} onClick={handleEndQuiz}>Exit</SubmitButton>
 					</>
 				);
+			}
 			case 'quiz':
 				return renderQuizButtons();
 			case 'result':
