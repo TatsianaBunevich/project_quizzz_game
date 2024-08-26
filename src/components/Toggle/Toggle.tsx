@@ -1,12 +1,10 @@
+import useBoundStore from '../../store/boundStore';
 import styles from './Toggle.module.css';
 import { Theme } from '../../types';
 
-interface ToggleProps {
-	theme: Theme;
-	onSwitchTheme: (theme: Theme) => void;
-}
-
-const Toggle = ({ theme, onSwitchTheme }: ToggleProps) => {
+const Toggle = () => {
+	const theme = useBoundStore((state) => state.theme);
+	const switchTheme = useBoundStore((state) => state.switchTheme);
 
 	return (
 		<div className={styles.toggle}>
@@ -15,7 +13,7 @@ const Toggle = ({ theme, onSwitchTheme }: ToggleProps) => {
 				id="toggle"
 				className={styles.toggleCheckbox}
 				checked={theme === Theme.DARK}
-				onChange={() => onSwitchTheme(theme)}
+				onChange={() => switchTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT)}
 			/>
 			<label htmlFor="toggle" className={styles.toggleLabel}>
 				<span className={styles.toggleLabelBackground}></span>

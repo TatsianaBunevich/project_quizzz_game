@@ -1,0 +1,13 @@
+.noMatch {
+    text-align: center;
+}
+
+.noMatch p,
+.errorMessage {
+    margin: 2em 0;
+}
+
+.errorMessage {
+    color: red;
+    white-space: normal;
+}

@@ -14,7 +14,7 @@
   cursor: pointer;
 }
 
-.button:hover:enabled {
+.button:hover:not(:disabled) {
   color: var(--button-color);
   background-color: var(--button-bg-color);
 }

@@ -1,0 +1,5 @@
+.footerButton {
+    flex: 0 0 auto;
+	position: fixed;
+	bottom: 2.5em;
+}

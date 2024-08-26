@@ -1,3 +1,7 @@
+.settings {
+  margin: auto;
+}
+
 .option {
   border-radius: var(--button-radius);
   border: 1px solid var(--skeleton-color);

@@ -1,5 +1,6 @@
 
-import SubmitButton from '../SubmitButton/SubmitButton';
+import Footer from '../../components/Footer/Footer';
+import ControlButton from '../ControlButton/ControlButton';
 import styles from './Fallback.module.css';
 
 interface FallbackProps {
@@ -9,11 +10,18 @@ interface FallbackProps {
 
 const Fallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 	return (
-		<div role="alert" className={styles.fallback}>
-			<p>There was an error!</p>
-			<SubmitButton onClick={() => resetErrorBoundary()}>Try again</SubmitButton>
-			<pre className={styles.errorMessage}>{error.message}</pre>
-		</div>
+		<>
+			<main>
+				<div role="alert" className={styles.fallback}>
+					<p>There was an error!</p>
+					<pre className={styles.errorMessage}>{error.message}</pre>
+				</div>
+			</main>
+			<Footer>
+				<ControlButton onClick={() => resetErrorBoundary()}>Try again</ControlButton>
+			</Footer>
+		</>
+
 	);
 }
 

@@ -1,46 +1,45 @@
+import { QueryErrorResetBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import useBoundStore from './store/boundStore';
-import { useState, useEffect } from 'react';
-import styles from './App.module.css';
-import Blobs from './components/Blobs/Blobs';
-import Toggle from './components/Toggle/Toggle';
-import PageContainer from './components/PageContainer/PageContainer';
+import { useEffect } from 'react';
+import routes from './routes';
+import HomePage from './pages/HomePage/HomePage';
+import Layout from './components/Layout/Layout';
+import NoMatchPage from './pages/NoMatchPage/NoMatchPage';
 import { Theme } from './types';
+import styles from './App.module.css';
+
+const queryClient = new QueryClient();
 
 const App = () => {
+	const router = createBrowserRouter([
+		{ index: true, Component: HomePage },
+		{ path: '/', Component: Layout, children: routes },
+		{ path: '*', Component: NoMatchPage }
+	]);
+	const theme = useBoundStore((state) => state.theme);
+	const switchTheme = useBoundStore((state) => state.switchTheme);
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);
-	const [theme, setTheme] = useState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT);
-	const play = useBoundStore((state) => state.play);
 
 	useEffect(() => {
 		const handleChange = (e: MediaQueryListEvent) => {
-			handleSwitchTheme(!e.matches ? Theme.DARK : Theme.LIGHT);
+			switchTheme(e.matches ? Theme.DARK : Theme.LIGHT);
 		};
 
 		mediaQuery.addEventListener('change', handleChange);
 
 		return () => mediaQuery.removeEventListener('change', handleChange);
-	}, [mediaQuery]);
-
-	const handleSwitchTheme = (theme: Theme) => {
-		const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
-		setTheme(newTheme);
-	}
+	}, [mediaQuery, switchTheme]);
 
 	return (
 		<div className={styles.app} data-theme={theme}>
-			<Blobs play={play} />
-			<div className={`${styles.container} ${play ? '' : styles.start}`}>
-				<header>
-					<Toggle theme={theme} onSwitchTheme={handleSwitchTheme} />
-				</header>
-				<PageContainer />
-			</div>
-			{!play && (
-				<div className={styles.contacts}>
-					<p>Feeling fun? Got an idea?</p>
-					<p><a className={styles.contactLink} href="https://www.linkedin.com/in/tatsiana-bunevich/" target="_blank" rel="noreferrer">contact the creator</a></p>
-				</div>
-			)}
+			<QueryClientProvider client={queryClient}>
+				<QueryErrorResetBoundary>
+					<RouterProvider router={router} />
+				</QueryErrorResetBoundary>
+				<ReactQueryDevtools initialIsOpen={false} />
+			</QueryClientProvider>
 		</div>
 	);
 };

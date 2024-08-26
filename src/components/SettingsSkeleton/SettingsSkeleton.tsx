@@ -5,7 +5,7 @@ import styles from './SettingsSkeleton.module.css';
 
 const SettingsSkeleton = () => {
 	return (
-		<div className={stylesSettings.settings}>
+		<div className={`${stylesSettings.settings} ${styles.settings}`}>
 			<div className={stylesSetting.setting}>
 				<h2 className={stylesSetting.title}>
 					<Skeleton width="10em" height="1.5em" />

@@ -3,8 +3,6 @@ export enum Theme {
 	DARK = 'dark',
 }
 
-export type Page = string | null;
-
 interface Category {
 	id: number;
 	name: string;

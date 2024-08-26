@@ -1,6 +1,6 @@
 import useBoundStore from '../../store/boundStore';
 import { useShallow } from 'zustand/react/shallow';
-import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState, useMemo, useCallback } from 'react';
 import { CategoriesResponse, SettingsType } from '../../types';
@@ -22,13 +22,10 @@ const Settings = () => {
 			handleSelectOption: state.handleSelectOption
 		}))
 	);
-	const queryClient = useQueryClient();
 	const [categoryClass, setCategoryClass] = useState('');
 	const [rangeValue, setRangeValue] = useState(settings.amount);
 	const [timerValue, setTimerValue] = useState(settings.timer);
 	const [isTimer, setIsTimer] = useState(settings.timer === 0 ? false : true);
-
-	queryClient.removeQueries({ queryKey: ['questions'] });
 
 	useSuspenseQuery({
 		queryKey: ['settings'],

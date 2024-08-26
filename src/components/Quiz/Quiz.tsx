@@ -9,10 +9,11 @@ import Question from '../Question/Question';
 import AnswerButton from '../AnswerButton/AnswerButton';
 import DisplayedAnswer from '../DisplayedAnswer/DisplayedAnswer';
 import Modal from '../Modal/Modal';
-import SubmitButton from '../SubmitButton/SubmitButton';
+import ControlButton from '../ControlButton/ControlButton';
+import PathConstants from '../../routes/pathConstants';
 import styles from './Quiz.module.css';
 
-const Quiz = () => {
+const Quiz = ({ isCountdown }: { isCountdown: boolean }) => {
 	const {
 		settings,
 		timer,
@@ -23,7 +24,6 @@ const Quiz = () => {
 		getQuestions,
 		sortQuestions,
 		handleSelectAnswer,
-		isCountdown,
 		runQuestionTimer,
 		handleCheckAnswers,
 		handleOpenSettings,
@@ -39,7 +39,6 @@ const Quiz = () => {
 			getQuestions: state.getQuestions,
 			sortQuestions: state.sortQuestions,
 			handleSelectAnswer: state.handleSelectAnswer,
-			isCountdown: state.isCountdown,
 			runQuestionTimer: state.runQuestionTimer,
 			handleCheckAnswers: state.handleCheckAnswers,
 			handleOpenSettings: state.handleOpenSettings,
@@ -116,9 +115,9 @@ const Quiz = () => {
 			{timer > 0 && <QuestionTimer />}
 			<Modal>
 				<h2>Do you want to</h2>
-				<SubmitButton className={styles.modalButton} onClick={handleCloseModal}>Back to the game</SubmitButton>
-				<SubmitButton className={styles.modalButton} onClick={handleCheckAnswers}>See the result</SubmitButton>
-				<SubmitButton className={styles.modalButton} onClick={handleOpenSettings}>Go to settings</SubmitButton>
+				<ControlButton className={styles.modalButton} onClick={handleCloseModal}>Back to the game</ControlButton>
+				<ControlButton className={styles.modalButton} to={PathConstants.RESULT} onClick={handleCheckAnswers}>See the result</ControlButton>
+				<ControlButton className={styles.modalButton} to={PathConstants.SETTINGS} onClick={handleOpenSettings}>Go to settings</ControlButton>
 			</Modal>
 		</>
 	);

@@ -1,3 +1,12 @@
+.countdownWrap {
+  margin: auto;
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
 .countdown {
   --size: 250px;
   font-family: "Karla", sans-serif;
@@ -13,10 +22,6 @@
   border-radius: 50%;
   margin: 0.5em auto;
   position: relative;
-  display: none;
-}
-
-.active {
   display: flex;
 }
 
