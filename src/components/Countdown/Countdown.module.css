@@ -1,9 +1,5 @@
 .countdownWrap {
   margin: auto;
-  display: none;
-}
-
-.active {
   display: block;
 }
 

@@ -1,9 +1,11 @@
-import useBoundStore from '../../store/boundStore';
 import { useEffect, useRef } from 'react';
 import styles from './Modal.module.css';
 
-const Modal = ({ children }: { children: React.ReactNode }) => {
-	const isModal = useBoundStore((state) => state.isModal);
+interface ModalProps extends React.ComponentProps<'dialog'> {
+	isModal: boolean;
+}
+
+const Modal = ({ isModal, children }: ModalProps) => {
 	const ref = useRef<HTMLDialogElement>(null);
 
 	useEffect(() => {

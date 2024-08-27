@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import {
 	SettingsType, IdType,
-	Question, sortedQuestionsType, Answer, SelectedAnswer, Score, Status,
+	sortedQuestionsType, Answer, SelectedAnswer, Score, Status,
 	CategoriesResponse, QuestionsResponse,
 	Theme
 } from '../types';
@@ -18,7 +18,6 @@ export interface SettingsState {
 }
 
 export interface QuizState {
-	questions: Question[];
 	sortedQuestions: sortedQuestionsType[];
 	selectedAnswers: SelectedAnswer[];
 	activeQuestionId: number;
@@ -31,7 +30,6 @@ export interface QuizState {
 
 export interface UtilsState {
 	theme: Theme;
-	isModal: boolean;
 	timeLeft: number;
 	intervalId: number | null;
 }
@@ -42,18 +40,18 @@ export interface SettingsActions {
 }
 
 export interface QuizActions {
-	getQuestions: (data: QuestionsResponse) => void;
-	sortQuestions: () => void;
+	sortQuestions: (data?: QuestionsResponse) => void;
+	controlCountdown: () => Promise<void>;
 	runQuestionTimer: (timer?: number) => void;
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	handlePrevButton: () => void;
 	handleNextButton: () => void;
 	incActiveQuestionId: () => void;
 	decActiveQuestionId: () => void;
-	handleCheckAnswers: () => void;
-	handleOpenSettings: () => void;
-	handleOpenModal: () => void;
-	handleCloseModal: () => void;
+	getRoundScore: () => void;
+	resetQuiz: () => void;
+	stopQuestionTimer: () => void;
+	restartQuestionTimer: () => void;
 	incRoundTimeCounter: (counter: number) => void;
 	calculateScore: () => void;
 	handleNewTry: () => void;
@@ -63,8 +61,6 @@ export interface QuizActions {
 
 export interface UtilsActions {
 	switchTheme: (theme: Theme) => void;
-	controlCountdown: () => Promise<void>;
-	setIsModal: (isModal: boolean) => void;
 	setTimeLeft: (timeLeft: number) => void;
 	runIntervalId: (callback: () => void) => void;
 	clearIntervalId: () => void;

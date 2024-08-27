@@ -1,8 +1,7 @@
 import { ActionsWithMiddlewares, QuizState, QuizActions, SettingsState, UtilsState, UtilsActions } from './types';
-import { sortedQuestionsType, Status } from '../types';
+import { Status } from '../types';
 
 export const initialQuizState: QuizState = {
-	questions: [],
 	sortedQuestions: [],
 	selectedAnswers: [],
 	activeQuestionId: 0,
@@ -15,41 +14,47 @@ export const initialQuizState: QuizState = {
 
 export const createQuizActions: ActionsWithMiddlewares<
 QuizState &
-Pick<QuizActions, 'sortQuestions' | 'runQuestionTimer' | 'handleNextButton' |'incActiveQuestionId' | 'decActiveQuestionId' | 'handleCheckAnswers' | 'handleOpenSettings' | 'incRoundTimeCounter' | 'calculateScore' | 'resetPartialQuizState'> &
+Pick<QuizActions, 'sortQuestions' | 'runQuestionTimer' | 'handleNextButton' |'incActiveQuestionId' | 'decActiveQuestionId' | 'getRoundScore' | 'resetQuiz' | 'incRoundTimeCounter' | 'calculateScore' | 'resetPartialQuizState'> &
 SettingsState &
-Pick<UtilsState, 'isModal' | 'timeLeft' |'intervalId'> &
-Pick<UtilsActions, 'setIsModal' | 'setTimeLeft' |'runIntervalId' | 'clearIntervalId'>,
+Pick<UtilsState, 'timeLeft' |'intervalId'> &
+Pick<UtilsActions, 'setTimeLeft' |'runIntervalId' | 'clearIntervalId'>,
 QuizActions
 > = (set, get) => ({
-	getQuestions: (data) => {
-		set({ questions: data.results },
-			undefined,
-			'quiz/getQuestions');
-	},
-
-	sortQuestions: () => {
+	sortQuestions: (data) => {
 		set((state) => {
-			const mappedQuestions: sortedQuestionsType[] = state.questions.map(q => ({
-				question: q.question,
-				answers: [
-					{
-						answer: q.correct_answer,
-						isCorrect: true
-					},
-					...q.incorrect_answers.map(a => ({
-						answer: a,
-						isCorrect: false
-					}))
-				]
-			}));
-			const initialQuestions = state.sortedQuestions;
-			const settedQuestions = !initialQuestions.length ? mappedQuestions : initialQuestions;
+			let settedQuestions;
+
+			if (data) {
+				const mappedQuestions = data.results.map(q => ({
+					question: q.question,
+					answers: [
+						{
+							answer: q.correct_answer,
+							isCorrect: true
+						},
+						...q.incorrect_answers.map(a => ({
+							answer: a,
+							isCorrect: false
+						}))
+					]
+				}));
+				settedQuestions = mappedQuestions;
+			} else {
+				settedQuestions = state.sortedQuestions;
+			}
 
 			settedQuestions.sort(() => Math.random() - 0.5).forEach(item => item.answers.sort(() => Math.random() - 0.5));
 			state.sortedQuestions = settedQuestions;
 		},
 		undefined,
 		'quiz/sortQuestions');
+	},
+
+	controlCountdown: async () => {
+		get().setTimeLeft(5);
+		await new Promise<void>((resolve) => {
+			get().runIntervalId(resolve);
+		});
 	},
 
 	runQuestionTimer: (timer) => {
@@ -80,7 +85,7 @@ QuizActions
 	handlePrevButton: () => {
 		get().settings.timer && get().intervalId !== null && get().clearIntervalId();
 		if (get().activeQuestionId === 0) {
-			get().handleOpenSettings();
+			get().resetQuiz();
 		} else {
 			get().decActiveQuestionId();
 		}
@@ -89,7 +94,7 @@ QuizActions
 	handleNextButton: () => {
 		get().settings.timer && get().intervalId !== null && get().clearIntervalId();
 		if (get().activeQuestionId === get().sortedQuestions.length - 1) {
-			get().handleCheckAnswers();
+			get().getRoundScore();
 		} else {
 			get().settings.timer && get().incRoundTimeCounter(get().settings.timer - get().timeLeft);
 			get().incActiveQuestionId();
@@ -113,25 +118,21 @@ QuizActions
 		'quiz/decActiveQuestionId');
 	},
 
-	handleCheckAnswers: () => {
+	getRoundScore: () => {
 		get().settings.timer && get().incRoundTimeCounter(get().settings.timer - get().timeLeft);
 		get().calculateScore();
-		get().isModal && get().setIsModal(false);
 	},
 
-	handleOpenSettings: () => {
+	resetQuiz: () => {
 		get().resetPartialQuizState('scores');
-		get().isModal && get().setIsModal(false);
 	},
 
-	handleOpenModal: () => {
-		get().settings.timer && get().clearIntervalId();
-		get().setIsModal(true);
+	stopQuestionTimer: () => {
+		get().clearIntervalId();
 	},
 
-	handleCloseModal: () => {
-		get().setIsModal(false);
-		get().settings.timer && get().runQuestionTimer(get().timeLeft);
+	restartQuestionTimer: () => {
+		get().runQuestionTimer(get().timeLeft);
 	},
 
 	incRoundTimeCounter: (counter) => {
@@ -166,7 +167,7 @@ QuizActions
 	},
 
 	handleNewTry: () => {
-		get().resetPartialQuizState('questions', 'sortedQuestions', 'scores');
+		get().resetPartialQuizState('sortedQuestions', 'scores');
 		get().sortQuestions();
 	},
 

@@ -18,6 +18,30 @@
     min-width: 100%;
 }
 
+.modalButton {
+    display: block;
+    width: 14em;
+    margin: 0 auto 1em;
+  }
+
+.quizProgress {
+    --progress-size: 0.3em;
+    background-color: var(--border-color);
+    height: var(--progress-size);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@keyframes :global(progress) {
+    0% {
+      width: var(--old-length);
+    }
+    100% {
+      width: var(--new-length);
+    }
+}
+
 @media (max-width: 991px) {
     .footerButton {
       min-width: calc(50% - var(--gap));

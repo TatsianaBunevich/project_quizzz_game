@@ -12,6 +12,16 @@ export interface CategoriesResponse {
 	trivia_categories: Category[];
 }
 
+interface Question {
+	category: string;
+	type: string;
+	difficulty: string;
+	question: string;
+	correct_answer: string;
+	incorrect_answers: string[];
+	answers: string[];
+}
+
 export interface QuestionsResponse {
 	results: Question[];
 }
@@ -52,16 +62,6 @@ export interface SelectedAnswer {
 }
 
 export type OptionalSelectedAnswer = SelectedAnswer | undefined;
-
-export interface Question {
-	category: string;
-	type: string;
-	difficulty: string;
-	question: string;
-	correct_answer: string;
-	incorrect_answers: string[];
-	answers: string[];
-}
 
 export interface Answer {
 	answer: string;

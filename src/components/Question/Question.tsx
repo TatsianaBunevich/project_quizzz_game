@@ -1,19 +1,7 @@
 import { memo } from 'react';
 import styles from './Question.module.css';
 
-interface QuestionProps extends React.ComponentProps<'div'> {
-	children: React.ReactNode;
-}
-
-interface TitleProps extends React.ComponentProps<'h2'> {
-	title: string;
-}
-
-interface OptionsProps extends React.ComponentProps<'div'> {
-	children: React.ReactNode;
-}
-
-const Question = ({ children, className }: QuestionProps) => {
+const Question = ({ children, className }: React.ComponentProps<'div'>) => {
 	return (
 		<div className={`${styles.question} ${className ?? ''}`}>
 			{children}
@@ -23,9 +11,9 @@ const Question = ({ children, className }: QuestionProps) => {
 
 const Id = ({ id }: { id: number }) => <div className={styles.questionId}>{id+1}</div>;
 
-const Title = ({ title, className }: TitleProps) => <h2 className={`${styles.questionTitle} ${className ?? ''}`} dangerouslySetInnerHTML={{__html: title}} />;
+const Title = ({ title, className }: React.ComponentProps<'h2'> & { title: string }) => <h2 className={`${styles.questionTitle} ${className ?? ''}`} dangerouslySetInnerHTML={{__html: title}} />;
 
-const Options = ({ children, className }: OptionsProps) => {
+const Options = ({ children, className }: React.ComponentProps<'div'>) => {
 	return (
 		<div className={`${styles.answers} ${className ?? ''}`}>
 			{children}
