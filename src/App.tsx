@@ -4,20 +4,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import useBoundStore from './store/boundStore';
 import { useEffect } from 'react';
 import routes from './routes';
-import HomePage from './pages/HomePage/HomePage';
-import Layout from './components/Layout/Layout';
-import NoMatchPage from './pages/NoMatchPage/NoMatchPage';
 import { Theme } from './types';
 import styles from './App.module.css';
 
 const queryClient = new QueryClient();
 
 const App = () => {
-	const router = createBrowserRouter([
-		{ index: true, Component: HomePage },
-		{ path: '/', Component: Layout, children: routes },
-		{ path: '*', Component: NoMatchPage }
-	]);
+	const router = createBrowserRouter(routes);
 	const theme = useBoundStore((state) => state.theme);
 	const switchTheme = useBoundStore((state) => state.switchTheme);
 	const mediaQuery = window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`);

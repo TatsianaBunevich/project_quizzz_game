@@ -1,11 +1,20 @@
-import { useRouteError, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import useBoundStore from '../../store/boundStore';
+import { useRouteError } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import ControlButton from '../../components/ControlButton/ControlButton';
+import PathConstants from '../../routes/pathConstants';
 import styles from './NoMatchPage.module.css';
 
 const NoMatchPage = () => {
+	const queryClient = useQueryClient();
+	const resetBoundStore = useBoundStore((state) => state.resetBoundStore);
 	const error = useRouteError();
-	const navigate = useNavigate();
+
+	const handleEndQuiz = () => {
+		resetBoundStore();
+		queryClient.clear();
+	};
 
 	return (
 		<>
@@ -19,7 +28,7 @@ const NoMatchPage = () => {
 				</div>
 			</main>
 			<Footer>
-				<ControlButton onClick={() => navigate(-1)}>Back</ControlButton>
+				<ControlButton to={PathConstants.HOME} onClick={handleEndQuiz}>Home page</ControlButton>
 			</Footer>
 		</>
 	);
