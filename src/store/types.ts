@@ -29,6 +29,7 @@ export interface QuizState {
 }
 
 export interface UtilsState {
+	isPlay: boolean;
 	theme: Theme;
 	timeLeft: number;
 	intervalId: number | null;
@@ -60,6 +61,7 @@ export interface QuizActions {
 }
 
 export interface UtilsActions {
+	toggleIsPlay: () => void;
 	switchTheme: (theme: Theme) => void;
 	setTimeLeft: (timeLeft: number) => void;
 	runIntervalId: (callback: () => void) => void;

@@ -14,6 +14,7 @@ const ControlButton = ({ children, className, to, onClick, ...rest }: ControlBut
 	return (
 		<Component
 			className={`${to ? stylesButton.button : ''} ${styles.controlButton} ${className ?? ''}`}
+			// @ts-expect-error: to
 			to={to ?? undefined}
 			onClick={onClick ?? undefined}
 			{...rest}>

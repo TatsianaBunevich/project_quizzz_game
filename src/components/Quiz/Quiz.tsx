@@ -48,7 +48,6 @@ const Quiz = () => {
 		staleTime: Infinity,
 	});
 
-
 	return (
 		<div className={styles.quiz}>
 			<Question>

@@ -17,7 +17,6 @@ const routes = [
 			{ path: PathConstants.RESULT, Component: ResultPage },
 			{ path: PathConstants.ANSWERS, Component: AnswersPage },
 			{ path: PathConstants.SCOREBOARD, Component: ScoreboardPage },
-			{ path: PathConstants.NOMATCH, Component: NoMatchPage },
 		],
 	},
 	{ path: PathConstants.NOMATCH, Component: NoMatchPage },

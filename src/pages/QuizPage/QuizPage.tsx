@@ -115,7 +115,8 @@ const QuizPage = () => {
 						</ControlButton>
 						<ControlButton
 							to={activeQuestionId === sortedQuestions.length - 1 ? PathConstants.RESULT : ''}
-							className={styles.footerButton} onClick={handleNextButton}>
+							className={styles.footerButton}
+							onClick={handleNextButton}>
 							{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <FontAwesomeIcon icon={faChevronRight} />}
 						</ControlButton>
 						<ControlButton

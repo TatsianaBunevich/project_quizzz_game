@@ -1,3 +1,5 @@
+import useBoundStore from '../../store/boundStore';
+import Blobs from '../../components/Blobs/Blobs';
 import Toggle from '../../components/Toggle/Toggle';
 import Footer from '../../components/Footer/Footer';
 import PathConstants from '../../routes/pathConstants';
@@ -5,14 +7,12 @@ import ControlButton from '../../components/ControlButton/ControlButton';
 import styles from './HomePage.module.css';
 
 const HomePage = () => {
+	const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay);
+
 	return (
 		<>
-			<div className={styles.blobsContainer}>
-				<div className={`${styles.startBlob} ${styles.one}`}></div>
-				<div className={`${styles.startBlob} ${styles.two}`}></div>
-				<div className={`${styles.startBlob} ${styles.three}`}></div>
-			</div>
-			<div className={`${styles.container} ${styles.home}`}>
+			<Blobs />
+			<div className={styles.container}>
 				<header>
 					<Toggle />
 				</header>
@@ -20,7 +20,7 @@ const HomePage = () => {
 					<h1>Quizzz Game</h1>
 				</main>
 				<Footer>
-					<ControlButton className={styles.startButton} to={PathConstants.SETTINGS}>START</ControlButton>
+					<ControlButton className={styles.startButton} to={PathConstants.SETTINGS} onClick={toggleIsPlay}>START</ControlButton>
 				</Footer>
 			</div>
 			<div className={styles.contacts}>
