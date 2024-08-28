@@ -5,16 +5,12 @@ export const initialQuizState: QuizState = {
 	sortedQuestions: [],
 	selectedAnswers: [],
 	activeQuestionId: 0,
-	calculatedScore: 0,
-	roundScore: 0,
-	roundStatus: Status.BAD,
-	roundTimeCounter: 0,
 	scores: [],
 }
 
 export const createQuizActions: ActionsWithMiddlewares<
 QuizState &
-Pick<QuizActions, 'sortQuestions' | 'runQuestionTimer' | 'handleNextButton' |'incActiveQuestionId' | 'decActiveQuestionId' | 'getRoundScore' | 'resetQuiz' | 'incRoundTimeCounter' | 'calculateScore' | 'resetPartialQuizState'> &
+Pick<QuizActions, 'sortQuestions' | 'addNewScore' | 'runQuestionTimer' | 'handleNextButton' |'incActiveQuestionId' | 'decActiveQuestionId' | 'getRoundScore' | 'resetQuiz' | 'incRoundTimeCounter' | 'calculateScore' | 'resetPartialQuizState'> &
 SettingsState &
 Pick<UtilsState, 'timeLeft' |'intervalId'> &
 Pick<UtilsActions, 'setTimeLeft' |'runIntervalId' | 'clearIntervalId'>,
@@ -55,6 +51,20 @@ QuizActions
 		await new Promise<void>((resolve) => {
 			get().runIntervalId(resolve);
 		});
+	},
+
+	addNewScore: () => {
+		set((state) => {
+			state.scores.push({
+				index: state.scores.length + 1,
+				points: 0,
+				percentage: 0,
+				status: Status.BAD,
+				time: 0
+			});
+		},
+		undefined,
+		'quiz/addNewScore');
 	},
 
 	runQuestionTimer: (timer) => {
@@ -137,7 +147,7 @@ QuizActions
 
 	incRoundTimeCounter: (counter) => {
 		set((state) => {
-			state.roundTimeCounter += counter
+			state.scores[state.scores.length - 1].time += counter
 		},
 		undefined,
 		'quiz/incRoundTimeCounter');
@@ -148,19 +158,13 @@ QuizActions
 			const points = state.selectedAnswers.reduce((acc, item) => (item.isCorrect ? acc + 1 : acc), 0);
 			const goal = state.sortedQuestions.length;
 			const percentage = (points / goal) * 100;
-			const total = Number(percentage.toFixed(0));
 			const step = 100 / 3;
 			const status = (percentage >= step * 2) ? Status.GOOD : (percentage >= step ? Status.NORMAL : Status.BAD);
+			const score = state.scores[state.scores.length - 1];
 
-			state.calculatedScore = points;
-			state.roundScore = total;
-			state.roundStatus = status;
-			state.scores.push({
-				index: state.scores.length + 1,
-				total,
-				status,
-				time: state.roundTimeCounter
-			});
+			score.points = points;
+			score.percentage = Number(percentage.toFixed(0));
+			score.status = status;
 		},
 		undefined,
 		'quiz/calculateScore');
@@ -169,6 +173,7 @@ QuizActions
 	handleNewTry: () => {
 		get().resetPartialQuizState('sortedQuestions', 'scores');
 		get().sortQuestions();
+		get().addNewScore();
 	},
 
 	resetScores: () => {

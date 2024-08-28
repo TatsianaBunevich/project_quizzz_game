@@ -5,7 +5,9 @@ import PathConstants from '../../routes/pathConstants';
 import ControlButton from '../../components/ControlButton/ControlButton';
 
 const ScoreboardPage = () => {
+	const scores = useBoundStore((state) => state.scores);
 	const resetScores = useBoundStore((state) => state.resetScores);
+	const resetQuiz = useBoundStore((state) => state.resetQuiz);
 
 	return (
 		<>
@@ -14,7 +16,10 @@ const ScoreboardPage = () => {
 			</main>
 			<Footer>
 				<ControlButton onClick={resetScores}>Clear</ControlButton>
-				<ControlButton to={PathConstants.RESULT}>Back</ControlButton>
+				{scores.length ?
+					<ControlButton to={PathConstants.RESULT}>Back</ControlButton> :
+					<ControlButton to={PathConstants.SETTINGS} onClick={resetQuiz}>Settings</ControlButton>
+				}
 			</Footer>
 		</>
 	);

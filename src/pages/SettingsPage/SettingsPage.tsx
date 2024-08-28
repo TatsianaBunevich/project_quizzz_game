@@ -13,6 +13,7 @@ import ControlButton from '../../components/ControlButton/ControlButton';
 const SettingsPage = () => {
 	const queryClient = useQueryClient();
 	const { reset } = useQueryErrorResetBoundary();
+	const addNewScore = useBoundStore((state) => state.addNewScore);
 	const resetBoundStore = useBoundStore((state) => state.resetBoundStore);
 
 	queryClient.removeQueries({ queryKey: ['questions'] });
@@ -32,7 +33,7 @@ const SettingsPage = () => {
 					<Settings />
 				</main>
 				<Footer>
-					<ControlButton to={PathConstants.QUIZ}>Let&apos;s go</ControlButton>
+					<ControlButton to={PathConstants.QUIZ} onClick={addNewScore}>Let&apos;s go</ControlButton>
 					<ControlButton to={PathConstants.HOME} onClick={handleEndQuiz}>Exit</ControlButton>
 				</Footer>
 			</Suspense>

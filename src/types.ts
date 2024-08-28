@@ -81,7 +81,8 @@ export enum Status {
 
 export interface Score {
 	index: number;
-	total: number;
+	points: number;
+	percentage: number;
 	status: Status;
 	time: number;
 }

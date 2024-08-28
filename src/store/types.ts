@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import {
 	SettingsType, IdType,
-	sortedQuestionsType, Answer, SelectedAnswer, Score, Status,
+	sortedQuestionsType, Answer, SelectedAnswer, Score,
 	CategoriesResponse, QuestionsResponse,
 	Theme
 } from '../types';
@@ -21,10 +21,6 @@ export interface QuizState {
 	sortedQuestions: sortedQuestionsType[];
 	selectedAnswers: SelectedAnswer[];
 	activeQuestionId: number;
-	calculatedScore: number;
-	roundScore: number;
-	roundStatus: Status;
-	roundTimeCounter: number;
 	scores: Score[];
 }
 
@@ -43,6 +39,7 @@ export interface SettingsActions {
 export interface QuizActions {
 	sortQuestions: (data?: QuestionsResponse) => void;
 	controlCountdown: () => Promise<void>;
+	addNewScore: () => void;
 	runQuestionTimer: (timer?: number) => void;
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	handlePrevButton: () => void;

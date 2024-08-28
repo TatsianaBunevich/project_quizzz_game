@@ -32,9 +32,9 @@ const Scoreboard = () => {
 				<div onClick={() => updateSortConfig('index')}>
 					{sortConfig.key === 'index' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
 				</div>
-				<div onClick={() => updateSortConfig('total')}>
+				<div onClick={() => updateSortConfig('percentage')}>
 					Score
-					{sortConfig.key === 'total' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
+					{sortConfig.key === 'percentage' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
 				</div>
 				<div onClick={() => updateSortConfig('time')}>
 					Time
@@ -45,7 +45,7 @@ const Scoreboard = () => {
 				<div key={index} className={styles.tableRow}>
 					<div>{score.index}</div>
 					<div>
-						<ProgressBar score={score.total} status={score.status} />
+						<ProgressBar score={score.percentage} status={score.status} />
 					</div>
 					<div>{score.time > 0 && secondsToHms(score.time)}</div>
 				</div>
