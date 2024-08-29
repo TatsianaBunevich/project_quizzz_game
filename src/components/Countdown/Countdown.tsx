@@ -1,32 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import useBoundStore from '../../store/boundStore';
 import styles from './Countdown.module.css';
 
-const Countdown = ({ setIsCountdown }: { setIsCountdown: (isCountdown: boolean) => void }) => {
-	const timer = useRef<HTMLDivElement>(null);
-	const [counter, setCounter] = useState(4);
-
-	useEffect(() => {
-		if (counter === -1) {
-			setIsCountdown(false);
-			return;
-		}
-
-		const countdown = setTimeout(() => {
-			setCounter(counter => counter - 1);
-		}, 1000);
-
-		return () => clearTimeout(countdown);
-	}, [counter, setIsCountdown]);
-
-	useEffect(() => {
-		if (timer.current) {
-			timer.current.style.setProperty("--counter", `${counter}`);
-		}
-	}, [counter]);
+const Countdown = () => {
+	const timeLeft = useBoundStore((state) => state.timeLeft);
+	const counter = timeLeft === 5 ? timeLeft - 2 : timeLeft === 1 ? 'GO!' : timeLeft - 1;
 
 	return (
-		<div className={styles.countdown} ref={timer}>
-			<div className={styles.countdownValue}>{counter === 4 ? counter - 1 : counter === 0 ? 'GO!' : counter}</div>
+		<div className={styles.countdownWrap}>
+			<div className={styles.countdown} style={{'--counter': `${counter}`} as React.CSSProperties}>
+				<div className={styles.countdownValue}>{counter}</div>
+			</div>
 		</div>
 	);
 }

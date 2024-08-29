@@ -1,0 +1,52 @@
+.quizItem {
+  text-align: center;
+  display: grid;
+  padding: 1em 0;
+}
+
+/* TODO: make animation on every render */
+
+.id {
+  font-family: "Karla", sans-serif;
+  font-size: 3em;
+  font-weight: 700;
+  text-align: center;
+}
+
+.title {
+  line-height: 1.3;
+  border: 1px solid var(--button-color);
+  border-radius: 0.75em;
+  padding: 2em 1em;
+  margin: 1em 0;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 1em;
+  padding: 1em;
+  position: relative;
+}
+
+.blur {
+  backdrop-filter: blur(var(--blur-size));
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  align-content: center;
+  border-radius: 1em;
+  z-index: 1;
+}
+
+.blur p {
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+}

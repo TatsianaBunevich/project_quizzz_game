@@ -1,21 +1,20 @@
 import { useEffect, useRef } from 'react';
 import styles from './Modal.module.css';
 
-type ModalProps = {
-	isOpen: boolean;
-	children: React.ReactNode;
+interface ModalProps extends React.ComponentProps<'dialog'> {
+	isModal: boolean;
 }
 
-const Modal = ({ isOpen, children }: ModalProps) => {
+const Modal = ({ isModal, children }: ModalProps) => {
 	const ref = useRef<HTMLDialogElement>(null);
 
 	useEffect(() => {
-		if (isOpen) {
+		if (isModal) {
 			ref.current?.showModal();
 		} else {
 			ref.current?.close();
 		}
-	}, [isOpen]);
+	}, [isModal]);
 
 	return (
 		<dialog className={styles.modal} ref={ref}>

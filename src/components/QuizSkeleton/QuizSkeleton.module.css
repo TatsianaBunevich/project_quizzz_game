@@ -1,8 +1,8 @@
-.question {
+.quizItem {
   display: grid;
 }
 
-.questionTitle {
+.title {
   border: 1px solid var(--skeleton-color);
 }
 

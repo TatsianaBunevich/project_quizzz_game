@@ -1,3 +1,8 @@
+.countdownWrap {
+  margin: auto;
+  display: block;
+}
+
 .countdown {
   --size: 250px;
   font-family: "Karla", sans-serif;
@@ -7,13 +12,13 @@
   border: 0.1em solid var(--color);
   width: var(--size);
   height: var(--size);
-  display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   border-radius: 50%;
   margin: 0.5em auto;
   position: relative;
+  display: flex;
 }
 
 .countdownValue {

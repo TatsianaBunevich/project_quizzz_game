@@ -1,6 +1,9 @@
-@value button from '../Button/Button.module.css';
+.settings {
+  margin: auto;
+}
 
 .option {
-  composes: button;
-  border-color: var(--skeleton-color) !important;
+  border-radius: var(--button-radius);
+  border: 1px solid var(--skeleton-color);
+  padding: var(--button-padding);
 }

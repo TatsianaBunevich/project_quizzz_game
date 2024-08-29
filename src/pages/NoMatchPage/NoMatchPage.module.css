@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    place-items: stretch;
+    margin: 2.5em auto;
+    padding: 0 var(--c-gap);
+    max-width: var(--c-width);
+    width: 100%;
+    z-index: 1;
+}
+
+.noMatch {
+    text-align: center;
+}
+
+.noMatch p,
+.errorMessage {
+    margin: 2em 0;
+}
+
+.errorMessage {
+    color: red;
+    white-space: normal;
+}
+
+.controlButton {
+    flex: 0 0 auto;
+}

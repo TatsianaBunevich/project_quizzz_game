@@ -5,13 +5,13 @@ import styles from './SettingsSkeleton.module.css';
 
 const SettingsSkeleton = () => {
 	return (
-		<div className={stylesSettings.settings}>
+		<div className={`${stylesSettings.settings} ${styles.settings}`}>
 			<div className={stylesSetting.setting}>
 				<h2 className={stylesSetting.title}>
 					<Skeleton width="10em" height="1.5em" />
 				</h2>
 				<div className={stylesSetting.options}>
-					{[...Array(10)].map((_, index) => {
+					{Array.from({ length: 10 }).map((_, index) => {
 						const width = Math.random() * (50 - 10) + 10;
 						return (
 							<div key={index} style={{width: `${width}%`}} className={`${stylesSettings.option} ${styles.option}`}>

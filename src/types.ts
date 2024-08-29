@@ -3,7 +3,28 @@ export enum Theme {
 	DARK = 'dark',
 }
 
-export type Page = string | null;
+interface Category {
+	id: number;
+	name: string;
+}
+
+export interface CategoriesResponse {
+	trivia_categories: Category[];
+}
+
+interface Question {
+	category: string;
+	type: string;
+	difficulty: string;
+	question: string;
+	correct_answer: string;
+	incorrect_answers: string[];
+	answers: string[];
+}
+
+export interface QuestionsResponse {
+	results: Question[];
+}
 
 export enum DifficultyType {
 	ANY = 'any',
@@ -23,7 +44,7 @@ export type IdType = string | DifficultyType | TypeItem;
 export interface SettingType {
 	id: IdType;
 	name: string;
-	isSelect: boolean;
+	isSelected: boolean;
 }
 
 export interface SettingsType {
@@ -34,31 +55,15 @@ export interface SettingsType {
 	timer: number;
 }
 
-export interface SelectedAnswer {
-	question: string;
-	answer: string;
-	isCorrect: boolean;
-}
-
-export interface Question {
-	category: string;
-	type: string;
-	difficulty: string;
-	question: string;
-	correct_answer: string;
-	incorrect_answers: string[];
-	answers: string[];
-}
-
 export interface Answer {
 	answer: string;
 	isCorrect: boolean;
+	isSelected: boolean;
 }
 
-export interface sortedQuestionsType {
+export interface QuizItemType {
 	question: string;
 	answers: Answer[];
-	timer: number;
 }
 
 export enum Status {
@@ -69,7 +74,8 @@ export enum Status {
 
 export interface Score {
 	index: number;
-	total: number;
+	points: number;
+	percentage: number;
 	status: Status;
 	time: number;
 }

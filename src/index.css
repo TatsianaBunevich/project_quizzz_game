@@ -8,6 +8,8 @@
   --skeleton-color: #808080;
   --timer-color: hsl(359, 96%, 90%);
 
+  --button-radius: 0.75em;
+  --button-padding: 0.5em 1.25em;
   --blur-size: 5px;
   --normal-color: #fce795;
   --good-color: #91c483;

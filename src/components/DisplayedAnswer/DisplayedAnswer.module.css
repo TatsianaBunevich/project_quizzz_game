@@ -1,0 +1,12 @@
+.boolean {
+  font-size: 1.5em;
+  margin: auto;
+}
+
+.true {
+  color: var(--green-color);
+}
+
+.false {
+  color: var(--red-color);
+}

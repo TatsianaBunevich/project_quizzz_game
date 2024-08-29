@@ -3,45 +3,7 @@
   flex-direction: column;
 }
 
-.allShown {
-  margin-bottom: 5em;
-}
-
-.allShown::after {
-  content: "";
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  height: 10em;
-  width: 100%;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    var(--background-color) 30%
-  );
-  z-index: 1;
-}
-
-.modalButton {
-  display: block;
-  width: 14em;
-  margin: 0 auto 1em;
-}
-
-.quizProgress {
-  --progress-size: 0.3em;
-  background-color: var(--border-color);
-  height: var(--progress-size);
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-@keyframes :global(progress) {
-  0% {
-    width: var(--old-length);
-  }
-  100% {
-    width: var(--new-length);
-  }
+.quiz .selected {
+  border-color: transparent;
+  background-color: var(--button-bg-color);
 }

@@ -2,9 +2,9 @@
   font-family: "Inter", sans-serif;
   font-size: 1em;
   font-weight: 500;
-  border-radius: 0.75em;
+  border-radius: var(--button-radius);
   border: 1px solid var(--button-color);
-  padding: 0.5em 1.25em;
+  padding: var(--button-padding);
   color: var(--button-color);
   background-color: transparent;
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -14,7 +14,7 @@
   cursor: pointer;
 }
 
-.button:hover:enabled {
+.button:hover:not(:disabled) {
   color: var(--button-color);
   background-color: var(--button-bg-color);
 }

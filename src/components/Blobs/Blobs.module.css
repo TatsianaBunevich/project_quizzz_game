@@ -6,6 +6,15 @@
   height: 100%;
 }
 
+.blur {
+    backdrop-filter: blur(var(--blur-size));
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
 .startBlob {
   border-radius: 30% 50% 20% 40%;
   opacity: 0.5;

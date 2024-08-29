@@ -1,18 +1,17 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
-import { QuizContext } from '../../context/QuizContext';
+import { useState, useEffect } from 'react';
 import styles from './Scoreboard.module.css';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { Score } from '../../types';
+import { ScoresState } from '../../store/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownShortWide, faArrowDownWideShort } from '@fortawesome/free-solid-svg-icons';
 import { secondsToHms } from '../../helpers';
 
-const Scoreboard = () => {
-	const { scores } = useContext(QuizContext);
+const Scoreboard = ({ scores }: ScoresState) => {
 	const [sortedScore, setSortedScore] = useState<Score[]>([]);
 	const [sortConfig, setSortConfig] = useState<{ key: keyof Score, ascending: boolean }>({ key: 'index', ascending: true });
 
-	const scoresCallback = useCallback(() => {
+	useEffect(() => {
 		const key = sortConfig.key;
 		const sorted = [...scores].sort((a, b) => {
 			if (a[key] < b[key]) return sortConfig.ascending ? -1 : 1;
@@ -21,10 +20,6 @@ const Scoreboard = () => {
 		});
 		setSortedScore(sorted);
 	}, [scores, sortConfig.key, sortConfig.ascending]);
-
-	useEffect(() => {
-		scoresCallback();
-	}, [scoresCallback]);
 
 	const updateSortConfig = (key: keyof Score) => {
 		setSortConfig({ key, ascending: !sortConfig.ascending });
@@ -36,9 +31,9 @@ const Scoreboard = () => {
 				<div onClick={() => updateSortConfig('index')}>
 					{sortConfig.key === 'index' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
 				</div>
-				<div onClick={() => updateSortConfig('total')}>
+				<div onClick={() => updateSortConfig('percentage')}>
 					Score
-					{sortConfig.key === 'total' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
+					{sortConfig.key === 'percentage' && <FontAwesomeIcon className={styles.sortIcon} icon={sortConfig.ascending ? faArrowDownShortWide : faArrowDownWideShort} />}
 				</div>
 				<div onClick={() => updateSortConfig('time')}>
 					Time
@@ -49,7 +44,7 @@ const Scoreboard = () => {
 				<div key={index} className={styles.tableRow}>
 					<div>{score.index}</div>
 					<div>
-						<ProgressBar score={score.total} status={score.status} />
+						<ProgressBar score={score.percentage} status={score.status} />
 					</div>
 					<div>{score.time > 0 && secondsToHms(score.time)}</div>
 				</div>

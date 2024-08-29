@@ -1,4 +1,4 @@
-.questionTimer {
+.timer {
   position: absolute;
   width: calc(100% - var(--c-gap) * 2);
   padding: 0 var(--c-gap);
@@ -9,7 +9,7 @@
   text-align: end;
 }
 
-.questionTimer span {
+.timer span {
   font-family: "Karla", sans-serif;
   font-size: 1.5em;
   font-weight: 700;
