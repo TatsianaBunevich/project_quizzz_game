@@ -48,7 +48,6 @@ export interface QuizActions {
 	handleNextButton: () => void;
 	incActiveQuestionId: () => void;
 	decActiveQuestionId: () => void;
-	getRoundScore: () => void;
 	resetQuiz: () => void;
 	stopQuestionTimer: () => void;
 	restartQuestionTimer: () => void;

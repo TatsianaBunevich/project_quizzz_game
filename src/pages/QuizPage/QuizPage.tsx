@@ -27,7 +27,6 @@ const QuizPage = () => {
 		handleNextButton,
 		startCountdown,
 		timer,
-		getRoundScore,
 		resetQuiz,
 		stopQuestionTimer,
 		restartQuestionTimer
@@ -40,7 +39,6 @@ const QuizPage = () => {
 			handleNextButton: state.handleNextButton,
 			startCountdown: state.startCountdown,
 			timer: state.settings.timer,
-			getRoundScore: state.getRoundScore,
 			resetQuiz: state.resetQuiz,
 			stopQuestionTimer: state.stopQuestionTimer,
 			restartQuestionTimer: state.restartQuestionTimer
@@ -56,8 +54,17 @@ const QuizPage = () => {
 	useEffect(() => {
 		if (isCountdown) {
 			startCountdown().then(() => setIsCountdown(false)).catch((error) => console.error(error));
+		} else if (timer) {
+			if (activeQuestionId === sortedQuestions.length - 1) {
+				runQuestionTimer(timer, () => {
+					handleNextButton();
+					navigate(PathConstants.RESULT);
+				});
+			} else {
+				runQuestionTimer();
+			}
 		}
-	}, [startCountdown, isCountdown]);
+	}, [activeQuestionId, handleNextButton, isCountdown, navigate, runQuestionTimer, sortedQuestions.length, startCountdown, timer]);
 
 	useEffect(() => {
 		if (progress.current) {
@@ -70,16 +77,6 @@ const QuizPage = () => {
 		}
 	}, [newLength]);
 
-	useEffect(() => {
-		if (!isCountdown && timer) {
-			if (activeQuestionId === sortedQuestions.length - 1) {
-				runQuestionTimer(timer, () => navigate(PathConstants.RESULT));
-			} else {
-				runQuestionTimer();
-			}
-		}
-	}, [activeQuestionId, isCountdown, navigate, runQuestionTimer, sortedQuestions.length, timer]);
-
 	const handleOpenModal = () => {
 		if (timer) stopQuestionTimer();
 		setIsModal(true);
@@ -91,7 +88,8 @@ const QuizPage = () => {
 	};
 
 	const handleCheckAnswers = () => {
-		getRoundScore();
+		useBoundStore.setState({ activeQuestionId: sortedQuestions.length - 1 });
+		handleNextButton();
 		setIsModal(false);
 	};
 

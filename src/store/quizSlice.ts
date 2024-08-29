@@ -8,7 +8,7 @@ export const initialQuizState: QuizState = {
 
 export const createQuizActions: ActionsWithMiddlewares<
 QuizState &
-Pick<QuizActions, 'sortQuestions' | 'runQuestionTimer' | 'handleNextButton' |'incActiveQuestionId' | 'decActiveQuestionId' | 'getRoundScore' | 'resetQuiz'> &
+Pick<QuizActions, 'sortQuestions' | 'runQuestionTimer' | 'handleNextButton' | 'incActiveQuestionId' | 'decActiveQuestionId' | 'resetQuiz'> &
 SettingsState &
 Pick<ScoresActions, 'addNewScore' | 'incScoreTime' | 'calculateScore'> &
 Pick<UtilsState, 'timeLeft' |'intervalId'> &
@@ -87,11 +87,13 @@ QuizActions
 	},
 
 	handleNextButton: () => {
-		get().settings.timer && get().intervalId !== null && get().clearIntervalId();
+		if (get().settings.timer) {
+			get().intervalId !== null && get().clearIntervalId();
+			get().incScoreTime(get().settings.timer - get().timeLeft);
+		}
 		if (get().activeQuestionId === get().sortedQuestions.length - 1) {
-			get().getRoundScore();
+			get().calculateScore();
 		} else {
-			get().settings.timer && get().incScoreTime(get().settings.timer - get().timeLeft);
 			get().incActiveQuestionId();
 		}
 	},
@@ -112,11 +114,6 @@ QuizActions
 		'quiz/decActiveQuestionId');
 	},
 
-	getRoundScore: () => {
-		get().settings.timer && get().incScoreTime(get().settings.timer - get().timeLeft);
-		get().calculateScore();
-	},
-
 	resetQuiz: () => {
 		set({ ...initialQuizState },
 			undefined,
@@ -135,7 +132,9 @@ QuizActions
 		set(() => ({
 			selectedAnswers: initialQuizState.selectedAnswers,
 			activeQuestionId: initialQuizState.activeQuestionId,
-		}));
+		}),
+		undefined,
+		'quiz/handleNewTry');
 		get().sortQuestions();
 		get().addNewScore();
 	}
