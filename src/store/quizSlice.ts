@@ -2,7 +2,6 @@ import { ActionsWithMiddlewares, QuizState, QuizActions, SettingsState, ScoresAc
 
 export const initialQuizState: QuizState = {
 	sortedQuestions: [],
-	selectedAnswers: [],
 	activeQuestionId: 0,
 }
 
@@ -25,11 +24,13 @@ QuizActions
 					answers: [
 						{
 							answer: q.correct_answer,
-							isCorrect: true
+							isCorrect: true,
+							isSelected: false
 						},
 						...q.incorrect_answers.map(a => ({
 							answer: a,
-							isCorrect: false
+							isCorrect: false,
+							isSelected: false
 						}))
 					]
 				}));
@@ -57,20 +58,14 @@ QuizActions
 		get().runIntervalId(callback ?? get().handleNextButton);
 	},
 
-	handleSelectAnswer: (question, a) => {
+	handleSelectAnswer: (id, answer) => {
 		set((state) => {
-			const foundIndex = state.selectedAnswers.findIndex(item => item.question === question);
-			if (foundIndex === -1) {
-				state.selectedAnswers.push({
-					question: question,
-					answer: a.answer,
-					isCorrect: a.isCorrect
-				});
-			} else if (state.selectedAnswers[foundIndex].answer === a.answer) {
-				state.selectedAnswers.splice(foundIndex, 1);
-			} else {
-				state.selectedAnswers[foundIndex].answer = a.answer;
-				state.selectedAnswers[foundIndex].isCorrect = a.isCorrect;
+			const answers = state.sortedQuestions[id].answers;
+			const selectedAnswer = answers.find(item => item.answer === answer);
+			const isSelected = selectedAnswer?.isSelected;
+			answers.forEach(item => item.isSelected = false);
+			if (selectedAnswer) {
+				selectedAnswer.isSelected = isSelected === true ? false : true;
 			}
 		},
 		undefined,
@@ -129,12 +124,12 @@ QuizActions
 	},
 
 	handleNewTry: () => {
-		set(() => ({
-			selectedAnswers: initialQuizState.selectedAnswers,
-			activeQuestionId: initialQuizState.activeQuestionId,
-		}),
-		undefined,
-		'quiz/handleNewTry');
+		set(() => ({ activeQuestionId: initialQuizState.activeQuestionId }),
+			undefined,
+			'quiz/resetActiveQuestionId');
+		set((state) => { state.sortedQuestions.find(q => q.answers.find(ans => ans.isSelected = false)) },
+			undefined,
+			'quiz/resetSortedQuestions');
 		get().sortQuestions();
 		get().addNewScore();
 	}

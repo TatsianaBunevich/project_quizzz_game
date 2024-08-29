@@ -55,17 +55,10 @@ export interface SettingsType {
 	timer: number;
 }
 
-export interface SelectedAnswer {
-	question: string;
-	answer: string;
-	isCorrect: boolean;
-}
-
-export type OptionalSelectedAnswer = SelectedAnswer | undefined;
-
 export interface Answer {
 	answer: string;
 	isCorrect: boolean;
+	isSelected: boolean;
 }
 
 export interface sortedQuestionsType {

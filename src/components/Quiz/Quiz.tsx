@@ -1,64 +1,42 @@
-import useBoundStore from '../../store/boundStore';
-import { useShallow } from 'zustand/react/shallow';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { SettingsType, SettingType, QuestionsResponse, OptionalSelectedAnswer } from '../../types';
+import { sortedQuestionsType, QuestionsResponse } from '../../types';
+import { QuizState, QuizActions } from '../../store/types';
 import Question from '../Question/Question';
 import AnswerButton from '../AnswerButton/AnswerButton';
 import DisplayedAnswer from '../DisplayedAnswer/DisplayedAnswer';
 import styles from './Quiz.module.css';
 
-const Quiz = () => {
-	const {
-		settings,
-		sortedQuestions,
-		selectedAnswers,
-		activeQuestionId,
-		sortQuestions,
-		handleSelectAnswer
-	} = useBoundStore(
-		useShallow((state) => ({
-			settings: state.settings,
-			sortedQuestions: state.sortedQuestions,
-			selectedAnswers: state.selectedAnswers,
-			activeQuestionId: state.activeQuestionId,
-			sortQuestions: state.sortQuestions,
-			handleSelectAnswer: state.handleSelectAnswer
-		}))
-	);
-	const selectedAnswer: OptionalSelectedAnswer = selectedAnswers.find(item => item?.question === sortedQuestions[activeQuestionId].question);
+interface QuizProps extends Pick<QuizActions, 'sortQuestions' | 'handleSelectAnswer'> {
+	params: string,
+	isSortQuestions: boolean,
+	sortedQuestion: sortedQuestionsType,
+	id: QuizState['activeQuestionId'],
+}
 
-	const createQuestionsUrl = (settings: SettingsType) => {
-		const createSettingId = (setting: SettingType[]) => {
-			const foundItem = setting.find((item: SettingType) => item.isSelected === true);
-			return foundItem?.id === 'any' ? '' : foundItem?.id;
-		}
-		const params = `amount=${settings.amount}&category=${createSettingId(settings.category)}&difficulty=${createSettingId(settings.difficulty)}&type=${createSettingId(settings.type)}`;
-
-		return `https://opentdb.com/api.php?${params}`;
-	};
+const Quiz = ({ params, isSortQuestions, sortedQuestion, id, sortQuestions, handleSelectAnswer }: QuizProps) => {
 
 	useSuspenseQuery({
 		queryKey: ['questions'],
 		queryFn: async () => {
-			const response = await axios.get<QuestionsResponse>(createQuestionsUrl(settings));
+			const response = await axios.get<QuestionsResponse>(params);
 			return response.data;
 		},
-		select: !sortedQuestions.length ? sortQuestions : undefined,
+		select: isSortQuestions ? sortQuestions : undefined,
 		staleTime: Infinity,
 	});
 
 	return (
 		<div className={styles.quiz}>
 			<Question>
-				<Question.Id id={activeQuestionId} />
-				<Question.Title title={sortedQuestions[activeQuestionId].question} />
+				<Question.Id id={id} />
+				<Question.Title title={sortedQuestion.question} />
 				<Question.Options>
-					{sortedQuestions[activeQuestionId].answers.map((a) => (
+					{sortedQuestion.answers.map((a) => (
 						<AnswerButton
 							key={a.answer}
-							className={selectedAnswer?.answer === a.answer ? styles.selected : ''}
-							onClick={() => handleSelectAnswer(sortedQuestions[activeQuestionId].question, a)}
+							className={a.isSelected ? styles.selected : ''}
+							onClick={() => handleSelectAnswer(id, a.answer)}
 						>
 							<DisplayedAnswer text={a.answer} />
 						</AnswerButton>

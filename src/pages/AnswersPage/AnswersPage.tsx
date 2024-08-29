@@ -7,15 +7,11 @@ import styles from './AnswersPage.module.css';
 
 const AnswersPage = () => {
 	const sortedQuestions = useBoundStore((state) => state.sortedQuestions);
-	const selectedAnswers = useBoundStore((state) => state.selectedAnswers);
 
 	return (
 		<>
 			<main>
-				<Answers
-					sortedQuestions={sortedQuestions}
-					selectedAnswers={selectedAnswers}
-				/>
+				<Answers sortedQuestions={sortedQuestions} />
 			</main>
 			<Footer>
 				<ControlButton to={PathConstants.RESULT} className={styles.footerButton}>Back</ControlButton>

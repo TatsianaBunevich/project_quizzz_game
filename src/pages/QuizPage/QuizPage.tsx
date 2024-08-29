@@ -4,6 +4,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { ErrorBoundary } from 'react-error-boundary';
 import Fallback from '../../components/Fallback/Fallback';
 import { lazy, Suspense, useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Countdown from '../../components/Countdown/Countdown';
 import QuizSkeleton from '../../components/QuizSkeleton/QuizSkeleton';
 const Quiz = lazy(() => import('../../components/Quiz/Quiz'));
@@ -14,14 +15,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import QuestionTimer from '../../components/QuestionTimer/QuestionTimer';
 import Modal from '../../components/Modal/Modal';
+import { SettingsType, SettingType } from '../../types';
 import styles from './QuizPage.module.css';
-import { useNavigate } from 'react-router-dom';
 
 const QuizPage = () => {
 	const { reset } = useQueryErrorResetBoundary();
 	const {
+		settings,
 		sortedQuestions,
 		activeQuestionId,
+		sortQuestions,
+		handleSelectAnswer,
 		runQuestionTimer,
 		handlePrevButton,
 		handleNextButton,
@@ -32,8 +36,11 @@ const QuizPage = () => {
 		restartQuestionTimer
 	} = useBoundStore(
 		useShallow((state) => ({
+			settings: state.settings,
 			sortedQuestions: state.sortedQuestions,
 			activeQuestionId: state.activeQuestionId,
+			sortQuestions: state.sortQuestions,
+			handleSelectAnswer: state.handleSelectAnswer,
 			runQuestionTimer: state.runQuestionTimer,
 			handlePrevButton: state.handlePrevButton,
 			handleNextButton: state.handleNextButton,
@@ -77,6 +84,16 @@ const QuizPage = () => {
 		}
 	}, [newLength]);
 
+	const createQuestionsUrl = (settings: SettingsType) => {
+		const createSettingId = (setting: SettingType[]) => {
+			const foundItem = setting.find((item: SettingType) => item.isSelected === true);
+			return foundItem?.id === 'any' ? '' : foundItem?.id;
+		}
+		const params = `amount=${settings.amount}&category=${createSettingId(settings.category)}&difficulty=${createSettingId(settings.difficulty)}&type=${createSettingId(settings.type)}`;
+
+		return `https://opentdb.com/api.php?${params}`;
+	};
+
 	const handleOpenModal = () => {
 		if (timer) stopQuestionTimer();
 		setIsModal(true);
@@ -88,7 +105,9 @@ const QuizPage = () => {
 	};
 
 	const handleCheckAnswers = () => {
-		useBoundStore.setState({ activeQuestionId: sortedQuestions.length - 1 });
+		useBoundStore.setState({ activeQuestionId: sortedQuestions.length - 1 },
+			undefined,
+			'quiz/getLastQuestionId');
 		handleNextButton();
 		setIsModal(false);
 	};
@@ -107,7 +126,14 @@ const QuizPage = () => {
 			<div className={`${styles.quizWrap} ${!isCountdown ? styles.active : ''}`}>
 				<Suspense fallback={<QuizSkeleton />}>
 					<main className={styles.quizItemWrap}>
-						<Quiz />
+						<Quiz
+							params={createQuestionsUrl(settings)}
+							isSortQuestions={!sortedQuestions.length}
+							sortedQuestion={sortedQuestions[activeQuestionId]}
+							id={activeQuestionId}
+							sortQuestions={sortQuestions}
+							handleSelectAnswer={handleSelectAnswer}
+						/>
 					</main>
 					<Footer>
 						<ControlButton
