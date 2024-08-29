@@ -5,46 +5,46 @@ export const DEFAULTSETTINGS: SettingsType = {
 		{
 			id: 'any',
 			name: 'Any Category',
-			isSelect: true
+			isSelected: true
 		}
 	],
 	difficulty: [
 		{
 			id: DifficultyType.ANY,
 			name: 'Any Difficulty',
-			isSelect: true
+			isSelected: true
 		},
 		{
 			id: DifficultyType.EASY,
 			name: 'Easy',
-			isSelect: false
+			isSelected: false
 		},
 		{
 			id: DifficultyType.MEDIUM,
 			name: 'Medium',
-			isSelect: false
+			isSelected: false
 		},
 		{
 			id: DifficultyType.HARD,
 			name: 'Hard',
-			isSelect: false
+			isSelected: false
 		}
 	],
 	type: [
 		{
 			id: TypeItem.ANY,
 			name: 'Any Type',
-			isSelect: true
+			isSelected: true
 		},
 		{
 			id: TypeItem.MULTIPLE,
 			name: 'Multiple Choice',
-			isSelect: false
+			isSelected: false
 		},
 		{
 			id: TypeItem.BOOLEAN,
 			name: 'True/False',
-			isSelect: false
+			isSelected: false
 		}
 	],
 	amount: 10,

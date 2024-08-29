@@ -54,7 +54,7 @@ const Settings = ({ settings, updateSettings, handleSelectOption }: SettingsStat
 			{settings.category.map((option) => (
 				<Button
 					key={option.id}
-					className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
+					className={`${styles.option} ${option.isSelected ? styles.selected : ''}`}
 					onClick={() => handleSelectOption(option.id, 'category')}>{option.name}
 				</Button>
 			))}
@@ -64,7 +64,7 @@ const Settings = ({ settings, updateSettings, handleSelectOption }: SettingsStat
 		settings.difficulty.map((option) => (
 			<Button
 				key={option.id}
-				className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
+				className={`${styles.option} ${option.isSelected ? styles.selected : ''}`}
 				onClick={() => handleSelectOption(option.id, 'difficulty')}>{option.name}
 			</Button>
 		)), [handleSelectOption, settings.difficulty]);
@@ -73,7 +73,7 @@ const Settings = ({ settings, updateSettings, handleSelectOption }: SettingsStat
 		settings.type.map((option) => (
 			<Button
 				key={option.id}
-				className={`${styles.option} ${option.isSelect ? styles.selected : ''}`}
+				className={`${styles.option} ${option.isSelected ? styles.selected : ''}`}
 				onClick={() => handleSelectOption(option.id, 'type')}>{option.name}
 			</Button>
 		)), [handleSelectOption, settings.type]);

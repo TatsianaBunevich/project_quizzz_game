@@ -15,6 +15,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import QuestionTimer from '../../components/QuestionTimer/QuestionTimer';
 import Modal from '../../components/Modal/Modal';
 import styles from './QuizPage.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const QuizPage = () => {
 	const { reset } = useQueryErrorResetBoundary();
@@ -24,7 +25,7 @@ const QuizPage = () => {
 		runQuestionTimer,
 		handlePrevButton,
 		handleNextButton,
-		controlCountdown,
+		startCountdown,
 		timer,
 		getRoundScore,
 		resetQuiz,
@@ -37,7 +38,7 @@ const QuizPage = () => {
 			runQuestionTimer: state.runQuestionTimer,
 			handlePrevButton: state.handlePrevButton,
 			handleNextButton: state.handleNextButton,
-			controlCountdown: state.controlCountdown,
+			startCountdown: state.startCountdown,
 			timer: state.settings.timer,
 			getRoundScore: state.getRoundScore,
 			resetQuiz: state.resetQuiz,
@@ -45,6 +46,7 @@ const QuizPage = () => {
 			restartQuestionTimer: state.restartQuestionTimer
 		}))
 	);
+	const navigate = useNavigate();
 	const [isCountdown, setIsCountdown] = useState(true);
 	const [isModal, setIsModal] = useState(false);
 	const progress = useRef<HTMLDivElement>(null);
@@ -53,9 +55,9 @@ const QuizPage = () => {
 
 	useEffect(() => {
 		if (isCountdown) {
-			controlCountdown().then(() => setIsCountdown(false)).catch((error) => console.error(error));
+			startCountdown().then(() => setIsCountdown(false)).catch((error) => console.error(error));
 		}
-	}, [controlCountdown, isCountdown]);
+	}, [startCountdown, isCountdown]);
 
 	useEffect(() => {
 		if (progress.current) {
@@ -69,10 +71,14 @@ const QuizPage = () => {
 	}, [newLength]);
 
 	useEffect(() => {
-		if (!isCountdown) {
-			if (timer) runQuestionTimer();
+		if (!isCountdown && timer) {
+			if (activeQuestionId === sortedQuestions.length - 1) {
+				runQuestionTimer(timer, () => navigate(PathConstants.RESULT));
+			} else {
+				runQuestionTimer();
+			}
 		}
-	}, [isCountdown, runQuestionTimer, timer]);
+	}, [activeQuestionId, isCountdown, navigate, runQuestionTimer, sortedQuestions.length, timer]);
 
 	const handleOpenModal = () => {
 		if (timer) stopQuestionTimer();

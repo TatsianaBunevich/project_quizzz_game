@@ -45,16 +45,16 @@ QuizActions
 		'quiz/sortQuestions');
 	},
 
-	controlCountdown: async () => {
+	startCountdown: async () => {
 		get().setTimeLeft(5);
 		await new Promise<void>((resolve) => {
 			get().runIntervalId(resolve);
 		});
 	},
 
-	runQuestionTimer: (timer) => {
+	runQuestionTimer: (timer, callback) => {
 		get().setTimeLeft(timer ?? get().settings.timer);
-		get().runIntervalId(get().handleNextButton);
+		get().runIntervalId(callback ?? get().handleNextButton);
 	},
 
 	handleSelectAnswer: (question, a) => {
@@ -93,7 +93,6 @@ QuizActions
 		} else {
 			get().settings.timer && get().incScoreTime(get().settings.timer - get().timeLeft);
 			get().incActiveQuestionId();
-			get().settings.timer && get().runQuestionTimer();
 		}
 	},
 

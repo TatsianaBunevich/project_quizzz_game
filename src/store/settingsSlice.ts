@@ -14,7 +14,7 @@ SettingsActions
 			const triviaCategories = data.trivia_categories.map((category) => ({
 				id: category.id.toString(),
 				name: category.name,
-				isSelect: false,
+				isSelected: false,
 			}));
 			state.settings.category.push(...triviaCategories);
 		},
@@ -30,10 +30,10 @@ SettingsActions
 				const settingsArray = state.settings[setting];
 				const foundItem = settingsArray.find(item => item.id === optionId);
 
-				settingsArray.forEach(item => item.isSelect = false);
+				settingsArray.forEach(item => item.isSelected = false);
 
 				if (foundItem) {
-					foundItem.isSelect = true;
+					foundItem.isSelected = true;
 				}
 			}
 		},

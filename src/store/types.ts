@@ -41,8 +41,8 @@ export interface SettingsActions {
 
 export interface QuizActions {
 	sortQuestions: (data?: QuestionsResponse) => void;
-	controlCountdown: () => Promise<void>;
-	runQuestionTimer: (timer?: number) => void;
+	startCountdown: () => Promise<void>;
+	runQuestionTimer: (timer?: number, callback?: () => void) => void;
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	handlePrevButton: () => void;
 	handleNextButton: () => void;

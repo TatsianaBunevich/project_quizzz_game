@@ -30,7 +30,7 @@ const Quiz = () => {
 
 	const createQuestionsUrl = (settings: SettingsType) => {
 		const createSettingId = (setting: SettingType[]) => {
-			const foundItem = setting.find((item: SettingType) => item.isSelect === true);
+			const foundItem = setting.find((item: SettingType) => item.isSelected === true);
 			return foundItem?.id === 'any' ? '' : foundItem?.id;
 		}
 		const params = `amount=${settings.amount}&category=${createSettingId(settings.category)}&difficulty=${createSettingId(settings.difficulty)}&type=${createSettingId(settings.type)}`;

@@ -44,7 +44,7 @@ export type IdType = string | DifficultyType | TypeItem;
 export interface SettingType {
 	id: IdType;
 	name: string;
-	isSelect: boolean;
+	isSelected: boolean;
 }
 
 export interface SettingsType {
