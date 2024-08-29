@@ -6,12 +6,12 @@ import ControlButton from '../../components/ControlButton/ControlButton';
 import styles from './AnswersPage.module.css';
 
 const AnswersPage = () => {
-	const sortedQuestions = useBoundStore((state) => state.sortedQuestions);
+	const quizItems = useBoundStore((state) => state.quizItems);
 
 	return (
 		<>
 			<main>
-				<Answers sortedQuestions={sortedQuestions} />
+				<Answers quizItems={quizItems} />
 			</main>
 			<Footer>
 				<ControlButton to={PathConstants.RESULT} className={styles.footerButton}>Back</ControlButton>

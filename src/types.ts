@@ -61,7 +61,7 @@ export interface Answer {
 	isSelected: boolean;
 }
 
-export interface sortedQuestionsType {
+export interface QuizItemType {
 	question: string;
 	answers: Answer[];
 }

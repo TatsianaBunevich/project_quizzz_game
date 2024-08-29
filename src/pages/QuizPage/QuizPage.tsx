@@ -22,56 +22,57 @@ const QuizPage = () => {
 	const { reset } = useQueryErrorResetBoundary();
 	const {
 		settings,
-		sortedQuestions,
-		activeQuestionId,
-		sortQuestions,
+		quizItems,
+		activeId,
+		sortQuizItems,
 		handleSelectAnswer,
-		runQuestionTimer,
+		startTimer,
 		handlePrevButton,
 		handleNextButton,
 		startCountdown,
 		timer,
 		resetQuiz,
-		stopQuestionTimer,
-		restartQuestionTimer
+		stopTimer,
+		restartTimer
 	} = useBoundStore(
 		useShallow((state) => ({
 			settings: state.settings,
-			sortedQuestions: state.sortedQuestions,
-			activeQuestionId: state.activeQuestionId,
-			sortQuestions: state.sortQuestions,
+			quizItems: state.quizItems,
+			activeId: state.activeId,
+			sortQuizItems: state.sortQuizItems,
 			handleSelectAnswer: state.handleSelectAnswer,
-			runQuestionTimer: state.runQuestionTimer,
+			startTimer: state.startTimer,
 			handlePrevButton: state.handlePrevButton,
 			handleNextButton: state.handleNextButton,
 			startCountdown: state.startCountdown,
 			timer: state.settings.timer,
 			resetQuiz: state.resetQuiz,
-			stopQuestionTimer: state.stopQuestionTimer,
-			restartQuestionTimer: state.restartQuestionTimer
+			stopTimer: state.stopTimer,
+			restartTimer: state.restartTimer
 		}))
 	);
 	const navigate = useNavigate();
 	const [isCountdown, setIsCountdown] = useState(true);
 	const [isModal, setIsModal] = useState(false);
+	const lastQuizItem = quizItems.length - 1;
 	const progress = useRef<HTMLDivElement>(null);
 	const oldLength = useRef(0);
-	const newLength = (activeQuestionId) / (sortedQuestions.length - 1) * 100;
+	const newLength = (activeId) / (quizItems.length - 1) * 100;
 
 	useEffect(() => {
 		if (isCountdown) {
 			startCountdown().then(() => setIsCountdown(false)).catch((error) => console.error(error));
 		} else if (timer) {
-			if (activeQuestionId === sortedQuestions.length - 1) {
-				runQuestionTimer(timer, () => {
+			if (activeId === lastQuizItem) {
+				startTimer(timer, () => {
 					handleNextButton();
 					navigate(PathConstants.RESULT);
 				});
 			} else {
-				runQuestionTimer();
+				startTimer();
 			}
 		}
-	}, [activeQuestionId, handleNextButton, isCountdown, navigate, runQuestionTimer, sortedQuestions.length, startCountdown, timer]);
+	}, [activeId, handleNextButton, isCountdown, lastQuizItem, navigate, startCountdown, startTimer, timer]);
 
 	useEffect(() => {
 		if (progress.current) {
@@ -95,19 +96,19 @@ const QuizPage = () => {
 	};
 
 	const handleOpenModal = () => {
-		if (timer) stopQuestionTimer();
+		if (timer) stopTimer();
 		setIsModal(true);
 	};
 
 	const handleCloseModal = () => {
-		if (timer) restartQuestionTimer();
+		if (timer) restartTimer();
 		setIsModal(false);
 	};
 
 	const handleCheckAnswers = () => {
-		useBoundStore.setState({ activeQuestionId: sortedQuestions.length - 1 },
+		useBoundStore.setState({ activeId: lastQuizItem },
 			undefined,
-			'quiz/getLastQuestionId');
+			'quiz/getLastQuizItemId');
 		handleNextButton();
 		setIsModal(false);
 	};
@@ -128,26 +129,26 @@ const QuizPage = () => {
 					<main className={styles.quizItemWrap}>
 						<Quiz
 							params={createQuestionsUrl(settings)}
-							isSortQuestions={!sortedQuestions.length}
-							sortedQuestion={sortedQuestions[activeQuestionId]}
-							id={activeQuestionId}
-							sortQuestions={sortQuestions}
+							isSortQuizItems={!quizItems.length}
+							quizItem={quizItems[activeId]}
+							activeId={activeId}
+							sortQuizItems={sortQuizItems}
 							handleSelectAnswer={handleSelectAnswer}
 						/>
 					</main>
 					<Footer>
 						<ControlButton
-							to={activeQuestionId === 0 ? PathConstants.SETTINGS : ''}
+							to={activeId === 0 ? PathConstants.SETTINGS : ''}
 							className={styles.footerButton}
 							onClick={handlePrevButton}
-							disabled={timer > 0 && activeQuestionId > 0}>
-							{activeQuestionId === 0 ? 'Back' : <FontAwesomeIcon icon={faChevronLeft} />}
+							disabled={timer > 0 && activeId > 0}>
+							{activeId === 0 ? 'Back' : <FontAwesomeIcon icon={faChevronLeft} />}
 						</ControlButton>
 						<ControlButton
-							to={activeQuestionId === sortedQuestions.length - 1 ? PathConstants.RESULT : ''}
+							to={activeId === lastQuizItem ? PathConstants.RESULT : ''}
 							className={styles.footerButton}
 							onClick={handleNextButton}>
-							{activeQuestionId === sortedQuestions.length - 1 ? 'Check' : <FontAwesomeIcon icon={faChevronRight} />}
+							{activeId === lastQuizItem ? 'Check' : <FontAwesomeIcon icon={faChevronRight} />}
 						</ControlButton>
 						<ControlButton
 							className={`${styles.footerButton} ${styles.stopButton}`}

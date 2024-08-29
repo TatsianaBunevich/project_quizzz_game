@@ -5,7 +5,7 @@ import DisplayedAnswer from '../DisplayedAnswer/DisplayedAnswer';
 import stylesAnswerButton from '../AnswerButton/AnswerButton.module.css';
 import styles from './Answers.module.css';
 
-const Answers = ({ sortedQuestions }: Pick<QuizState, 'sortedQuestions'>) => {
+const Answers = ({ quizItems }: Pick<QuizState, 'quizItems'>) => {
 	const answerClasses = (a: Answer) => {
 		if (a.isCorrect) {
 			return styles.correct;
@@ -18,7 +18,7 @@ const Answers = ({ sortedQuestions }: Pick<QuizState, 'sortedQuestions'>) => {
 
 	return (
 		<div className={styles.answers}>
-			{sortedQuestions.map((q, index) => {
+			{quizItems.map((q, index) => {
 				return (
 					<Question key={index} className={styles.question}>
 						<Question.Title title={q.question} className={styles.questionTitle} />

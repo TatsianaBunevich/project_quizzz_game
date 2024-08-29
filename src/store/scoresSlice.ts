@@ -6,7 +6,7 @@ export const initialScoresState: ScoresState = {
 }
 
 export const createScoresActions: ActionsWithMiddlewares<
-ScoresState & Pick<QuizState, 'sortedQuestions'>,
+ScoresState & Pick<QuizState, 'quizItems'>,
 ScoresActions
 > = (set) => ({
 	addNewScore: () => {
@@ -33,18 +33,17 @@ ScoresActions
 
 	calculateScore: () => {
 		set((state) => {
-			const points = state.sortedQuestions.reduce((acc, item) => (
+			const points = state.quizItems.reduce((acc, item) => (
 				item.answers.reduce((acc, a) => (a.isSelected && a.isCorrect ? acc + 1 : acc), 0) ? acc + 1 : acc
 			), 0);
-			const goal = state.sortedQuestions.length;
+			const goal = state.quizItems.length;
 			const percentage = (points / goal) * 100;
 			const step = 100 / 3;
-			const status = (percentage >= step * 2) ? Status.GOOD : (percentage >= step ? Status.NORMAL : Status.BAD);
 			const score = state.scores[state.scores.length - 1];
 
 			score.points = points;
 			score.percentage = Number(percentage.toFixed(0));
-			score.status = status;
+			score.status = (percentage >= step * 2) ? Status.GOOD : (percentage >= step ? Status.NORMAL : Status.BAD);
 		},
 		undefined,
 		'scores/calculateScore');

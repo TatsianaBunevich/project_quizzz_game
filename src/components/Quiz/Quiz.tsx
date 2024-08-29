@@ -1,20 +1,19 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { sortedQuestionsType, QuestionsResponse } from '../../types';
+import { QuizItemType, QuestionsResponse } from '../../types';
 import { QuizState, QuizActions } from '../../store/types';
 import Question from '../Question/Question';
 import AnswerButton from '../AnswerButton/AnswerButton';
 import DisplayedAnswer from '../DisplayedAnswer/DisplayedAnswer';
 import styles from './Quiz.module.css';
 
-interface QuizProps extends Pick<QuizActions, 'sortQuestions' | 'handleSelectAnswer'> {
+interface QuizProps extends Pick<QuizState, 'activeId'>, Pick<QuizActions, 'sortQuizItems' | 'handleSelectAnswer'> {
 	params: string,
-	isSortQuestions: boolean,
-	sortedQuestion: sortedQuestionsType,
-	id: QuizState['activeQuestionId'],
+	isSortQuizItems: boolean,
+	quizItem: QuizItemType,
 }
 
-const Quiz = ({ params, isSortQuestions, sortedQuestion, id, sortQuestions, handleSelectAnswer }: QuizProps) => {
+const Quiz = ({ params, isSortQuizItems, quizItem, activeId, sortQuizItems, handleSelectAnswer }: QuizProps) => {
 
 	useSuspenseQuery({
 		queryKey: ['questions'],
@@ -22,21 +21,21 @@ const Quiz = ({ params, isSortQuestions, sortedQuestion, id, sortQuestions, hand
 			const response = await axios.get<QuestionsResponse>(params);
 			return response.data;
 		},
-		select: isSortQuestions ? sortQuestions : undefined,
+		select: isSortQuizItems ? sortQuizItems : undefined,
 		staleTime: Infinity,
 	});
 
 	return (
 		<div className={styles.quiz}>
 			<Question>
-				<Question.Id id={id} />
-				<Question.Title title={sortedQuestion.question} />
+				<Question.Id id={activeId} />
+				<Question.Title title={quizItem.question} />
 				<Question.Options>
-					{sortedQuestion.answers.map((a) => (
+					{quizItem.answers.map((a) => (
 						<AnswerButton
 							key={a.answer}
 							className={a.isSelected ? styles.selected : ''}
-							onClick={() => handleSelectAnswer(id, a.answer)}
+							onClick={() => handleSelectAnswer(activeId, a.answer)}
 						>
 							<DisplayedAnswer text={a.answer} />
 						</AnswerButton>
