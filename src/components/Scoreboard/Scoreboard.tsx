@@ -1,14 +1,13 @@
-import useBoundStore from '../../store/boundStore';
 import { useState, useEffect } from 'react';
 import styles from './Scoreboard.module.css';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { Score } from '../../types';
+import { ScoresState } from '../../store/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownShortWide, faArrowDownWideShort } from '@fortawesome/free-solid-svg-icons';
 import { secondsToHms } from '../../helpers';
 
-const Scoreboard = () => {
-	const scores = useBoundStore((state) => state.scores);
+const Scoreboard = ({ scores }: ScoresState) => {
 	const [sortedScore, setSortedScore] = useState<Score[]>([]);
 	const [sortConfig, setSortConfig] = useState<{ key: keyof Score, ascending: boolean }>({ key: 'index', ascending: true });
 

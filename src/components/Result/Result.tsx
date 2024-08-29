@@ -1,12 +1,14 @@
-import useBoundStore from '../../store/boundStore';
 import { useState } from 'react';
-import { Status } from '../../types';
+import { Status, Score } from '../../types';
 import styles from './Result.module.css';
 import { secondsToHms } from '../../helpers';
 
-const Result = () => {
-	const sortedQuestions = useBoundStore((state) => state.sortedQuestions);
-	const score = useBoundStore((state) => state.scores[state.scores.length - 1]);
+interface ResultProps {
+	goal: number;
+	score: Score;
+}
+
+const Result = ({ goal, score }: ResultProps) => {
 	const [result, setResult] = useState(true);
 	const statusClass = score.status === Status.GOOD ? styles.good : score.status === Status.NORMAL ? styles.normal : styles.bad;
 
@@ -21,7 +23,7 @@ const Result = () => {
 				<circle className={`${styles.foreground} ${statusClass}`}></circle>
 				<text x="50%" y="50%" textAnchor="middle" className={styles.circularProgressValue} dy=".3em">
 					<tspan x="50%" className={`${styles.text} ${result ? styles.show : ''}`}>{`${score.percentage}%`}</tspan>
-					<tspan x="50%" className={`${styles.text} ${!result ? styles.show : ''}`}>{`${score.points}/${sortedQuestions.length}`}</tspan>
+					<tspan x="50%" className={`${styles.text} ${!result ? styles.show : ''}`}>{`${score.points}/${goal}`}</tspan>
 				</text>
 			</svg>
 			<div className={styles.time}>{score.time > 0 && secondsToHms(score.time)}</div>

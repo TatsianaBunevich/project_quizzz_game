@@ -1,17 +1,16 @@
-import { ActionsWithMiddlewares, QuizState, QuizActions, SettingsState, UtilsState, UtilsActions } from './types';
-import { Status } from '../types';
+import { ActionsWithMiddlewares, QuizState, QuizActions, SettingsState, ScoresActions, UtilsState, UtilsActions } from './types';
 
 export const initialQuizState: QuizState = {
 	sortedQuestions: [],
 	selectedAnswers: [],
 	activeQuestionId: 0,
-	scores: [],
 }
 
 export const createQuizActions: ActionsWithMiddlewares<
 QuizState &
-Pick<QuizActions, 'sortQuestions' | 'addNewScore' | 'runQuestionTimer' | 'handleNextButton' |'incActiveQuestionId' | 'decActiveQuestionId' | 'getRoundScore' | 'resetQuiz' | 'incRoundTimeCounter' | 'calculateScore' | 'resetPartialQuizState'> &
+Pick<QuizActions, 'sortQuestions' | 'runQuestionTimer' | 'handleNextButton' |'incActiveQuestionId' | 'decActiveQuestionId' | 'getRoundScore' | 'resetQuiz'> &
 SettingsState &
+Pick<ScoresActions, 'addNewScore' | 'incScoreTime' | 'calculateScore'> &
 Pick<UtilsState, 'timeLeft' |'intervalId'> &
 Pick<UtilsActions, 'setTimeLeft' |'runIntervalId' | 'clearIntervalId'>,
 QuizActions
@@ -53,20 +52,6 @@ QuizActions
 		});
 	},
 
-	addNewScore: () => {
-		set((state) => {
-			state.scores.push({
-				index: state.scores.length + 1,
-				points: 0,
-				percentage: 0,
-				status: Status.BAD,
-				time: 0
-			});
-		},
-		undefined,
-		'quiz/addNewScore');
-	},
-
 	runQuestionTimer: (timer) => {
 		get().setTimeLeft(timer ?? get().settings.timer);
 		get().runIntervalId(get().handleNextButton);
@@ -106,7 +91,7 @@ QuizActions
 		if (get().activeQuestionId === get().sortedQuestions.length - 1) {
 			get().getRoundScore();
 		} else {
-			get().settings.timer && get().incRoundTimeCounter(get().settings.timer - get().timeLeft);
+			get().settings.timer && get().incScoreTime(get().settings.timer - get().timeLeft);
 			get().incActiveQuestionId();
 			get().settings.timer && get().runQuestionTimer();
 		}
@@ -129,12 +114,14 @@ QuizActions
 	},
 
 	getRoundScore: () => {
-		get().settings.timer && get().incRoundTimeCounter(get().settings.timer - get().timeLeft);
+		get().settings.timer && get().incScoreTime(get().settings.timer - get().timeLeft);
 		get().calculateScore();
 	},
 
 	resetQuiz: () => {
-		get().resetPartialQuizState('scores');
+		set({ ...initialQuizState },
+			undefined,
+			'quiz/resetQuiz');
 	},
 
 	stopQuestionTimer: () => {
@@ -145,55 +132,12 @@ QuizActions
 		get().runQuestionTimer(get().timeLeft);
 	},
 
-	incRoundTimeCounter: (counter) => {
-		set((state) => {
-			state.scores[state.scores.length - 1].time += counter
-		},
-		undefined,
-		'quiz/incRoundTimeCounter');
-	},
-
-	calculateScore: () => {
-		set((state) => {
-			const points = state.selectedAnswers.reduce((acc, item) => (item.isCorrect ? acc + 1 : acc), 0);
-			const goal = state.sortedQuestions.length;
-			const percentage = (points / goal) * 100;
-			const step = 100 / 3;
-			const status = (percentage >= step * 2) ? Status.GOOD : (percentage >= step ? Status.NORMAL : Status.BAD);
-			const score = state.scores[state.scores.length - 1];
-
-			score.points = points;
-			score.percentage = Number(percentage.toFixed(0));
-			score.status = status;
-		},
-		undefined,
-		'quiz/calculateScore');
-	},
-
 	handleNewTry: () => {
-		get().resetPartialQuizState('sortedQuestions', 'scores');
+		set(() => ({
+			selectedAnswers: initialQuizState.selectedAnswers,
+			activeQuestionId: initialQuizState.activeQuestionId,
+		}));
 		get().sortQuestions();
 		get().addNewScore();
-	},
-
-	resetScores: () => {
-		set({ scores: initialQuizState.scores },
-			undefined,
-			'quiz/resetScores');
-	},
-
-	resetPartialQuizState: (...exceptParams) => {
-		set((state) => {
-			const newState = Object.entries(initialQuizState).reduce((acc, [key, value]) => {
-				if (!exceptParams.includes(key as keyof QuizState)) {
-					acc[key] = value as QuizState[keyof QuizState];
-				}
-				return acc;
-			}, {} as Record<string, QuizState[keyof QuizState]>);
-
-			Object.assign(state, newState);
-		},
-		undefined,
-		'quiz/resetPartialQuizState');
 	}
 });

@@ -21,6 +21,9 @@ export interface QuizState {
 	sortedQuestions: sortedQuestionsType[];
 	selectedAnswers: SelectedAnswer[];
 	activeQuestionId: number;
+}
+
+export interface ScoresState {
 	scores: Score[];
 }
 
@@ -39,7 +42,6 @@ export interface SettingsActions {
 export interface QuizActions {
 	sortQuestions: (data?: QuestionsResponse) => void;
 	controlCountdown: () => Promise<void>;
-	addNewScore: () => void;
 	runQuestionTimer: (timer?: number) => void;
 	handleSelectAnswer: (question: string, a: Answer) => void;
 	handlePrevButton: () => void;
@@ -50,11 +52,14 @@ export interface QuizActions {
 	resetQuiz: () => void;
 	stopQuestionTimer: () => void;
 	restartQuestionTimer: () => void;
-	incRoundTimeCounter: (counter: number) => void;
-	calculateScore: () => void;
 	handleNewTry: () => void;
+}
+
+export interface ScoresActions {
+	addNewScore: () => void;
+	incScoreTime: (time: number) => void;
+	calculateScore: () => void;
 	resetScores: () => void;
-	resetPartialQuizState: (...exceptParams: (keyof QuizState)[]) => void;
 }
 
 export interface UtilsActions {
@@ -68,11 +73,13 @@ export interface UtilsActions {
 export interface BoundState extends
 SettingsState,
 QuizState,
+ScoresState,
 UtilsState {}
 
 export interface BoundActions extends
 SettingsActions,
 QuizActions,
+ScoresActions,
 UtilsActions {
 	resetBoundStore: () => void;
 }

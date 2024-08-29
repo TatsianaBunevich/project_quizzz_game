@@ -13,6 +13,9 @@ import ControlButton from '../../components/ControlButton/ControlButton';
 const SettingsPage = () => {
 	const queryClient = useQueryClient();
 	const { reset } = useQueryErrorResetBoundary();
+	const settings = useBoundStore((state) => state.settings);
+	const updateSettings = useBoundStore((state) => state.updateSettings);
+	const handleSelectOption = useBoundStore((state) => state.handleSelectOption);
 	const addNewScore = useBoundStore((state) => state.addNewScore);
 	const resetBoundStore = useBoundStore((state) => state.resetBoundStore);
 
@@ -30,7 +33,11 @@ const SettingsPage = () => {
 		>
 			<Suspense fallback={<SettingsSkeleton />}>
 				<main>
-					<Settings />
+					<Settings
+						settings={settings}
+						updateSettings={updateSettings}
+						handleSelectOption={handleSelectOption}
+					/>
 				</main>
 				<Footer>
 					<ControlButton to={PathConstants.QUIZ} onClick={addNewScore}>Let&apos;s go</ControlButton>

@@ -12,7 +12,7 @@ const ScoreboardPage = () => {
 	return (
 		<>
 			<main>
-				<Scoreboard />
+				<Scoreboard scores={scores} />
 			</main>
 			<Footer>
 				<ControlButton onClick={resetScores}>Clear</ControlButton>

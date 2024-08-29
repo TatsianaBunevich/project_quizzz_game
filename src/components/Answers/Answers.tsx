@@ -1,22 +1,11 @@
-import useBoundStore from '../../store/boundStore';
-import { useShallow } from 'zustand/react/shallow';
 import { OptionalSelectedAnswer, Answer } from '../../types';
+import { QuizState } from '../../store/types';
 import Question from '../Question/Question';
 import DisplayedAnswer from '../DisplayedAnswer/DisplayedAnswer';
 import stylesAnswerButton from '../AnswerButton/AnswerButton.module.css';
 import styles from './Answers.module.css';
 
-const Answers = () => {
-	const {
-		sortedQuestions,
-		selectedAnswers
-	} = useBoundStore(
-		useShallow((state) => ({
-			sortedQuestions: state.sortedQuestions,
-			selectedAnswers: state.selectedAnswers
-		}))
-	);
-
+const Answers = ({ sortedQuestions, selectedAnswers }: Pick<QuizState, 'sortedQuestions' | 'selectedAnswers'>) => {
 	const answerClasses = (selectedAnswer: OptionalSelectedAnswer, a: Answer) => {
 		if (a.isCorrect) {
 			return styles.correct;

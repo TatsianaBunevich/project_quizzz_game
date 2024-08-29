@@ -1,27 +1,15 @@
-import useBoundStore from '../../store/boundStore';
-import { useShallow } from 'zustand/react/shallow';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState, useMemo, useCallback } from 'react';
-import { CategoriesResponse, SettingsType } from '../../types';
 import Setting from '../Setting/Setting';
 import Button from '../Button/Button';
 import { secondsToHms } from '../../helpers';
-import styles from './Settings.module.css';
 import { debounce } from 'lodash';
+import { CategoriesResponse, SettingsType } from '../../types';
+import { SettingsState, SettingsActions } from '../../store/types';
+import styles from './Settings.module.css';
 
-const Settings = () => {
-	const {
-		settings,
-		updateSettings,
-		handleSelectOption
-	} = useBoundStore(
-		useShallow((state) => ({
-			settings: state.settings,
-			updateSettings: state.updateSettings,
-			handleSelectOption: state.handleSelectOption
-		}))
-	);
+const Settings = ({ settings, updateSettings, handleSelectOption }: SettingsState & SettingsActions) => {
 	const [categoryClass, setCategoryClass] = useState('');
 	const [rangeValue, setRangeValue] = useState(settings.amount);
 	const [timerValue, setTimerValue] = useState(settings.timer);

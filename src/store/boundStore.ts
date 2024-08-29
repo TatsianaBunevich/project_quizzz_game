@@ -4,11 +4,13 @@ import { immer } from 'zustand/middleware/immer';
 import { BoundState, BoundActions } from './types';
 import { initialSettingsState, createSettingsActions } from './settingsSlice';
 import { initialQuizState, createQuizActions } from './quizSlice';
+import { initialScoresState, createScoresActions } from './scoresSlice';
 import { initialUtilsState, createUtilsActions } from './utilsSlice';
 
 const initialBoundState: BoundState = {
 	...initialSettingsState,
 	...initialQuizState,
+	...initialScoresState,
 	...initialUtilsState,
 }
 
@@ -19,6 +21,7 @@ const useBoundStore = create<BoundState & BoundActions>()(
 				...initialBoundState,
 				...createSettingsActions(set, get, api),
 				...createQuizActions(set, get, api),
+				...createScoresActions(set, get, api),
 				...createUtilsActions(set, get, api),
 				resetBoundStore: () => {
 					set({ ...initialBoundState }, false, 'store/resetBoundStore');
