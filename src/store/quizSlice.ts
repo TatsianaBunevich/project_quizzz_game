@@ -65,7 +65,7 @@ QuizActions
 			const isSelected = selectedAnswer?.isSelected;
 			answers.forEach(item => item.isSelected = false);
 			if (selectedAnswer) {
-				selectedAnswer.isSelected = isSelected === true ? false : true;
+				selectedAnswer.isSelected = !isSelected;
 			}
 		},
 		undefined,
