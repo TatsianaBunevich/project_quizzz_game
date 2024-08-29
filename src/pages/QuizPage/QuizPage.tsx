@@ -13,7 +13,7 @@ import PathConstants from '../../routes/pathConstants';
 import ControlButton from '../../components/ControlButton/ControlButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import QuestionTimer from '../../components/QuestionTimer/QuestionTimer';
+import Timer from '../../components/Timer/Timer';
 import Modal from '../../components/Modal/Modal';
 import { SettingsType, SettingType } from '../../types';
 import styles from './QuizPage.module.css';
@@ -157,7 +157,7 @@ const QuizPage = () => {
 						</ControlButton>
 					</Footer>
 					<div className={styles.quizProgress} ref={progress}></div>
-					{timer > 0 && <QuestionTimer />}
+					{timer > 0 && <Timer />}
 					<Modal isModal={isModal}>
 						<h2>Do you want to</h2>
 						<ControlButton className={styles.modalButton} onClick={handleCloseModal}>Back to the game</ControlButton>

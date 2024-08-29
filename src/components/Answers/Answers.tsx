@@ -1,6 +1,6 @@
 import { Answer } from '../../types';
 import { QuizState } from '../../store/types';
-import Question from '../Question/Question';
+import QuizItem from '../QuizItem/QuizItem';
 import DisplayedAnswer from '../DisplayedAnswer/DisplayedAnswer';
 import stylesAnswerButton from '../AnswerButton/AnswerButton.module.css';
 import styles from './Answers.module.css';
@@ -20,10 +20,10 @@ const Answers = ({ quizItems }: Pick<QuizState, 'quizItems'>) => {
 		<div className={styles.answers}>
 			{quizItems.map((q, index) => {
 				return (
-					<Question key={index} className={styles.question}>
-						<Question.Title title={q.question} className={styles.questionTitle} />
-						<Question.Options className={styles.options}>
-							{q.answers.every(a => !a.isSelected) && <Question.Blur />}
+					<QuizItem key={index} className={styles.quizItem}>
+						<QuizItem.Title title={q.question} className={styles.title} />
+						<QuizItem.Options className={styles.options}>
+							{q.answers.every(a => !a.isSelected) && <QuizItem.Blur />}
 							{q.answers.map((a) => (
 								<div
 									key={a.answer}
@@ -32,8 +32,8 @@ const Answers = ({ quizItems }: Pick<QuizState, 'quizItems'>) => {
 									<DisplayedAnswer text={a.answer} className={styles.boolean} />
 								</div>
 							))}
-						</Question.Options>
-					</Question>
+						</QuizItem.Options>
+					</QuizItem>
 				)
 			})}
 		</div>

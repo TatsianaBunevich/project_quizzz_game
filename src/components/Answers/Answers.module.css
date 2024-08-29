@@ -19,22 +19,22 @@
   z-index: 1;
 }
 
-.question {
-  counter-increment: question_counter;
+.quizItem {
+  counter-increment: quizItem_counter;
 }
 
-.question:not(:last-child) {
+.quizItem:not(:last-child) {
   border-bottom: 1px solid var(--border-color);
 }
 
-.questionTitle {
+.title {
   display: inline-grid;
   grid-template-columns: min-content 1fr;
   gap: 1em;
 }
 
-.questionTitle::before {
-  content: counter(question_counter);
+.title::before {
+  content: counter(quizItem_counter);
   display: inline;
 }
 
@@ -66,7 +66,7 @@
 }
 
 @media (max-width: calc(400px + 1.25em * 2 - 1px)) {
-  .questionTitle {
+  .title {
     text-align: left;
   }
 }

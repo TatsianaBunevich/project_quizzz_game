@@ -2,7 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { QuizItemType, QuestionsResponse } from '../../types';
 import { QuizState, QuizActions } from '../../store/types';
-import Question from '../Question/Question';
+import QuizItem from '../QuizItem/QuizItem';
 import AnswerButton from '../AnswerButton/AnswerButton';
 import DisplayedAnswer from '../DisplayedAnswer/DisplayedAnswer';
 import styles from './Quiz.module.css';
@@ -27,10 +27,10 @@ const Quiz = ({ params, isSortQuizItems, quizItem, activeId, sortQuizItems, hand
 
 	return (
 		<div className={styles.quiz}>
-			<Question>
-				<Question.Id id={activeId} />
-				<Question.Title title={quizItem.question} />
-				<Question.Options>
+			<QuizItem>
+				<QuizItem.Id id={activeId} />
+				<QuizItem.Title title={quizItem.question} />
+				<QuizItem.Options>
 					{quizItem.answers.map((a) => (
 						<AnswerButton
 							key={a.answer}
@@ -40,8 +40,8 @@ const Quiz = ({ params, isSortQuizItems, quizItem, activeId, sortQuizItems, hand
 							<DisplayedAnswer text={a.answer} />
 						</AnswerButton>
 					))}
-				</Question.Options>
-			</Question>
+				</QuizItem.Options>
+			</QuizItem>
 		</div>
 	);
 };

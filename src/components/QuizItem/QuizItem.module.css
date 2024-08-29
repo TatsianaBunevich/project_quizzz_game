@@ -1,4 +1,4 @@
-.question {
+.quizItem {
   text-align: center;
   display: grid;
   padding: 1em 0;
@@ -6,14 +6,14 @@
 
 /* TODO: make animation on every render */
 
-.questionId {
+.id {
   font-family: "Karla", sans-serif;
   font-size: 3em;
   font-weight: 700;
   text-align: center;
 }
 
-.questionTitle {
+.title {
   line-height: 1.3;
   border: 1px solid var(--button-color);
   border-radius: 0.75em;
