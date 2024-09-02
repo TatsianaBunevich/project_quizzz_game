@@ -9,7 +9,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "*.config.*"],
   parser: "@typescript-eslint/parser",
   plugins: ["react-refresh"],
   rules: {
@@ -18,7 +18,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     semi: "off",
-    indent: ["error", "tab", { SwitchCase: 1, MemberExpression: 1 }],
+    indent: ["error", 2, { SwitchCase: 1, MemberExpression: 1 }],
     "@typescript-eslint/no-misused-promises": [
       "error",
       {
