@@ -6,7 +6,7 @@
 }
 
 .table::after {
-  content: "";
+  content: '';
   position: fixed;
   left: 0;
   bottom: 0;
@@ -33,7 +33,7 @@
 .tableHeader div {
   display: flex;
   place-content: center;
-  font-family: "Karla", sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 1.5em;
   padding: 1em 0;
   background-color: var(--button-bg-color);
@@ -51,12 +51,12 @@
 }
 
 .tableHeader > div:first-child:before {
-  content: "#";
+  content: '#';
 }
 
 @media (min-width: 992px) {
   .tableHeader > div:first-child:before {
-    content: "Round";
+    content: 'Round';
   }
   .sortIcon {
     font-size: 1em;

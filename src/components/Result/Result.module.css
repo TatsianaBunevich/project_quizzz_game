@@ -50,7 +50,7 @@
 }
 
 .circularProgressValue {
-  font-family: "Karla", sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 4em;
   font-weight: 700;
   fill: var(--color);
@@ -66,7 +66,7 @@
 }
 
 @property --progress {
-  syntax: "<number>";
+  syntax: '<number>';
   inherits: false;
   initial-value: 0;
 }
@@ -81,7 +81,7 @@
 }
 
 .time {
-  font-family: "Karla", sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 2em;
   font-weight: 700;
   margin-top: 1em;

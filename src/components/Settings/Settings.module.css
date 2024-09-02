@@ -71,7 +71,7 @@
 
 .sliderValue {
   content: attr(value);
-  font-family: "Karla", sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 1.5em;
   font-weight: 700;
   margin-top: 1em;
@@ -106,18 +106,22 @@
 }
 
 .checkbox:before {
-  content: "";
+  content: '';
   padding: calc(var(--s) / 10);
   --_g: radial-gradient(
     circle closest-side at calc(100% - var(--s) / 2) 50%,
     #000 96%,
     #0000
   );
-  background: var(--_g) 0 / var(--_p, var(--s)) 100% no-repeat content-box,
-    var(--_g) var(--_p, 0) / var(--s) 100% no-repeat content-box, #fff;
+  background:
+    var(--_g) 0 / var(--_p, var(--s)) 100% no-repeat content-box,
+    var(--_g) var(--_p, 0) / var(--s) 100% no-repeat content-box,
+    #fff;
   mix-blend-mode: darken;
   filter: blur(calc(var(--s) / 12)) contrast(11);
-  transition: 0.4s, background-position 0.4s 0.1s,
+  transition:
+    0.4s,
+    background-position 0.4s 0.1s,
     padding
       cubic-bezier(0, calc(var(--_i, -1) * 200), 1, calc(var(--_i, -1) * 200))
       0.25s 0.1s;

@@ -1,59 +1,59 @@
 .quizWrap {
-    height: 100%;
-    flex-direction: column;
-    justify-content: space-between;
-    display: none;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  display: none;
 }
 
 .active {
-    display: flex;
+  display: flex;
 }
 
 .quizItemWrap {
-    margin: auto;
-    width: 100%;
+  margin: auto;
+  width: 100%;
 }
 
 .stopButton {
-    min-width: 100%;
+  min-width: 100%;
 }
 
 .modalButton {
-    display: block;
-    width: 14em;
-    margin: 0 auto 1em;
-  }
+  display: block;
+  width: 14em;
+  margin: 0 auto 1em;
+}
 
 .quizProgress {
-    --progress-size: 0.3em;
-    background-color: var(--border-color);
-    height: var(--progress-size);
-    position: absolute;
-    top: 0;
-    left: 0;
+  --progress-size: 0.3em;
+  background-color: var(--border-color);
+  height: var(--progress-size);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 @keyframes :global(progress) {
-    0% {
-      width: var(--old-length);
-    }
-    100% {
-      width: var(--new-length);
-    }
+  0% {
+    width: var(--old-length);
+  }
+  100% {
+    width: var(--new-length);
+  }
 }
 
 @media (max-width: 991px) {
-    .footerButton {
-      min-width: calc(50% - var(--gap));
-    }
+  .footerButton {
+    min-width: calc(50% - var(--gap));
+  }
 }
 
 @media (min-width: 992px) {
-    .stopButton {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      min-width: 12em;
-    }
+  .stopButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    min-width: 12em;
+  }
 }

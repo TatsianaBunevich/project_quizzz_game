@@ -28,7 +28,7 @@
   --c-width: 400px;
   --c-gap: 1.25em;
 
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   line-height: 1;
   font-weight: 400;
   font-size: 12px;
@@ -43,7 +43,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-[data-theme="light"] {
+[data-theme='light'] {
   --color: #0a475c;
   --background-color: #e8f7fc;
   --button-bg-color: #96dcee;
@@ -54,7 +54,7 @@
   --timer-color: hsl(0, 80%, 40%);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color: #ffffff;
   --background-color: #1b1b32;
   --button-bg-color: #6b7abb;
@@ -85,7 +85,7 @@ body::-webkit-scrollbar-thumb {
 
 h1,
 h2 {
-  font-family: "Karla", sans-serif;
+  font-family: 'Karla', sans-serif;
   font-weight: 700;
 }
 

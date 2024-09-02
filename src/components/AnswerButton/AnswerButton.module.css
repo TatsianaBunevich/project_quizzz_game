@@ -8,7 +8,7 @@
 }
 
 .answerButton::before {
-  content: counter(answer_counter, upper-alpha) ":";
+  content: counter(answer_counter, upper-alpha) ':';
   opacity: 0.6;
 }
 

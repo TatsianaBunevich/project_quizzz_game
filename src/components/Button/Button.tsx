@@ -1,11 +1,20 @@
-import styles from './Button.module.css';
+import styles from './Button.module.css'
 
-const Button = ({ onClick, children, className, ...rest }: React.ComponentProps<'button'>) => {
-	return (
-		<button className={`${styles.button} ${className ?? ''}`} onClick={onClick} {...rest}>
-			{children}
-		</button>
-	);
-};
+const Button = ({
+  onClick,
+  children,
+  className,
+  ...rest
+}: React.ComponentProps<'button'>) => {
+  return (
+    <button
+      className={`${styles.button} ${className ?? ''}`}
+      onClick={onClick}
+      {...rest}
+    >
+      {children}
+    </button>
+  )
+}
 
-export default Button;
+export default Button

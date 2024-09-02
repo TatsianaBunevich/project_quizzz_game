@@ -1,5 +1,5 @@
 .button {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1em;
   font-weight: 500;
   border-radius: var(--button-radius);
@@ -7,7 +7,9 @@
   padding: var(--button-padding);
   color: var(--button-color);
   background-color: transparent;
-  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transition:
+    color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
 }
 
 .button:enabled {

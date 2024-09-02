@@ -1,81 +1,81 @@
 export enum Theme {
-	LIGHT = 'light',
-	DARK = 'dark',
+  LIGHT = 'light',
+  DARK = 'dark',
 }
 
 interface Category {
-	id: number;
-	name: string;
+  id: number
+  name: string
 }
 
 export interface CategoriesResponse {
-	trivia_categories: Category[];
+  trivia_categories: Category[]
 }
 
 interface Question {
-	category: string;
-	type: string;
-	difficulty: string;
-	question: string;
-	correct_answer: string;
-	incorrect_answers: string[];
-	answers: string[];
+  category: string
+  type: string
+  difficulty: string
+  question: string
+  correct_answer: string
+  incorrect_answers: string[]
+  answers: string[]
 }
 
 export interface QuestionsResponse {
-	results: Question[];
+  results: Question[]
 }
 
 export enum DifficultyType {
-	ANY = 'any',
-	EASY = 'easy',
-	MEDIUM = 'medium',
-	HARD = 'hard'
+  ANY = 'any',
+  EASY = 'easy',
+  MEDIUM = 'medium',
+  HARD = 'hard',
 }
 
 export enum TypeItem {
-	ANY = 'any',
-	MULTIPLE = 'multiple',
-	BOOLEAN = 'boolean'
+  ANY = 'any',
+  MULTIPLE = 'multiple',
+  BOOLEAN = 'boolean',
 }
 
-export type IdType = string | DifficultyType | TypeItem;
+export type IdType = string | DifficultyType | TypeItem
 
 export interface SettingType {
-	id: IdType;
-	name: string;
-	isSelected: boolean;
+  id: IdType
+  name: string
+  isSelected: boolean
 }
 
 export interface SettingsType {
-	category: SettingType[];
-	difficulty: SettingType[];
-	type: SettingType[];
-	amount: number;
-	timer: number;
+  category: SettingType[]
+  difficulty: SettingType[]
+  type: SettingType[]
+  amount: number
+  timer: number
 }
 
 export interface Answer {
-	answer: string;
-	isCorrect: boolean;
-	isSelected: boolean;
+  answer: string
+  isCorrect: boolean
+  isSelected: boolean
 }
 
 export interface QuizItemType {
-	question: string;
-	answers: Answer[];
+  question: string
+  answers: Answer[]
 }
 
 export enum Status {
-	GOOD = 'good',
-	NORMAL = 'normal',
-	BAD = 'bad',
+  GOOD = 'good',
+  NORMAL = 'normal',
+  BAD = 'bad',
 }
 
 export interface Score {
-	index: number;
-	points: number;
-	percentage: number;
-	status: Status;
-	time: number;
+  index: number
+  points: number
+  percentage: number
+  status: Status
+  time: number
 }

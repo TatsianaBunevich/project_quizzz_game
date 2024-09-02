@@ -5,7 +5,7 @@
 
 .countdown {
   --size: 250px;
-  font-family: "Karla", sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 7em;
   font-weight: 700;
   color: var(--color);
@@ -23,7 +23,9 @@
 
 .countdownValue {
   content: var(--counter);
-  animation: 4s 1s forwards timer_countdown, 1s 0.875s 4 timer_beat;
+  animation:
+    4s 1s forwards timer_countdown,
+    1s 0.875s 4 timer_beat;
   z-index: 1;
 }
 
@@ -53,7 +55,7 @@
 }
 
 .countdown:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

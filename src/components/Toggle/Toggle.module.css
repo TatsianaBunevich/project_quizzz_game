@@ -1,6 +1,6 @@
 .toggle {
   /** sunny side **/
-  --blue-background: #C2E9F6;
+  --blue-background: #c2e9f6;
   --blue-border: #72cce3;
   --blue-color: #96dcee;
   --yellow-background: #fffaa8;
@@ -84,7 +84,7 @@
   transition: all 150ms ease-in;
 }
 .toggleLabelBackground:before {
-  content: "";
+  content: '';
   position: absolute;
   top: -2.5px;
   width: 20px;
@@ -95,7 +95,7 @@
   transition: all 150ms ease-in;
 }
 .toggleLabelBackground:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 2.5px;
   width: 20px;
@@ -110,7 +110,7 @@
   animation-duration: 350ms;
   animation-fill-mode: forwards;
   transition: all 350ms ease-in;
-  content: "";
+  content: '';
   width: 41px;
   height: 41px;
   border: 2.5px solid var(--yellow-border);
@@ -124,8 +124,10 @@
   transition-delay: 0ms;
   transition: all 250ms ease-in;
   position: absolute;
-  content: "";
-  box-shadow: var(--gray-dots) -6.5px 0 0 1px, var(--gray-dots) -12px 7px 0 -1px;
+  content: '';
+  box-shadow:
+    var(--gray-dots) -6.5px 0 0 1px,
+    var(--gray-dots) -12px 7px 0 -1px;
   left: 71.5px;
   top: 11.5px;
   width: 5px;

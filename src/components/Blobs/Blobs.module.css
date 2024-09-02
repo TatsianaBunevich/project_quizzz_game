@@ -7,12 +7,12 @@
 }
 
 .blur {
-    backdrop-filter: blur(var(--blur-size));
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
+  backdrop-filter: blur(var(--blur-size));
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .startBlob {
@@ -27,7 +27,8 @@
   width: 200px;
   left: 70%;
   top: 50%;
-  animation: transform 20s ease-in-out infinite both alternate,
+  animation:
+    transform 20s ease-in-out infinite both alternate,
     movement_one 40s ease-in-out infinite both;
 }
 
@@ -38,7 +39,8 @@
   left: -200px;
   top: -150px;
   transform: rotate(-180deg);
-  animation: transform 30s ease-in-out infinite both alternate,
+  animation:
+    transform 30s ease-in-out infinite both alternate,
     movement_two 60s ease-in-out infinite both;
 }
 
@@ -49,7 +51,8 @@
   left: 500px;
   top: -150px;
   transform: rotate(-180deg);
-  animation: transform 30s ease-in-out infinite both alternate,
+  animation:
+    transform 30s ease-in-out infinite both alternate,
     movement_two 60s ease-in-out infinite both;
 }
 
@@ -94,7 +97,7 @@
 
 .playBlob {
   position: absolute;
-  content: "";
+  content: '';
   opacity: 0.5;
   border-radius: 55% 35% 48% 30% / 40% 40% 70% 6%;
   will-change: border-radius, transform, opacity;

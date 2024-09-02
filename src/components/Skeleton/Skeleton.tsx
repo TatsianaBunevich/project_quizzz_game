@@ -1,22 +1,22 @@
-import styles from './Skeleton.module.css';
+import styles from './Skeleton.module.css'
 
 interface SkeletonProps extends React.ComponentProps<'span'> {
-    width: string;
-    height: string;
+  width: string
+  height: string
 }
 
 const Skeleton = ({ width, height, className }: SkeletonProps) => {
-	const style = {
-		width,
-		height,
-	};
+  const style = {
+    width,
+    height,
+  }
 
-	return (
-		<span
-			className={`${className ?? ''} ${styles.skeleton}`}
-			style={style}>
-		</span>
-	);
-};
+  return (
+    <span
+      className={`${className ?? ''} ${styles.skeleton}`}
+      style={style}
+    ></span>
+  )
+}
 
-export default Skeleton;
+export default Skeleton
