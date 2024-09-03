@@ -1,7 +1,7 @@
-import useBoundStore from '../../store/boundStore'
+import useBoundStore from 'store/boundStore'
 import { cn } from '@/lib/utils'
 import Header from 'layout/header'
-import PathConstants from '../../routes/pathConstants'
+import PathConstants from 'routes/pathConstants'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 
@@ -10,8 +10,8 @@ const HomePage = () => {
 
   return (
     <>
-      <Header />
-      <main className="flex h-[calc(100vh-2.5rem-2rem)] flex-col items-center justify-center text-center">
+      <Header className="fixed top-0 w-full" />
+      <main className="flex h-lvh flex-col items-center justify-center text-center">
         <h1>Quizzz Game</h1>
         <Button asChild onClick={toggleIsPlay}>
           <Link to={PathConstants.SETTINGS}>START</Link>
