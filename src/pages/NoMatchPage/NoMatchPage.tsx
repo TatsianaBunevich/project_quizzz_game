@@ -1,5 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query'
-import useBoundStore from '../../store/boundStore'
+import useResetQuiz from 'hooks/useResetQuiz'
 import { useRouteError } from 'react-router-dom'
 import Header from 'layout/header'
 import ControlButton from '../../components/ControlButton/ControlButton'
@@ -7,14 +6,7 @@ import PathConstants from '../../routes/pathConstants'
 import styles from './NoMatchPage.module.css'
 
 const NoMatchPage = () => {
-  const queryClient = useQueryClient()
-  const resetBoundStore = useBoundStore((state) => state.resetBoundStore)
   const error = useRouteError()
-
-  const handleEndQuiz = () => {
-    resetBoundStore()
-    queryClient.clear()
-  }
 
   return (
     <>
@@ -43,7 +35,7 @@ const NoMatchPage = () => {
           <ControlButton
             to={PathConstants.HOME}
             className={styles.controlButton}
-            onClick={handleEndQuiz}
+            onClick={useResetQuiz}
           >
             Home page
           </ControlButton>

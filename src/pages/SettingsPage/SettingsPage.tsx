@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import useBoundStore from '../../store/boundStore'
 import { ErrorBoundary } from 'react-error-boundary'
+import useResetQuiz from 'hooks/useResetQuiz'
 import Fallback from '../../components/Fallback/Fallback'
 import { lazy, Suspense } from 'react'
 import SettingsSkeleton from '../../components/SettingsSkeleton/SettingsSkeleton'
@@ -16,14 +17,8 @@ const SettingsPage = () => {
   const updateSettings = useBoundStore((state) => state.updateSettings)
   const handleSelectOption = useBoundStore((state) => state.handleSelectOption)
   const addNewScore = useBoundStore((state) => state.addNewScore)
-  const resetBoundStore = useBoundStore((state) => state.resetBoundStore)
 
   queryClient.removeQueries({ queryKey: ['questions'] })
-
-  const handleEndQuiz = () => {
-    resetBoundStore()
-    queryClient.clear()
-  }
 
   return (
     <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
@@ -39,7 +34,7 @@ const SettingsPage = () => {
           <ControlButton to={PathConstants.QUIZ} onClick={addNewScore}>
             Let&apos;s go
           </ControlButton>
-          <ControlButton to={PathConstants.HOME} onClick={handleEndQuiz}>
+          <ControlButton to={PathConstants.HOME} onClick={useResetQuiz}>
             Exit
           </ControlButton>
         </footer>
