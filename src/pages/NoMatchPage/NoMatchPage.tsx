@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import useBoundStore from '../../store/boundStore'
 import { useRouteError } from 'react-router-dom'
-import Header from '@layout/header'
+import Header from 'layout/header'
 import ControlButton from '../../components/ControlButton/ControlButton'
 import PathConstants from '../../routes/pathConstants'
 import styles from './NoMatchPage.module.css'

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@ui/button'
-import { ModeToggle } from '@components/mode-toggle'
 import { useQueryClient } from '@tanstack/react-query'
 import useBoundStore from '../../store/boundStore'
-import PathConstants from '../../routes/pathConstants'
+import { Button } from 'ui/button'
+import { ModeToggle } from 'components/mode-toggle'
+import PathConstants from 'routes/pathConstants'
 
 const Header = () => {
   const queryClient = useQueryClient()

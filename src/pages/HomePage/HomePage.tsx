@@ -1,9 +1,9 @@
 import useBoundStore from '../../store/boundStore'
 import { cn } from '@/lib/utils'
-import Header from '@layout/header'
+import Header from 'layout/header'
 import PathConstants from '../../routes/pathConstants'
 import { Link } from 'react-router-dom'
-import { Button } from '@ui/button'
+import { Button } from 'ui/button'
 
 const HomePage = () => {
   const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay)
