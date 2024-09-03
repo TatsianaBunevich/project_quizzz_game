@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --color: #ffffff;
   --background-color: #1b1b32;
   --button-bg-color: #6b7abb;
@@ -122,7 +122,7 @@ h2 {
   h1 {
     margin: 1em 0;
   }
-}
+} */
 
 @layer base {
   :root {

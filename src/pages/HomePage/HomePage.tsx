@@ -1,39 +1,28 @@
 import useBoundStore from '../../store/boundStore'
-import Blobs from '../../components/Blobs/Blobs'
-import Toggle from '../../components/Toggle/Toggle'
-import Footer from '../../components/Footer/Footer'
+import { cn } from '@/lib/utils'
+import Header from '@layout/header'
 import PathConstants from '../../routes/pathConstants'
-import ControlButton from '../../components/ControlButton/ControlButton'
-import styles from './HomePage.module.css'
+import { Link } from 'react-router-dom'
+import { Button } from '@ui/button'
 
 const HomePage = () => {
   const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay)
 
   return (
     <>
-      <Blobs />
-      <div className={styles.container}>
-        <header>
-          <Toggle />
-        </header>
-        <main>
-          <h1>Quizzz Game</h1>
-        </main>
-        <Footer>
-          <ControlButton
-            className={styles.startButton}
-            to={PathConstants.SETTINGS}
-            onClick={toggleIsPlay}
-          >
-            START
-          </ControlButton>
-        </Footer>
-      </div>
-      <div className={styles.contacts}>
-        <p>Feeling fun? Got an idea?</p>
+      <Header />
+      <main className="flex h-[calc(100vh-2.5rem-2rem)] flex-col items-center justify-center text-center">
+        <h1>Quizzz Game</h1>
+        <Button asChild onClick={toggleIsPlay}>
+          <Link to={PathConstants.SETTINGS}>START</Link>
+        </Button>
+      </main>
+      <footer className="absolute bottom-0 flex rotate-180 flex-col [writing-mode:vertical-lr]">
+        <p className={cn('order-last hidden md:block')}>
+          Feeling fun? Got an idea?
+        </p>
         <p>
           <a
-            className={styles.contactLink}
             href="https://www.linkedin.com/in/tatsiana-bunevich/"
             target="_blank"
             rel="noreferrer"
@@ -41,7 +30,7 @@ const HomePage = () => {
             contact the creator
           </a>
         </p>
-      </div>
+      </footer>
     </>
   )
 }

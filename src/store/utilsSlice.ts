@@ -1,11 +1,7 @@
 import { ActionsWithMiddlewares, UtilsState, UtilsActions } from './types'
-import { Theme } from '../types'
 
 export const initialUtilsState: UtilsState = {
   isPlay: false,
-  theme: window.matchMedia(`(prefers-color-scheme: ${Theme.DARK})`).matches
-    ? Theme.DARK
-    : Theme.LIGHT,
   timeLeft: 0,
   intervalId: null,
 }
@@ -17,10 +13,6 @@ export const createUtilsActions: ActionsWithMiddlewares<
 > = (set, get) => ({
   toggleIsPlay: () => {
     set((state) => ({ isPlay: !state.isPlay }), undefined, 'utils/toggleIsPlay')
-  },
-
-  switchTheme: (theme) => {
-    set({ theme }, undefined, 'utils/switchTheme')
   },
 
   setTimeLeft: (timeLeft) => {

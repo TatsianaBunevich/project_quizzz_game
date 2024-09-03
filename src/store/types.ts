@@ -6,7 +6,6 @@ import {
   Score,
   CategoriesResponse,
   QuestionsResponse,
-  Theme,
 } from '../types'
 
 export type ActionsWithMiddlewares<T, U = T> = StateCreator<
@@ -31,7 +30,6 @@ export interface ScoresState {
 
 export interface UtilsState {
   isPlay: boolean
-  theme: Theme
   timeLeft: number
   intervalId: number | null
 }
@@ -68,7 +66,6 @@ export interface ScoresActions {
 
 export interface UtilsActions {
   toggleIsPlay: () => void
-  switchTheme: (theme: Theme) => void
   setTimeLeft: (timeLeft: number) => void
   runIntervalId: (callback: () => void) => void
   clearIntervalId: () => void

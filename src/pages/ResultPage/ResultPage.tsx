@@ -1,6 +1,5 @@
 import useBoundStore from '../../store/boundStore'
 import Result from '../../components/Result/Result'
-import Footer from '../../components/Footer/Footer'
 import PathConstants from '../../routes/pathConstants'
 import ControlButton from '../../components/ControlButton/ControlButton'
 
@@ -15,7 +14,7 @@ const ResultPage = () => {
       <main>
         <Result goal={goal} score={score} />
       </main>
-      <Footer>
+      <footer>
         <ControlButton to={PathConstants.ANSWERS}>Answers</ControlButton>
         <ControlButton to={PathConstants.SCOREBOARD}>Scores</ControlButton>
         <ControlButton to={PathConstants.QUIZ} onClick={handleNewTry}>
@@ -24,7 +23,7 @@ const ResultPage = () => {
         <ControlButton to={PathConstants.SETTINGS} onClick={resetQuiz}>
           Settings
         </ControlButton>
-      </Footer>
+      </footer>
     </>
   )
 }

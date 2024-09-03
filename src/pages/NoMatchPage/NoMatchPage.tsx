@@ -1,9 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import useBoundStore from '../../store/boundStore'
 import { useRouteError } from 'react-router-dom'
-import Blobs from '../../components/Blobs/Blobs'
-import Toggle from '../../components/Toggle/Toggle'
-import Footer from '../../components/Footer/Footer'
+import Header from '@layout/header'
 import ControlButton from '../../components/ControlButton/ControlButton'
 import PathConstants from '../../routes/pathConstants'
 import styles from './NoMatchPage.module.css'
@@ -20,11 +18,8 @@ const NoMatchPage = () => {
 
   return (
     <>
-      <Blobs />
       <div className={styles.container}>
-        <header>
-          <Toggle />
-        </header>
+        <Header />
         <main>
           <div className={styles.noMatch}>
             <h1>Oops!</h1>
@@ -44,7 +39,7 @@ const NoMatchPage = () => {
             </p>
           </div>
         </main>
-        <Footer>
+        <footer>
           <ControlButton
             to={PathConstants.HOME}
             className={styles.controlButton}
@@ -52,7 +47,7 @@ const NoMatchPage = () => {
           >
             Home page
           </ControlButton>
-        </Footer>
+        </footer>
       </div>
     </>
   )

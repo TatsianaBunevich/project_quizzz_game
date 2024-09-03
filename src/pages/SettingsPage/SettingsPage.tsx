@@ -6,7 +6,6 @@ import Fallback from '../../components/Fallback/Fallback'
 import { lazy, Suspense } from 'react'
 import SettingsSkeleton from '../../components/SettingsSkeleton/SettingsSkeleton'
 const Settings = lazy(() => import('../../components/Settings/Settings'))
-import Footer from '../../components/Footer/Footer'
 import PathConstants from '../../routes/pathConstants'
 import ControlButton from '../../components/ControlButton/ControlButton'
 
@@ -36,14 +35,14 @@ const SettingsPage = () => {
             handleSelectOption={handleSelectOption}
           />
         </main>
-        <Footer>
+        <footer>
           <ControlButton to={PathConstants.QUIZ} onClick={addNewScore}>
             Let&apos;s go
           </ControlButton>
           <ControlButton to={PathConstants.HOME} onClick={handleEndQuiz}>
             Exit
           </ControlButton>
-        </Footer>
+        </footer>
       </Suspense>
     </ErrorBoundary>
   )

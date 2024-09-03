@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 import Countdown from '../../components/Countdown/Countdown'
 import QuizSkeleton from '../../components/QuizSkeleton/QuizSkeleton'
 const Quiz = lazy(() => import('../../components/Quiz/Quiz'))
-import Footer from '../../components/Footer/Footer'
 import PathConstants from '../../routes/pathConstants'
 import ControlButton from '../../components/ControlButton/ControlButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -156,7 +155,7 @@ const QuizPage = () => {
               handleSelectAnswer={handleSelectAnswer}
             />
           </main>
-          <Footer>
+          <footer>
             <ControlButton
               to={activeId === 0 ? PathConstants.SETTINGS : ''}
               className={styles.footerButton}
@@ -186,7 +185,7 @@ const QuizPage = () => {
             >
               Stop
             </ControlButton>
-          </Footer>
+          </footer>
           <div className={styles.quizProgress} ref={progress}></div>
           {timer > 0 && <Timer />}
           <Modal isModal={isModal}>

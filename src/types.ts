@@ -1,8 +1,3 @@
-export enum Theme {
-  LIGHT = 'light',
-  DARK = 'dark',
-}
-
 interface Category {
   id: number
   name: string

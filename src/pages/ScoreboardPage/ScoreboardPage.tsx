@@ -1,6 +1,5 @@
 import useBoundStore from '../../store/boundStore'
 import Scoreboard from '../../components/Scoreboard/Scoreboard'
-import Footer from '../../components/Footer/Footer'
 import PathConstants from '../../routes/pathConstants'
 import ControlButton from '../../components/ControlButton/ControlButton'
 
@@ -14,7 +13,7 @@ const ScoreboardPage = () => {
       <main>
         <Scoreboard scores={scores} />
       </main>
-      <Footer>
+      <footer>
         <ControlButton onClick={resetScores}>Clear</ControlButton>
         {scores.length ? (
           <ControlButton to={PathConstants.RESULT}>Back</ControlButton>
@@ -23,7 +22,7 @@ const ScoreboardPage = () => {
             Settings
           </ControlButton>
         )}
-      </Footer>
+      </footer>
     </>
   )
 }

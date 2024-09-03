@@ -1,4 +1,3 @@
-import Footer from '../../components/Footer/Footer'
 import ControlButton from '../ControlButton/ControlButton'
 import styles from './Fallback.module.css'
 
@@ -16,11 +15,11 @@ const Fallback = ({ error, resetErrorBoundary }: FallbackProps) => {
           <pre className={styles.errorMessage}>{error.message}</pre>
         </div>
       </main>
-      <Footer>
+      <footer>
         <ControlButton onClick={() => resetErrorBoundary()}>
           Try again
         </ControlButton>
-      </Footer>
+      </footer>
     </>
   )
 }

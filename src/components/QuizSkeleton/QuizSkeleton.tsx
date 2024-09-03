@@ -1,5 +1,4 @@
 import Skeleton from '../Skeleton/Skeleton'
-import Footer from '../../components/Footer/Footer'
 import stylesQuizPage from '../../pages/QuizPage/QuizPage.module.css'
 import stylesQuiz from '../Quiz/Quiz.module.css'
 import stylesQuizItem from '../QuizItem/QuizItem.module.css'
@@ -33,7 +32,7 @@ const QuizSkeleton = () => {
           </div>
         </div>
       </main>
-      <Footer>
+      <footer>
         <Skeleton
           className={`${stylesControl.controlButton} ${stylesQuizPage.footerButton}`}
           width="12em"
@@ -49,7 +48,7 @@ const QuizSkeleton = () => {
           width="12em"
           height="4em"
         />
-      </Footer>
+      </footer>
     </>
   )
 }

@@ -1,6 +1,5 @@
 import useBoundStore from '../../store/boundStore'
 import Answers from '../../components/Answers/Answers'
-import Footer from '../../components/Footer/Footer'
 import PathConstants from '../../routes/pathConstants'
 import ControlButton from '../../components/ControlButton/ControlButton'
 import styles from './AnswersPage.module.css'
@@ -13,14 +12,14 @@ const AnswersPage = () => {
       <main>
         <Answers quizItems={quizItems} />
       </main>
-      <Footer>
+      <footer>
         <ControlButton
           to={PathConstants.RESULT}
           className={styles.footerButton}
         >
           Back
         </ControlButton>
-      </Footer>
+      </footer>
     </>
   )
 }

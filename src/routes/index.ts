@@ -1,6 +1,6 @@
 import PathConstants from './pathConstants'
 import HomePage from '../pages/HomePage/HomePage'
-import Layout from '../components/Layout/Layout'
+import PageLayout from '@components/PageLayout/PageLayout'
 import SettingsPage from '../pages/SettingsPage/SettingsPage'
 import QuizPage from '../pages/QuizPage/QuizPage'
 import ResultPage from '../pages/ResultPage/ResultPage'
@@ -11,7 +11,7 @@ import NoMatchPage from '../pages/NoMatchPage/NoMatchPage'
 const routes = [
   { index: true, Component: HomePage },
   {
-    Component: Layout,
+    Component: PageLayout,
     children: [
       { path: PathConstants.SETTINGS, Component: SettingsPage },
       { path: PathConstants.QUIZ, Component: QuizPage },
