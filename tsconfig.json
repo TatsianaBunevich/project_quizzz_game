@@ -24,7 +24,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "components/*": ["./src/components/*"],
-      "layout/*": ["./src/components/layout/*"],
+      "custom/*": ["./src/components/custom/*"],
+      "layouts/*": ["./src/components/layouts/*"],
+      "shared/*": ["./src/components/shared/*"],
       "ui/*": ["./src/components/ui/*"],
       "hooks/*": ["./src/hooks/*"],
       "pages/*": ["./src/pages/*"],

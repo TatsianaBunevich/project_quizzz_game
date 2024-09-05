@@ -1,6 +1,6 @@
 import useBoundStore from 'store/boundStore'
 import { cn } from '@/lib/utils'
-import Header from 'layout/header'
+import MainLayout from 'layouts/main-layout'
 import PathConstants from 'routes/pathConstants'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
@@ -9,15 +9,18 @@ const HomePage = () => {
   const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay)
 
   return (
-    <>
-      <Header className="fixed top-0 w-full" />
-      <main className="flex h-lvh flex-col items-center justify-center text-center">
+    <MainLayout>
+      <MainLayout.Header isFixed />
+      <MainLayout.Main className="items-center justify-center text-center">
         <h1>Quizzz Game</h1>
         <Button asChild onClick={toggleIsPlay}>
           <Link to={PathConstants.SETTINGS}>START</Link>
         </Button>
-      </main>
-      <footer className="absolute bottom-0 flex rotate-180 flex-col [writing-mode:vertical-lr]">
+      </MainLayout.Main>
+      <MainLayout.Footer
+        isAbsolute
+        className="absolute bottom-0 flex rotate-180 flex-col [writing-mode:vertical-lr]"
+      >
         <p className={cn('order-last hidden md:block')}>
           Feeling fun? Got an idea?
         </p>
@@ -30,8 +33,8 @@ const HomePage = () => {
             contact the creator
           </a>
         </p>
-      </footer>
-    </>
+      </MainLayout.Footer>
+    </MainLayout>
   )
 }
 

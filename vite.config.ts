@@ -11,7 +11,9 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       components: path.resolve(__dirname, './src/components'),
-      layout: path.resolve(__dirname, './src/components/layout'),
+      custom: path.resolve(__dirname, './src/components/custom'),
+      layouts: path.resolve(__dirname, './src/components/layouts'),
+      shared: path.resolve(__dirname, './src/components/shared'),
       ui: path.resolve(__dirname, './src/components/ui'),
       hooks: path.resolve(__dirname, './src/hooks'),
       pages: path.resolve(__dirname, './src/pages'),

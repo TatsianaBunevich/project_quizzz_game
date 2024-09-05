@@ -3,7 +3,6 @@ import { Navigate } from 'react-router-dom'
 import PathConstants from 'routes/pathConstants'
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import Header from 'layout/header'
 
 const PageLayout = () => {
   const isPlay = useBoundStore((state) => state.isPlay)
@@ -23,7 +22,7 @@ const PageLayout = () => {
   } else {
     return (
       <>
-        <Header />
+        {/* <Header /> */}
         <Outlet />
       </>
     )

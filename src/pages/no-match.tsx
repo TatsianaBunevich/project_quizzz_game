@@ -1,17 +1,17 @@
 import useResetQuiz from 'hooks/useResetQuiz'
 import { useRouteError } from 'react-router-dom'
+import MainLayout from 'layouts/main-layout'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
-import Header from 'layout/header'
 import PathConstants from 'routes/pathConstants'
 
 const NoMatchPage = () => {
   const error = useRouteError()
 
   return (
-    <>
-      <Header className="fixed top-0 w-full" />
-      <main className="container flex h-lvh flex-col items-center justify-center text-center">
+    <MainLayout>
+      <MainLayout.Header isFixed />
+      <MainLayout.Main className="items-center justify-center text-center">
         <h1>Oops!</h1>
         <p>
           The page you are looking for <b>does not exist</b>, or you are{' '}
@@ -30,8 +30,8 @@ const NoMatchPage = () => {
         <Button asChild onClick={useResetQuiz}>
           <Link to={PathConstants.HOME}>Home page</Link>
         </Button>
-      </main>
-    </>
+      </MainLayout.Main>
+    </MainLayout>
   )
 }
 

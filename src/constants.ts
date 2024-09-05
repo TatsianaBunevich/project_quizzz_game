@@ -4,14 +4,14 @@ export const DEFAULTSETTINGS: SettingsType = {
   category: [
     {
       id: 'any',
-      name: 'Any Category',
+      name: 'Any',
       isSelected: true,
     },
   ],
   difficulty: [
     {
       id: DifficultyType.ANY,
-      name: 'Any Difficulty',
+      name: 'Any',
       isSelected: true,
     },
     {
@@ -33,7 +33,7 @@ export const DEFAULTSETTINGS: SettingsType = {
   type: [
     {
       id: TypeItem.ANY,
-      name: 'Any Type',
+      name: 'Any',
       isSelected: true,
     },
     {
