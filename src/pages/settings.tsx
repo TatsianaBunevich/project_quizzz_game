@@ -4,7 +4,6 @@ import useBoundStore from 'store/boundStore'
 import { ErrorBoundary } from 'react-error-boundary'
 import Fallback from 'shared/fallback'
 import { lazy, Suspense } from 'react'
-import SettingsSkeleton from 'components/SettingsSkeleton/SettingsSkeleton'
 import MainLayout from 'layouts/main-layout'
 const Settings = lazy(() => import('custom/settings'))
 import { cn } from '@/lib/utils'
@@ -39,7 +38,8 @@ const SettingsPage = () => {
     <MainLayout>
       <MainLayout.Header />
       <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
-        <Suspense fallback={<SettingsSkeleton />}>
+        {/* TODO: add fallback */}
+        <Suspense fallback="">
           <MainLayout.Main className="justify-between">
             <Settings
               settings={settings}
