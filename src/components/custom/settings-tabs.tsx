@@ -14,7 +14,7 @@ import { debounce } from 'lodash'
 import { CategoriesResponse, SettingsType } from '@/types'
 import { SettingsState, SettingsActions } from 'store/types'
 
-const Settings = ({
+const SettingsTabs = ({
   settings,
   updateSettings,
   handleSelectOption,
@@ -24,6 +24,7 @@ const Settings = ({
     settings.timer === 0 ? 10 : settings.timer,
   ])
   const [isTimer, setIsTimer] = useState(settings.timer === 0 ? false : true)
+
   useSuspenseQuery({
     queryKey: ['settings'],
     queryFn: async () => {
@@ -220,4 +221,4 @@ const Settings = ({
   )
 }
 
-export default Settings
+export default SettingsTabs
