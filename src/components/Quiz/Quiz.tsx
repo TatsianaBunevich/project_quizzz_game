@@ -1,6 +1,5 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
-import axios from 'axios'
-import { QuizItemType, QuestionsResponse } from '../../types'
+import useGetData from 'hooks/useGetData'
+import { QuestionsResponse, QuizItemType } from '@/types'
 import { QuizState, QuizActions } from '../../store/types'
 import QuizItem from '../QuizItem/QuizItem'
 import AnswerButton from '../AnswerButton/AnswerButton'
@@ -23,15 +22,11 @@ const Quiz = ({
   sortQuizItems,
   handleSelectAnswer,
 }: QuizProps) => {
-  useSuspenseQuery({
-    queryKey: ['questions'],
-    queryFn: async () => {
-      const response = await axios.get<QuestionsResponse>(params)
-      return response.data
-    },
-    select: isSortQuizItems ? sortQuizItems : undefined,
-    staleTime: Infinity,
-  })
+  useGetData<QuestionsResponse>(
+    'questions',
+    params,
+    isSortQuizItems ? sortQuizItems : undefined
+  )
 
   return (
     <div className={styles.quiz}>

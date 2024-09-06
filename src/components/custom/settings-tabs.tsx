@@ -1,5 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
-import axios from 'axios'
+import useGetData from 'hooks/useGetData'
 import { cn } from '@/lib/utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'ui/tabs'
 import { Tags, Gauge, SwatchBook, Sigma, Timer } from 'lucide-react'
@@ -25,17 +24,11 @@ const SettingsTabs = ({
   ])
   const [isTimer, setIsTimer] = useState(settings.timer === 0 ? false : true)
 
-  useSuspenseQuery({
-    queryKey: ['settings'],
-    queryFn: async () => {
-      const response = await axios.get<CategoriesResponse>(
-        'https://opentdb.com/api_category.php'
-      )
-      return response.data
-    },
-    select: settings.category.length === 1 ? updateSettings : undefined,
-    staleTime: Infinity,
-  })
+  useGetData<CategoriesResponse>(
+    'settings',
+    'https://opentdb.com/api_category.php',
+    settings.category.length === 1 ? updateSettings : undefined
+  )
 
   const debounceFn = useMemo(
     () => debounce(handleSelectOption, 300),
