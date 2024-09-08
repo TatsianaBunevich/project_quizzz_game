@@ -15,13 +15,13 @@ const routes = [
     children: [
       { index: true, Component: HomePage },
       { path: PathConstants.SETTINGS, Component: SettingsPage },
+      { path: PathConstants.QUIZ, Component: QuizPage },
       { path: PathConstants.NOMATCH, Component: NoMatchPage },
     ],
   },
   {
     layout: PageLayout,
     children: [
-      { path: PathConstants.QUIZ, Component: QuizPage },
       { path: PathConstants.RESULT, Component: ResultPage },
       { path: PathConstants.ANSWERS, Component: AnswersPage },
       { path: PathConstants.SCOREBOARD, Component: ScoreboardPage },

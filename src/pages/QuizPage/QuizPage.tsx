@@ -1,24 +1,43 @@
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import useBoundStore from '../../store/boundStore'
+import useBoundStore from 'store/boundStore'
 import { useShallow } from 'zustand/react/shallow'
 import { ErrorBoundary } from 'react-error-boundary'
 import Fallback from 'shared/fallback'
-import { lazy, Suspense, useEffect, useState, useRef } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Countdown from '../../components/Countdown/Countdown'
-import QuizSkeleton from '../../components/QuizSkeleton/QuizSkeleton'
-const Quiz = lazy(() => import('../../components/Quiz/Quiz'))
-import PathConstants from '../../routes/pathConstants'
-import ControlButton from '../../components/ControlButton/ControlButton'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Countdown from 'components/Countdown/Countdown'
+import QuizSkeleton from 'components/QuizSkeleton/QuizSkeleton'
+import MainLayout from 'layouts/main-layout'
+import { cn } from '@/lib/utils'
+const Quiz = lazy(() => import('components/Quiz/Quiz'))
 import {
-  faChevronLeft,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons'
-import Timer from '../../components/Timer/Timer'
-import Modal from '../../components/Modal/Modal'
-import { SettingsType, SettingType } from '../../types'
-import styles from './QuizPage.module.css'
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer'
+import {
+  ChevronLeft,
+  ChevronRight,
+  Pause,
+  Undo2,
+  Goal,
+  Settings,
+} from 'lucide-react'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from '@/components/ui/pagination'
+import { Link } from 'react-router-dom'
+import { Button } from 'ui/button'
+import Timer from 'components/Timer/Timer'
+import Modal from 'components/Modal/Modal'
+import PathConstants from 'routes/pathConstants'
+import { SettingsType, SettingType } from '@/types'
 
 const QuizPage = () => {
   const { reset } = useQueryErrorResetBoundary()
@@ -57,9 +76,6 @@ const QuizPage = () => {
   const [isCountdown, setIsCountdown] = useState(true)
   const [isModal, setIsModal] = useState(false)
   const lastQuizItem = quizItems.length - 1
-  const progress = useRef<HTMLDivElement>(null)
-  const oldLength = useRef(0)
-  const newLength = (activeId / (quizItems.length - 1)) * 100
 
   useEffect(() => {
     if (isCountdown) {
@@ -86,20 +102,6 @@ const QuizPage = () => {
     startTimer,
     timer,
   ])
-
-  useEffect(() => {
-    if (progress.current) {
-      progress.current.style.animation = 'none'
-      progress.current.offsetHeight
-      progress.current.style.setProperty(
-        '--old-length',
-        `${oldLength.current}%`
-      )
-      progress.current.style.setProperty('--new-length', `${newLength}%`)
-      progress.current.style.animation = 'progress 0.5s normal forwards'
-      oldLength.current = newLength
-    }
-  }, [newLength])
 
   const createQuestionsUrl = (settings: SettingsType) => {
     const createSettingId = (setting: SettingType[]) => {
@@ -139,81 +141,125 @@ const QuizPage = () => {
   }
 
   return (
-    <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
-      {isCountdown && <Countdown />}
-      <div
-        className={`${styles.quizWrap} ${!isCountdown ? styles.active : ''}`}
-      >
-        <Suspense fallback={<QuizSkeleton />}>
-          <main className={styles.quizItemWrap}>
-            <Quiz
-              params={createQuestionsUrl(settings)}
-              isSortQuizItems={!quizItems.length}
-              quizItem={quizItems[activeId]}
-              activeId={activeId}
-              sortQuizItems={sortQuizItems}
-              handleSelectAnswer={handleSelectAnswer}
-            />
-          </main>
-          <footer>
-            <ControlButton
-              to={activeId === 0 ? PathConstants.SETTINGS : ''}
-              className={styles.footerButton}
-              onClick={handlePrevButton}
-              disabled={timer > 0 && activeId > 0}
-            >
-              {activeId === 0 ? (
-                'Back'
-              ) : (
-                <FontAwesomeIcon icon={faChevronLeft} />
-              )}
-            </ControlButton>
-            <ControlButton
-              to={activeId === lastQuizItem ? PathConstants.RESULT : ''}
-              className={styles.footerButton}
-              onClick={handleNextButton}
-            >
-              {activeId === lastQuizItem ? (
-                'Check'
-              ) : (
-                <FontAwesomeIcon icon={faChevronRight} />
-              )}
-            </ControlButton>
-            <ControlButton
-              className={`${styles.footerButton} ${styles.stopButton}`}
-              onClick={handleOpenModal}
-            >
-              Stop
-            </ControlButton>
-          </footer>
-          <div className={styles.quizProgress} ref={progress}></div>
-          {timer > 0 && <Timer />}
-          <Modal isModal={isModal}>
-            <h2>Do you want to</h2>
-            <ControlButton
-              className={styles.modalButton}
-              onClick={handleCloseModal}
-            >
-              Back to the game
-            </ControlButton>
-            <ControlButton
-              className={styles.modalButton}
-              to={PathConstants.RESULT}
-              onClick={handleCheckAnswers}
-            >
-              See the result
-            </ControlButton>
-            <ControlButton
-              className={styles.modalButton}
-              to={PathConstants.SETTINGS}
-              onClick={handleOpenSettings}
-            >
-              Go to settings
-            </ControlButton>
-          </Modal>
-        </Suspense>
+    <>
+      {/* eslint-disable-next-line react/no-unknown-property */}
+      <div vaul-drawer-wrapper="">
+        <div className="bg-background">
+          <MainLayout>
+            <MainLayout.Header isFixed={isCountdown} />
+            <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
+              {isCountdown && <Countdown />}
+              <div className={cn({ hidden: isCountdown, block: !isCountdown })}>
+                <Suspense fallback={<QuizSkeleton />}>
+                  <MainLayout.Main className="justify-between">
+                    <Quiz
+                      params={createQuestionsUrl(settings)}
+                      isSortQuizItems={!quizItems.length}
+                      quizItem={quizItems[activeId]}
+                      activeId={activeId}
+                      sortQuizItems={sortQuizItems}
+                      handleSelectAnswer={handleSelectAnswer}
+                    />
+                    {/* TODO: move Drawer to separate component */}
+                    <Drawer>
+                      <DrawerTrigger asChild>
+                        {/* TODO: update handleOpenModal */}
+                        <Button variant="outline" onClick={handleOpenModal}>
+                          <Pause />
+                        </Button>
+                      </DrawerTrigger>
+                      {/* TODO: add action on drag Drawer down and on Overlay click */}
+                      <DrawerContent>
+                        <DrawerHeader className="p-0">
+                          <DrawerTitle></DrawerTitle>
+                          <DrawerDescription></DrawerDescription>
+                        </DrawerHeader>
+                        <div className="flex flex-col justify-center gap-2 p-4 sm:flex-row [&>*>span]:ml-2">
+                          <DrawerClose asChild>
+                            {/* TODO: check actions on close */}
+                            <Button
+                              variant="link"
+                              onClick={handleCloseModal}
+                              className="hover:bg-accent"
+                            >
+                              <Undo2 />
+                              <span>Back to the game</span>
+                            </Button>
+                          </DrawerClose>
+                          <Button
+                            variant="link"
+                            asChild
+                            onClick={handleCheckAnswers}
+                          >
+                            <Link
+                              to={PathConstants.RESULT}
+                              className="hover:bg-accent"
+                            >
+                              <Goal />
+                              <span>See the result</span>
+                            </Link>
+                          </Button>
+                          <Button
+                            variant="link"
+                            asChild
+                            onClick={handleOpenSettings}
+                          >
+                            <Link
+                              to={PathConstants.SETTINGS}
+                              className="hover:bg-accent"
+                            >
+                              <Settings />
+                              <span>Go to settings</span>
+                            </Link>
+                          </Button>
+                        </div>
+                      </DrawerContent>
+                    </Drawer>
+                  </MainLayout.Main>
+                  <MainLayout.Footer>
+                    <Pagination>
+                      <PaginationContent className="w-full justify-center gap-4 [&>*>*]:w-full [&>*]:w-full md:[&>*]:w-1/5">
+                        <PaginationItem>
+                          <Button
+                            asChild
+                            onClick={handlePrevButton}
+                            disabled={timer > 0 && activeId > 0}
+                          >
+                            <Link
+                              to={activeId === 0 ? PathConstants.SETTINGS : ''}
+                            >
+                              {activeId === 0 ? 'Back' : <ChevronLeft />}
+                            </Link>
+                          </Button>
+                        </PaginationItem>
+                        <PaginationItem>
+                          <Button asChild onClick={handleNextButton}>
+                            <Link
+                              to={
+                                activeId === lastQuizItem
+                                  ? PathConstants.RESULT
+                                  : ''
+                              }
+                            >
+                              {activeId === lastQuizItem ? (
+                                'Check'
+                              ) : (
+                                <ChevronRight />
+                              )}
+                            </Link>
+                          </Button>
+                        </PaginationItem>
+                      </PaginationContent>
+                    </Pagination>
+                  </MainLayout.Footer>
+                  {timer > 0 && <Timer />}
+                </Suspense>
+              </div>
+            </ErrorBoundary>
+          </MainLayout>
+        </div>
       </div>
-    </ErrorBoundary>
+    </>
   )
 }
 
