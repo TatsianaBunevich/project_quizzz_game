@@ -139,23 +139,23 @@ const SettingsTabs = ({
     <Tabs defaultValue="category">
       <TabsList className="w-full items-stretch [&>*>span]:ml-2 max-sm:[&>*>span]:hidden [&>*]:w-full">
         <TabsTrigger value="category">
-          <Tags></Tags>
+          <Tags />
           <span>Category</span>
         </TabsTrigger>
         <TabsTrigger value="difficulty">
-          <Gauge></Gauge>
+          <Gauge />
           <span>Difficulty</span>
         </TabsTrigger>
         <TabsTrigger value="type">
-          <SwatchBook></SwatchBook>
+          <SwatchBook />
           <span>Type</span>
         </TabsTrigger>
         <TabsTrigger value="amount">
-          <Sigma></Sigma>
+          <Sigma />
           <span>Amount</span>
         </TabsTrigger>
         <TabsTrigger value="timer">
-          <Timer></Timer>
+          <Timer />
           <span>Timer</span>
         </TabsTrigger>
       </TabsList>
