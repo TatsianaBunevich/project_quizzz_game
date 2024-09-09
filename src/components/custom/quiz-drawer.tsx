@@ -1,5 +1,4 @@
 import useBoundStore from 'store/boundStore'
-import { useState } from 'react'
 import {
   Drawer,
   DrawerClose,
@@ -20,16 +19,13 @@ const QuizDrawer = ({ lastQuizItem }: { lastQuizItem: number }) => {
   const resetQuiz = useBoundStore((state) => state.resetQuiz)
   const stopTimer = useBoundStore((state) => state.stopTimer)
   const restartTimer = useBoundStore((state) => state.restartTimer)
-  const [isModal, setIsModal] = useState(false)
 
-  const handleOpenModal = () => {
+  const handleOpenDrawer = () => {
     if (timer) stopTimer()
-    setIsModal(true)
   }
 
-  const handleCloseModal = () => {
+  const handleCloseDrawer = () => {
     if (timer) restartTimer()
-    setIsModal(false)
   }
 
   const handleCheckAnswers = () => {
@@ -39,26 +35,22 @@ const QuizDrawer = ({ lastQuizItem }: { lastQuizItem: number }) => {
       'quiz/getLastQuizItemId'
     )
     handleNextButton()
-    setIsModal(false)
   }
 
   const handleOpenSettings = () => {
     resetQuiz()
-    setIsModal(false)
   }
 
   return (
-    <Drawer>
+    <Drawer onClose={handleCloseDrawer}>
       <DrawerTrigger asChild>
-        {/* TODO: update handleOpenModal */}
         <Button
-          onClick={handleOpenModal}
+          onClick={handleOpenDrawer}
           className="mt-2 self-end rounded-full px-2"
         >
           <Pause />
         </Button>
       </DrawerTrigger>
-      {/* TODO: add action on drag Drawer down and on Overlay click */}
       <DrawerContent>
         <DrawerHeader className="p-0">
           <DrawerTitle />
@@ -66,10 +58,9 @@ const QuizDrawer = ({ lastQuizItem }: { lastQuizItem: number }) => {
         </DrawerHeader>
         <div className="flex flex-col justify-center gap-2 p-4 sm:flex-row [&>*>span]:ml-2">
           <DrawerClose asChild>
-            {/* TODO: check actions on close */}
             <Button
               variant="link"
-              onClick={handleCloseModal}
+              onClick={handleCloseDrawer}
               className="hover:bg-accent"
             >
               <Undo2 />
