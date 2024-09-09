@@ -6,7 +6,7 @@ import Fallback from 'shared/fallback'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import QuizCountdown from 'custom/quiz-countdown'
-import QuizSkeleton from 'components/QuizSkeleton/QuizSkeleton'
+import QuizSkeleton from 'custom/quiz-skeleton'
 import MainLayout from 'layouts/main-layout'
 import { cn } from '@/lib/utils'
 const QuizItem = lazy(() => import('custom/quiz-item'))
