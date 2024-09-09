@@ -5,28 +5,12 @@ import { ErrorBoundary } from 'react-error-boundary'
 import Fallback from 'shared/fallback'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Countdown from 'components/Countdown/Countdown'
+import QuizCountdown from 'custom/quiz-countdown'
 import QuizSkeleton from 'components/QuizSkeleton/QuizSkeleton'
 import MainLayout from 'layouts/main-layout'
 import { cn } from '@/lib/utils'
-const Quiz = lazy(() => import('components/Quiz/Quiz'))
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer'
-import {
-  ChevronLeft,
-  ChevronRight,
-  Pause,
-  Undo2,
-  Goal,
-  Settings,
-} from 'lucide-react'
+const QuizItem = lazy(() => import('custom/quiz-item'))
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import {
   Pagination,
   PaginationContent,
@@ -34,8 +18,9 @@ import {
 } from '@/components/ui/pagination'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
-import Timer from 'components/Timer/Timer'
-import Modal from 'components/Modal/Modal'
+
+import QuizTimer from 'custom/quiz-timer'
+import QuizDrawer from 'custom/quiz-drawer'
 import PathConstants from 'routes/pathConstants'
 import { SettingsType, SettingType } from '@/types'
 
@@ -52,9 +37,6 @@ const QuizPage = () => {
     handleNextButton,
     startCountdown,
     timer,
-    resetQuiz,
-    stopTimer,
-    restartTimer,
   } = useBoundStore(
     useShallow((state) => ({
       settings: state.settings,
@@ -67,14 +49,10 @@ const QuizPage = () => {
       handleNextButton: state.handleNextButton,
       startCountdown: state.startCountdown,
       timer: state.settings.timer,
-      resetQuiz: state.resetQuiz,
-      stopTimer: state.stopTimer,
-      restartTimer: state.restartTimer,
     }))
   )
   const navigate = useNavigate()
   const [isCountdown, setIsCountdown] = useState(true)
-  const [isModal, setIsModal] = useState(false)
   const lastQuizItem = quizItems.length - 1
 
   useEffect(() => {
@@ -115,31 +93,6 @@ const QuizPage = () => {
     return `https://opentdb.com/api.php?${params}`
   }
 
-  const handleOpenModal = () => {
-    if (timer) stopTimer()
-    setIsModal(true)
-  }
-
-  const handleCloseModal = () => {
-    if (timer) restartTimer()
-    setIsModal(false)
-  }
-
-  const handleCheckAnswers = () => {
-    useBoundStore.setState(
-      { activeId: lastQuizItem },
-      undefined,
-      'quiz/getLastQuizItemId'
-    )
-    handleNextButton()
-    setIsModal(false)
-  }
-
-  const handleOpenSettings = () => {
-    resetQuiz()
-    setIsModal(false)
-  }
-
   return (
     <>
       {/* eslint-disable-next-line react/no-unknown-property */}
@@ -148,73 +101,33 @@ const QuizPage = () => {
           <MainLayout>
             <MainLayout.Header isFixed={isCountdown} />
             <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
-              {isCountdown && <Countdown />}
-              <div className={cn({ hidden: isCountdown, block: !isCountdown })}>
+              {isCountdown && <QuizCountdown />}
+              <div
+                className={cn({
+                  hidden: isCountdown,
+                  'flex h-full flex-col': !isCountdown,
+                })}
+              >
                 <Suspense fallback={<QuizSkeleton />}>
                   <MainLayout.Main className="justify-between">
-                    <Quiz
-                      params={createQuestionsUrl(settings)}
-                      isSortQuizItems={!quizItems.length}
-                      quizItem={quizItems[activeId]}
-                      activeId={activeId}
-                      sortQuizItems={sortQuizItems}
-                      handleSelectAnswer={handleSelectAnswer}
-                    />
-                    {/* TODO: move Drawer to separate component */}
-                    <Drawer>
-                      <DrawerTrigger asChild>
-                        {/* TODO: update handleOpenModal */}
-                        <Button variant="outline" onClick={handleOpenModal}>
-                          <Pause />
-                        </Button>
-                      </DrawerTrigger>
-                      {/* TODO: add action on drag Drawer down and on Overlay click */}
-                      <DrawerContent>
-                        <DrawerHeader className="p-0">
-                          <DrawerTitle></DrawerTitle>
-                          <DrawerDescription></DrawerDescription>
-                        </DrawerHeader>
-                        <div className="flex flex-col justify-center gap-2 p-4 sm:flex-row [&>*>span]:ml-2">
-                          <DrawerClose asChild>
-                            {/* TODO: check actions on close */}
-                            <Button
-                              variant="link"
-                              onClick={handleCloseModal}
-                              className="hover:bg-accent"
-                            >
-                              <Undo2 />
-                              <span>Back to the game</span>
-                            </Button>
-                          </DrawerClose>
-                          <Button
-                            variant="link"
-                            asChild
-                            onClick={handleCheckAnswers}
-                          >
-                            <Link
-                              to={PathConstants.RESULT}
-                              className="hover:bg-accent"
-                            >
-                              <Goal />
-                              <span>See the result</span>
-                            </Link>
-                          </Button>
-                          <Button
-                            variant="link"
-                            asChild
-                            onClick={handleOpenSettings}
-                          >
-                            <Link
-                              to={PathConstants.SETTINGS}
-                              className="hover:bg-accent"
-                            >
-                              <Settings />
-                              <span>Go to settings</span>
-                            </Link>
-                          </Button>
-                        </div>
-                      </DrawerContent>
-                    </Drawer>
+                    <div className="flex min-h-full flex-col">
+                      <div className="mb-2 flex items-end justify-between">
+                        <span className="h-10 w-10 rounded-full bg-accent-foreground text-center leading-10 text-accent">
+                          {activeId + 1}
+                        </span>
+                        {timer > 0 && <QuizTimer />}
+                      </div>
+                      <QuizItem
+                        params={createQuestionsUrl(settings)}
+                        isSortQuizItems={!quizItems.length}
+                        quizItem={quizItems[activeId]}
+                        activeId={activeId}
+                        sortQuizItems={sortQuizItems}
+                        handleSelectAnswer={handleSelectAnswer}
+                        isTimer={timer ? true : false}
+                      />
+                      <QuizDrawer lastQuizItem={lastQuizItem} />
+                    </div>
                   </MainLayout.Main>
                   <MainLayout.Footer>
                     <Pagination>
@@ -252,7 +165,6 @@ const QuizPage = () => {
                       </PaginationContent>
                     </Pagination>
                   </MainLayout.Footer>
-                  {timer > 0 && <Timer />}
                 </Suspense>
               </div>
             </ErrorBoundary>

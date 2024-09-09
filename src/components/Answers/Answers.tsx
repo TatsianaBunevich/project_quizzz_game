@@ -1,7 +1,7 @@
 import { Answer } from '../../types'
 import { QuizState } from '../../store/types'
 import QuizItem from '../QuizItem/QuizItem'
-import DisplayedAnswer from '../DisplayedAnswer/DisplayedAnswer'
+import DisplayedAnswer from '../custom/displayed-answer'
 import stylesAnswerButton from '../AnswerButton/AnswerButton.module.css'
 import styles from './Answers.module.css'
 

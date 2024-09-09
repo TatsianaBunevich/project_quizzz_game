@@ -1,9 +1,0 @@
-.quiz {
-  display: flex;
-  flex-direction: column;
-}
-
-.quiz .selected {
-  border-color: transparent;
-  background-color: var(--button-bg-color);
-}
