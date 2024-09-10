@@ -22,8 +22,11 @@ const Header = ({ isFixed }: { isFixed?: boolean }) => {
         'fixed top-0 w-full': isFixed,
       })}
     >
-        <Link to={PathConstants.HOME}>QG</Link>
       <Button variant="link" asChild onClick={() => resetGame()}>
+        <Link to={PathConstants.HOME}>
+          <span>QG</span>
+          <span className="sr-only">Quizzz Game</span>
+        </Link>
       </Button>
       <ModeToggle />
     </header>

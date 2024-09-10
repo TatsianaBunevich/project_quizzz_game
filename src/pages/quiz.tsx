@@ -54,6 +54,8 @@ const QuizPage = () => {
   const navigate = useNavigate()
   const [isCountdown, setIsCountdown] = useState(true)
   const lastQuizItem = quizItems.length - 1
+  const activeFirstId = activeId === 0
+  const activeLastId = activeId === lastQuizItem
 
   useEffect(() => {
     if (isCountdown) {
@@ -61,7 +63,7 @@ const QuizPage = () => {
         .then(() => setIsCountdown(false))
         .catch((error) => console.error(error))
     } else if (timer) {
-      if (activeId === lastQuizItem) {
+      if (activeLastId) {
         startTimer(timer, () => {
           handleNextButton()
           navigate(PathConstants.RESULT)
@@ -71,10 +73,9 @@ const QuizPage = () => {
       }
     }
   }, [
-    activeId,
+    activeLastId,
     handleNextButton,
     isCountdown,
-    lastQuizItem,
     navigate,
     startCountdown,
     startTimer,
@@ -139,26 +140,26 @@ const QuizPage = () => {
                             disabled={timer > 0 && activeId > 0}
                           >
                             <Link
-                              to={activeId === 0 ? PathConstants.SETTINGS : ''}
+                              aria-label={
+                                activeFirstId
+                                  ? 'Back'
+                                  : 'Go to previous question'
+                              }
+                              to={activeFirstId ? PathConstants.SETTINGS : ''}
                             >
-                              {activeId === 0 ? 'Back' : <ChevronLeft />}
+                              {activeFirstId ? 'Back' : <ChevronLeft />}
                             </Link>
                           </Button>
                         </PaginationItem>
                         <PaginationItem>
                           <Button asChild onClick={handleNextButton}>
                             <Link
-                              to={
-                                activeId === lastQuizItem
-                                  ? PathConstants.RESULT
-                                  : ''
+                              aria-label={
+                                activeLastId ? 'Check' : 'Go to next question'
                               }
+                              to={activeLastId ? PathConstants.RESULT : ''}
                             >
-                              {activeId === lastQuizItem ? (
-                                'Check'
-                              ) : (
-                                <ChevronRight />
-                              )}
+                              {activeLastId ? 'Check' : <ChevronRight />}
                             </Link>
                           </Button>
                         </PaginationItem>
