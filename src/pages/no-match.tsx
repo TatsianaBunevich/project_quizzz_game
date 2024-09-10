@@ -1,4 +1,4 @@
-import useResetQuiz from 'hooks/useResetQuiz'
+import useResetGame from 'hooks/use-reset-game'
 import { useRouteError } from 'react-router-dom'
 import MainLayout from 'layouts/main-layout'
 import { Link } from 'react-router-dom'
@@ -7,6 +7,7 @@ import PathConstants from 'routes/pathConstants'
 
 const NoMatchPage = () => {
   const error = useRouteError()
+  const resetGame = useResetGame()
 
   return (
     <MainLayout>
@@ -27,7 +28,7 @@ const NoMatchPage = () => {
               (error as { statusText?: string })?.statusText}
           </i>
         </p>
-        <Button asChild onClick={useResetQuiz}>
+        <Button asChild onClick={() => resetGame()}>
           <Link to={PathConstants.HOME}>Home page</Link>
         </Button>
       </MainLayout.Main>

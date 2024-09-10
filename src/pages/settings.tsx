@@ -9,7 +9,7 @@ const SettingsTabs = lazy(() => import('custom/settings-tabs'))
 import SettingsBadges from 'custom/settings-badges'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
-import useResetQuiz from 'hooks/useResetQuiz'
+import useResetGame from 'hooks/use-reset-game'
 import PathConstants from 'routes/pathConstants'
 
 const SettingsPage = () => {
@@ -19,6 +19,7 @@ const SettingsPage = () => {
   const updateSettings = useBoundStore((state) => state.updateSettings)
   const handleSelectOption = useBoundStore((state) => state.handleSelectOption)
   const addNewScore = useBoundStore((state) => state.addNewScore)
+  const resetGame = useResetGame()
 
   queryClient.removeQueries({ queryKey: ['questions'] })
 
@@ -40,7 +41,7 @@ const SettingsPage = () => {
             <Button asChild onClick={addNewScore}>
               <Link to={PathConstants.QUIZ}>Let&apos;s go</Link>
             </Button>
-            <Button asChild onClick={useResetQuiz}>
+            <Button asChild onClick={() => resetGame()}>
               <Link to={PathConstants.HOME}>Exit</Link>
             </Button>
           </MainLayout.Footer>

@@ -1,12 +1,14 @@
 import { useQueryClient } from '@tanstack/react-query'
 import useBoundStore from 'store/boundStore'
 
-const useResetQuiz = () => {
+const useResetGame = () => {
   const queryClient = useQueryClient()
   const resetBoundStore = useBoundStore((state) => state.resetBoundStore)
 
-  resetBoundStore()
-  queryClient.clear()
+  return () => {
+    resetBoundStore()
+    queryClient.clear()
+  }
 }
 
-export default useResetQuiz
+export default useResetGame
