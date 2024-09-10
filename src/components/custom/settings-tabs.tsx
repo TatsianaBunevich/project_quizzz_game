@@ -1,4 +1,4 @@
-import useGetData from 'hooks/useGetData'
+import useGetData from 'hooks/use-get-data'
 import { cn } from '@/lib/utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'ui/tabs'
 import { Tags, Gauge, SwatchBook, Sigma, Timer } from 'lucide-react'

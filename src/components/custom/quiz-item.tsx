@@ -1,4 +1,4 @@
-import useGetData from 'hooks/useGetData'
+import useGetData from 'hooks/use-get-data'
 import { cn } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card'
 import { Button } from 'ui/button'
