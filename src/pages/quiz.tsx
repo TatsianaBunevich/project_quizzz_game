@@ -1,6 +1,5 @@
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import useBoundStore from 'store/boundStore'
-import { useShallow } from 'zustand/react/shallow'
 import { ErrorBoundary } from 'react-error-boundary'
 import Fallback from 'shared/fallback'
 import { lazy, Suspense, useEffect, useState } from 'react'
@@ -24,33 +23,19 @@ import { SettingsType, SettingType } from '@/types'
 
 const QuizPage = () => {
   const { reset } = useQueryErrorResetBoundary()
-  const {
-    settings,
-    quizItems,
-    activeId,
-    sortQuizItems,
-    handleSelectAnswer,
-    startTimer,
-    handlePrevButton,
-    handleNextButton,
-    startCountdown,
-    timer,
-  } = useBoundStore(
-    useShallow((state) => ({
-      settings: state.settings,
-      quizItems: state.quizItems,
-      activeId: state.activeId,
-      sortQuizItems: state.sortQuizItems,
-      handleSelectAnswer: state.handleSelectAnswer,
-      startTimer: state.startTimer,
-      handlePrevButton: state.handlePrevButton,
-      handleNextButton: state.handleNextButton,
-      startCountdown: state.startCountdown,
-      timer: state.settings.timer,
-    }))
-  )
+  const settings = useBoundStore((state) => state.settings)
+  const quizItems = useBoundStore((state) => state.quizItems)
+  const activeId = useBoundStore((state) => state.activeId)
+  const sortQuizItems = useBoundStore((state) => state.sortQuizItems)
+  const handleSelectAnswer = useBoundStore((state) => state.handleSelectAnswer)
+  const startTimer = useBoundStore((state) => state.startTimer)
+  const handlePrevButton = useBoundStore((state) => state.handlePrevButton)
+  const handleNextButton = useBoundStore((state) => state.handleNextButton)
+  const startCountdown = useBoundStore((state) => state.startCountdown)
+  const isPlay = useBoundStore((state) => state.isPlay)
   const navigate = useNavigate()
   const [isCountdown, setIsCountdown] = useState(true)
+  const timer = settings.timer
   const lastQuizItem = quizItems.length - 1
   const activeFirstId = activeId === 0
   const activeLastId = activeId === lastQuizItem
@@ -61,7 +46,7 @@ const QuizPage = () => {
         .then(() => setIsCountdown(false))
         .catch((error) => console.error(error))
     } else if (timer) {
-      if (activeLastId) {
+      if (activeId === lastQuizItem) {
         startTimer(timer, () => {
           handleNextButton()
           navigate(PathConstants.RESULT)
@@ -71,7 +56,8 @@ const QuizPage = () => {
       }
     }
   }, [
-    activeLastId,
+    activeId,
+    lastQuizItem,
     handleNextButton,
     isCountdown,
     navigate,
@@ -91,8 +77,6 @@ const QuizPage = () => {
 
     return `https://opentdb.com/api.php?${params}`
   }
-
-  const isPlay = useBoundStore((state) => state.isPlay)
 
   if (!isPlay) {
     return <Navigate to={PathConstants.HOME} replace={true} />
@@ -138,7 +122,6 @@ const QuizPage = () => {
                         <PaginationContent className="w-full justify-center gap-4 [&>*>*]:w-full [&>*]:w-full md:[&>*]:w-1/5">
                           <PaginationItem>
                             <Button
-                              asChild
                               onClick={handlePrevButton}
                               disabled={timer > 0 && activeId > 0}
                             >
@@ -155,7 +138,7 @@ const QuizPage = () => {
                             </Button>
                           </PaginationItem>
                           <PaginationItem>
-                            <Button asChild onClick={handleNextButton}>
+                            <Button onClick={handleNextButton}>
                               <Link
                                 aria-label={
                                   activeLastId ? 'Check' : 'Go to next question'
