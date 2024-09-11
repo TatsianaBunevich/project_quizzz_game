@@ -49,7 +49,7 @@ const QuizItem = ({
             <Button
               key={a.answer}
               variant={a.isSelected ? 'default' : 'outline'}
-              className="after:-top-7.5 relative h-full justify-start overflow-hidden whitespace-normal p-4 text-left before:mr-4 before:content-[counter(els,upper-alpha)] before:[counter-increment:els] after:absolute after:-left-10 after:h-20 after:w-20 after:rounded-full after:border after:border-inherit"
+              className="after:-top-7.5 relative h-full justify-start overflow-hidden whitespace-normal p-4 text-left before:mr-4 before:content-[counter(els,upper-alpha)] before:[counter-increment:els] after:absolute after:right-[calc(100%-2.5rem)] after:aspect-square after:h-[120%] after:w-auto after:rounded-full after:border after:border-inherit"
               onClick={() => handleSelectAnswer(activeId, a.answer)}
             >
               <DisplayedAnswer text={a.answer} />

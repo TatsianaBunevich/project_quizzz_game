@@ -1,7 +1,6 @@
 import useResetGame from 'hooks/use-reset-game'
-import { useRouteError } from 'react-router-dom'
+import { useRouteError, Link } from 'react-router-dom'
 import MainLayout from 'layouts/main-layout'
-import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 import PathConstants from 'routes/pathConstants'
 

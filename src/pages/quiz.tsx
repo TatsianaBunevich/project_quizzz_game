@@ -4,7 +4,7 @@ import { useShallow } from 'zustand/react/shallow'
 import { ErrorBoundary } from 'react-error-boundary'
 import Fallback from 'shared/fallback'
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate, Link } from 'react-router-dom'
 import QuizCountdown from 'custom/quiz-countdown'
 import QuizSkeleton from 'custom/quiz-skeleton'
 import MainLayout from 'layouts/main-layout'
@@ -16,9 +16,7 @@ import {
   PaginationContent,
   PaginationItem,
 } from '@/components/ui/pagination'
-import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
-
 import QuizTimer from 'custom/quiz-timer'
 import QuizDrawer from 'custom/quiz-drawer'
 import PathConstants from 'routes/pathConstants'
@@ -94,86 +92,92 @@ const QuizPage = () => {
     return `https://opentdb.com/api.php?${params}`
   }
 
-  return (
-    <>
-      {/* eslint-disable-next-line react/no-unknown-property */}
-      <div vaul-drawer-wrapper="">
-        <div className="bg-background">
-          <MainLayout>
-            <MainLayout.Header isFixed={isCountdown} />
-            <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
-              {isCountdown && <QuizCountdown />}
-              <div
-                className={cn({
-                  hidden: isCountdown,
-                  'flex h-full flex-col': !isCountdown,
-                })}
-              >
-                <Suspense fallback={<QuizSkeleton />}>
-                  <MainLayout.Main className="justify-between">
-                    <div className="flex min-h-full flex-col">
-                      <div className="mb-2 flex items-end justify-between">
-                        <span className="h-10 w-10 rounded-full bg-accent-foreground text-center leading-10 text-accent">
-                          {activeId + 1}
-                        </span>
-                        {timer > 0 && <QuizTimer />}
+  const isPlay = useBoundStore((state) => state.isPlay)
+
+  if (!isPlay) {
+    return <Navigate to={PathConstants.HOME} replace={true} />
+  } else {
+    return (
+      <>
+        {/* eslint-disable-next-line react/no-unknown-property */}
+        <div vaul-drawer-wrapper="">
+          <div className="bg-background">
+            <MainLayout>
+              <MainLayout.Header isFixed={isCountdown} />
+              <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
+                {isCountdown && <QuizCountdown />}
+                <div
+                  className={cn({
+                    hidden: isCountdown,
+                    'flex h-full flex-col': !isCountdown,
+                  })}
+                >
+                  <Suspense fallback={<QuizSkeleton />}>
+                    <MainLayout.Main className="justify-between">
+                      <div className="flex min-h-full flex-col">
+                        <div className="mb-2 flex items-end justify-between">
+                          <span className="h-10 w-10 rounded-full bg-accent-foreground text-center leading-10 text-accent">
+                            {activeId + 1}
+                          </span>
+                          {timer > 0 && <QuizTimer />}
+                        </div>
+                        <QuizItem
+                          params={createQuestionsUrl(settings)}
+                          isSortQuizItems={!quizItems.length}
+                          quizItem={quizItems[activeId]}
+                          activeId={activeId}
+                          sortQuizItems={sortQuizItems}
+                          handleSelectAnswer={handleSelectAnswer}
+                          isTimer={timer ? true : false}
+                        />
+                        <QuizDrawer lastQuizItem={lastQuizItem} />
                       </div>
-                      <QuizItem
-                        params={createQuestionsUrl(settings)}
-                        isSortQuizItems={!quizItems.length}
-                        quizItem={quizItems[activeId]}
-                        activeId={activeId}
-                        sortQuizItems={sortQuizItems}
-                        handleSelectAnswer={handleSelectAnswer}
-                        isTimer={timer ? true : false}
-                      />
-                      <QuizDrawer lastQuizItem={lastQuizItem} />
-                    </div>
-                  </MainLayout.Main>
-                  <MainLayout.Footer>
-                    <Pagination>
-                      <PaginationContent className="w-full justify-center gap-4 [&>*>*]:w-full [&>*]:w-full md:[&>*]:w-1/5">
-                        <PaginationItem>
-                          <Button
-                            asChild
-                            onClick={handlePrevButton}
-                            disabled={timer > 0 && activeId > 0}
-                          >
-                            <Link
-                              aria-label={
-                                activeFirstId
-                                  ? 'Back'
-                                  : 'Go to previous question'
-                              }
-                              to={activeFirstId ? PathConstants.SETTINGS : ''}
+                    </MainLayout.Main>
+                    <MainLayout.Footer>
+                      <Pagination>
+                        <PaginationContent className="w-full justify-center gap-4 [&>*>*]:w-full [&>*]:w-full md:[&>*]:w-1/5">
+                          <PaginationItem>
+                            <Button
+                              asChild
+                              onClick={handlePrevButton}
+                              disabled={timer > 0 && activeId > 0}
                             >
-                              {activeFirstId ? 'Back' : <ChevronLeft />}
-                            </Link>
-                          </Button>
-                        </PaginationItem>
-                        <PaginationItem>
-                          <Button asChild onClick={handleNextButton}>
-                            <Link
-                              aria-label={
-                                activeLastId ? 'Check' : 'Go to next question'
-                              }
-                              to={activeLastId ? PathConstants.RESULT : ''}
-                            >
-                              {activeLastId ? 'Check' : <ChevronRight />}
-                            </Link>
-                          </Button>
-                        </PaginationItem>
-                      </PaginationContent>
-                    </Pagination>
-                  </MainLayout.Footer>
-                </Suspense>
-              </div>
-            </ErrorBoundary>
-          </MainLayout>
+                              <Link
+                                aria-label={
+                                  activeFirstId
+                                    ? 'Back'
+                                    : 'Go to previous question'
+                                }
+                                to={activeFirstId ? PathConstants.SETTINGS : ''}
+                              >
+                                {activeFirstId ? 'Back' : <ChevronLeft />}
+                              </Link>
+                            </Button>
+                          </PaginationItem>
+                          <PaginationItem>
+                            <Button asChild onClick={handleNextButton}>
+                              <Link
+                                aria-label={
+                                  activeLastId ? 'Check' : 'Go to next question'
+                                }
+                                to={activeLastId ? PathConstants.RESULT : ''}
+                              >
+                                {activeLastId ? 'Check' : <ChevronRight />}
+                              </Link>
+                            </Button>
+                          </PaginationItem>
+                        </PaginationContent>
+                      </Pagination>
+                    </MainLayout.Footer>
+                  </Suspense>
+                </div>
+              </ErrorBoundary>
+            </MainLayout>
+          </div>
         </div>
-      </div>
-    </>
-  )
+      </>
+    )
+  }
 }
 
 export default QuizPage
