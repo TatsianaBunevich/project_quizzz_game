@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { devtools, persist, createJSONStorage } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { BoundState, BoundActions } from './types'
 import { initialSettingsState, createSettingsActions } from './settingsSlice'
@@ -29,6 +29,7 @@ const useBoundStore = create<BoundState & BoundActions>()(
       })),
       {
         name: 'bound-storage',
+        storage: createJSONStorage(() => sessionStorage),
         partialize: (state) =>
           Object.fromEntries(
             Object.entries(state).filter(

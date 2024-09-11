@@ -11,7 +11,7 @@ import {
 export type ActionsWithMiddlewares<T, U = T> = StateCreator<
   T,
   [['zustand/devtools', never], ['zustand/immer', never]],
-  [],
+  [['zustand/persist', Partial<T>]],
   U
 >
 
