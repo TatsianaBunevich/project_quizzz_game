@@ -72,5 +72,5 @@ export interface Score {
   points: number
   percentage: number
   status: Status
-  time: number
+  time: number | null
 }

@@ -16,8 +16,8 @@ const DashboardLayout = () => {
       <TooltipProvider>
         <div className="flex min-h-screen flex-col justify-between bg-muted/40">
           <DashboardSidebar />
-          <div className="flex w-full flex-col sm:gap-4 sm:pl-16">
-            <header className="flex justify-between p-4 sm:justify-end">
+          <div className="flex w-full flex-col gap-4 sm:pl-16">
+            <header className="sticky top-0 z-30 flex justify-between p-4 backdrop-blur-xl sm:justify-end">
               <DashboardSheet />
               <ModeToggle />
             </header>

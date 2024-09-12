@@ -3,6 +3,7 @@ import {
   ScoresState,
   ScoresActions,
   QuizState,
+  SettingsState,
 } from './types'
 import { Status } from '../types'
 
@@ -11,7 +12,7 @@ export const initialScoresState: ScoresState = {
 }
 
 export const createScoresActions: ActionsWithMiddlewares<
-  ScoresState & Pick<QuizState, 'quizItems'>,
+  ScoresState & Pick<QuizState, 'quizItems'> & Pick<SettingsState, 'settings'>,
   ScoresActions
 > = (set) => ({
   addNewScore: () => {
@@ -22,7 +23,7 @@ export const createScoresActions: ActionsWithMiddlewares<
           points: 0,
           percentage: 0,
           status: Status.BAD,
-          time: 0,
+          time: state.settings.timer === 0 ? null : 0,
         })
       },
       undefined,
@@ -33,7 +34,10 @@ export const createScoresActions: ActionsWithMiddlewares<
   incScoreTime: (time) => {
     set(
       (state) => {
-        state.scores[state.scores.length - 1].time += time
+        const lastScore = state.scores[state.scores.length - 1]
+        if (lastScore && lastScore.time !== null) {
+          lastScore.time += time
+        }
       },
       undefined,
       'scores/incScoreTime'

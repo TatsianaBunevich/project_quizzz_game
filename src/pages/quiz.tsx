@@ -100,7 +100,7 @@ const QuizPage = () => {
                     <MainLayout.Main className="justify-between">
                       <div className="flex min-h-full flex-col">
                         <div className="mb-2 flex items-end justify-between">
-                          <span className="h-10 w-10 rounded-full bg-accent-foreground text-center leading-10 text-accent">
+                          <span className="h-10 w-10 rounded-full bg-accent-foreground text-center font-bold leading-10 text-accent">
                             {activeId + 1}
                           </span>
                           {timer > 0 && <QuizTimer />}

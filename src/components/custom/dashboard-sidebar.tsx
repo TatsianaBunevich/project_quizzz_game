@@ -85,7 +85,7 @@ const DashboardSidebar = () => {
           <TooltipTrigger asChild onClick={handleNewTry}>
             <Link
               to={PathConstants.QUIZ}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
             >
               <DiamondPlus className="h-5 w-5" />
               <span className="sr-only">Try again</span>
@@ -99,7 +99,7 @@ const DashboardSidebar = () => {
           <TooltipTrigger asChild onClick={resetQuiz}>
             <Link
               to={PathConstants.SETTINGS}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
             >
               <Settings className="h-5 w-5" />
               <span className="sr-only">Settings</span>

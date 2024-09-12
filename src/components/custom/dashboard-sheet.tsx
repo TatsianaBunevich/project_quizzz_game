@@ -101,18 +101,18 @@ const DashboardSheet = () => {
             <Button variant="link" asChild onClick={handleNewTry}>
               <Link
                 to={PathConstants.QUIZ}
-                className="flex h-auto items-center !justify-start gap-4 !text-muted-foreground hover:!text-foreground hover:no-underline"
+                className="flex h-auto items-center !justify-start gap-4 !rounded-full !text-muted-foreground hover:bg-accent hover:!text-foreground hover:no-underline"
               >
                 <DiamondPlus className="h-5 w-5" /> Try again
                 <span className="sr-only">Try again</span>
               </Link>
             </Button>
           </nav>
-          <nav>
+          <nav className="grid gap-2">
             <Button variant="link" asChild onClick={resetQuiz}>
               <Link
                 to={PathConstants.SETTINGS}
-                className="flex h-auto items-center !justify-start gap-4 !text-muted-foreground hover:!text-foreground hover:no-underline"
+                className="flex h-auto items-center !justify-start gap-4 !rounded-full !text-muted-foreground hover:bg-accent hover:!text-foreground hover:no-underline"
               >
                 <Settings className="h-5 w-5" /> Settings
                 <span className="sr-only">Settings</span>
