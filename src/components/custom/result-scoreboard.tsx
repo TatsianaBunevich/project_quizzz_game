@@ -30,7 +30,7 @@ const ResultScoreboard = ({ scores }: { scores: Score[] }) => {
   return (
     <Card className="flex flex-1 flex-col">
       <CardContent className="flex-1 pb-0">
-        <ChartContainer config={chartConfig} className="md:aspect-auto">
+        <ChartContainer config={chartConfig} className="h-full md:aspect-auto">
           <LineChart
             accessibilityLayer
             data={chartData}

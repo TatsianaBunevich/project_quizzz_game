@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Badge } from 'ui/badge'
 import {
   Pagination,
   PaginationContent,
@@ -52,23 +53,28 @@ const ResultAnswers = ({
           className="text-wrap text-lg"
         ></CardTitle>
       </CardHeader>
-      <CardContent className="grid gap-4 pt-6 [counter-reset:els]">
+      <CardContent className="mb-auto grid gap-4 pt-6 [counter-reset:els]">
         {quizItem.answers.map((a) => (
-          <div
+          <Button
             key={a.answer}
-            className={cn(
-              'after:-top-7.5 before:-top-7.5 relative inline-flex h-full items-center justify-start overflow-hidden whitespace-normal rounded-md border border-input bg-background p-4 text-left text-sm font-medium ring-offset-background transition-colors before:absolute before:right-[calc(100%-2.5rem)] before:aspect-square before:h-[120%] before:w-auto before:rounded-full before:border before:border-inherit after:absolute after:content-[counter(els,upper-alpha)] after:[counter-increment:els] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-              {
-                'before:bg-lime-500': a.isSelected && a.isCorrect,
-                'before:bg-red-500': a.isSelected && !a.isCorrect,
-              }
-            )}
+            asChild
+            variant="outline"
+            className={cn('item-answer hover:bg-background', {
+              'before:bg-lime-500': a.isSelected && a.isCorrect,
+              'before:bg-red-500': a.isSelected && !a.isCorrect,
+            })}
           >
-            <DisplayedAnswer text={a.answer} />
-          </div>
+            <div>
+              <DisplayedAnswer text={a.answer} />
+            </div>
+          </Button>
         ))}
       </CardContent>
       <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+        {!quizItem.answers.some((item) => item.isSelected) && (
+          <Badge variant="outline">Unanswered</Badge>
+        )}
+
         <Pagination className="ml-auto mr-0 w-auto">
           <PaginationContent>
             <PaginationItem>

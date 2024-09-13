@@ -48,9 +48,8 @@ const QuizItem = ({
           {quizItem.answers.map((a) => (
             <Button
               key={a.answer}
-              //
               variant={a.isSelected ? 'default' : 'outline'}
-              className="before:-top-7.5 after:absoluteafter:content-[counter(els,upper-alpha)] relative h-full justify-start overflow-hidden whitespace-normal p-4 text-left before:absolute before:right-[calc(100%-2.5rem)] before:aspect-square before:h-[120%] before:w-auto before:rounded-full before:border before:border-inherit after:[counter-increment:els]"
+              className="item-answer"
               onClick={() => handleSelectAnswer(activeId, a.answer)}
             >
               <DisplayedAnswer text={a.answer} />

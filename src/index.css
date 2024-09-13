@@ -2,128 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --color: #ffffff;
-  --background-color: #1b1b32;
-  --button-bg-color: #6b7abb;
-  --border-color: #5d6baa;
-  --button-color: var(--color);
-  --blob-color: #ffffff;
-  --skeleton-color: #808080;
-  --timer-color: hsl(359, 96%, 90%);
-
-  --button-radius: 0.75em;
-  --button-padding: 0.5em 1.25em;
-  --blur-size: 5px;
-  --normal-color: #fce795;
-  --good-color: #91c483;
-  --bad-color: #fd9091;
-  --green-hs: 107, 36%;
-  --green-l: 55%;
-  --red-hs: 359, 96%;
-  --red-l: 70%;
-  --green-color: hsl(var(--green-hs), var(--green-l));
-  --red-color: hsl(var(--red-hs), var(--red-l));
-  --progress-color: #dddddd;
-  --c-width: 400px;
-  --c-gap: 1.25em;
-
-  font-family: 'Inter', sans-serif;
-  line-height: 1;
-  font-weight: 400;
-  font-size: 12px;
-  width: 100%;
-  overflow-x: hidden;
-
-  color-scheme: light dark;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-[data-theme='light'] {
-  --color: #0a475c;
-  --background-color: #e8f7fc;
-  --button-bg-color: #96dcee;
-  --border-color: #72cce3;
-  --button-color: var(--color);
-  --blob-color: #fffaa8;
-  --skeleton-color: #d0d0d0;
-  --timer-color: hsl(0, 80%, 40%);
-}
-
-[data-theme='dark'] {
-  --color: #ffffff;
-  --background-color: #1b1b32;
-  --button-bg-color: #6b7abb;
-  --border-color: #5d6baa;
-  --button-color: var(--color);
-  --blob-color: #ffffff;
-  --skeleton-color: #808080;
-  --timer-color: hsl(359, 96%, 90%);
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-body::-webkit-scrollbar {
-  width: 0.5em;
-}
-
-body::-webkit-scrollbar-track {
-  background-color: #ffffff;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: var(--progress-color);
-}
-
-h1,
-h2 {
-  font-family: 'Karla', sans-serif;
-  font-weight: 700;
-}
-
-h1 {
-  font-size: 4em;
-  text-align: center;
-  margin: 0.7em 0;
-}
-
-h2 {
-  font-size: 1.5em;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --color: #0a475c;
-    --background-color: #e8f7fc;
-    --button-bg-color: #96dcee;
-    --border-color: #72cce3;
-    --button-color: var(--color);
-    --blob-color: #fffaa8;
-    --skeleton-color: #d0d0d0;
-    --timer-color: hsl(0, 80%, 40%);
-  }
-}
-
-@media (min-width: 992px) {
-  :root {
-    --c-width: 1200px;
-    --c-gap: 3em;
-
-    font-size: 16px;
-  }
-  h1 {
-    margin: 1em 0;
-  }
-} */
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -190,5 +68,11 @@ h2 {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .item-answer {
+    @apply relative !h-full overflow-hidden !whitespace-normal !p-4 !pl-10 before:absolute before:right-[calc(100%-2.7rem)] before:top-1/2 before:aspect-square before:h-[130%] before:w-auto before:-translate-y-1/2 before:rounded-full before:border before:border-inherit after:absolute after:left-4 after:content-[counter(els,upper-alpha)] after:[counter-increment:els];
   }
 }
