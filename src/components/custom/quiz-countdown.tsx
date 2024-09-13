@@ -1,4 +1,4 @@
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 
 const QuizCountdown = () => {
   const timeLeft = useBoundStore((state) => state.timeLeft)

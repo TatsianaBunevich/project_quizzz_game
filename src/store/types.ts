@@ -6,7 +6,7 @@ import {
   Score,
   CategoriesResponse,
   QuestionsResponse,
-} from '../types'
+} from '@/types'
 
 export type ActionsWithMiddlewares<T, U = T> = StateCreator<
   T,

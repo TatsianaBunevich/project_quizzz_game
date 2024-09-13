@@ -1,5 +1,5 @@
 import { ActionsWithMiddlewares, SettingsState, SettingsActions } from './types'
-import { DEFAULTSETTINGS } from '../constants'
+import { DEFAULTSETTINGS } from '@/constants'
 
 export const initialSettingsState: SettingsState = {
   settings: structuredClone(DEFAULTSETTINGS),

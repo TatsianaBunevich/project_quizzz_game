@@ -1,4 +1,4 @@
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 import { ScrollArea, ScrollBar } from 'ui/scroll-area'
 import { Button } from 'ui/button'
 import ScoreboardTable from 'custom/scoreboard-table'

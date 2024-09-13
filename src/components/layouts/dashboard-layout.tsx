@@ -1,4 +1,4 @@
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 import { Navigate, Outlet } from 'react-router-dom'
 import PathConstants from 'routes/constants'
 import DashboardSidebar from 'custom/dashboard-sidebar'

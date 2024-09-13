@@ -1,4 +1,4 @@
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 import { cn } from '@/lib/utils'
 import MainLayout from 'layouts/main-layout'
 import PathConstants from 'routes/constants'

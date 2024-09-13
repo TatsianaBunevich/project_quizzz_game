@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useMatch } from 'react-router-dom'
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 import { cn } from '@/lib/utils'
 import { debounce } from 'lodash'
 import { Button } from 'ui/button'

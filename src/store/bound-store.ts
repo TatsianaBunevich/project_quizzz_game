@@ -2,10 +2,10 @@ import { create } from 'zustand'
 import { devtools, persist, createJSONStorage } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { BoundState, BoundActions } from './types'
-import { initialSettingsState, createSettingsActions } from './settingsSlice'
-import { initialQuizState, createQuizActions } from './quizSlice'
-import { initialScoresState, createScoresActions } from './scoresSlice'
-import { initialUtilsState, createUtilsActions } from './utilsSlice'
+import { initialSettingsState, createSettingsActions } from './settings-slice'
+import { initialQuizState, createQuizActions } from './quiz-slice'
+import { initialScoresState, createScoresActions } from './scores-slice'
+import { initialUtilsState, createUtilsActions } from './utils-slice'
 
 const initialBoundState: BoundState = {
   ...initialSettingsState,

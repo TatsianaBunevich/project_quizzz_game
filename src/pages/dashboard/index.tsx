@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 import ResultData from 'custom/result-data'
 import ResultScoreboard from 'custom/result-scoreboard'
 import ResultAnswers from 'custom/result-answers'

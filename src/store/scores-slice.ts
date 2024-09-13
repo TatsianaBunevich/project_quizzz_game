@@ -5,7 +5,7 @@ import {
   QuizState,
   SettingsState,
 } from './types'
-import { Status } from '../types'
+import { Status } from '@/types'
 
 export const initialScoresState: ScoresState = {
   scores: [],

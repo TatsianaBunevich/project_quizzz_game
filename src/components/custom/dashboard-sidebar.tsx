@@ -1,5 +1,5 @@
 import { Link, useMatch } from 'react-router-dom'
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 import { cn } from '@/lib/utils'
 import { Button } from 'ui/button'
 import {

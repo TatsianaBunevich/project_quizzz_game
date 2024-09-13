@@ -1,4 +1,4 @@
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 import {
   Drawer,
   DrawerClose,

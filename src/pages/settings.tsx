@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 import { ErrorBoundary } from 'react-error-boundary'
 import Fallback from 'shared/fallback'
 import { lazy, Suspense } from 'react'

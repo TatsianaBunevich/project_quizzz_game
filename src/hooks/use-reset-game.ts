@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import useBoundStore from 'store/boundStore'
+import useBoundStore from 'store/bound-store'
 
 const useResetGame = () => {
   const queryClient = useQueryClient()
