@@ -3,14 +3,17 @@ import { Navigate, Outlet } from 'react-router-dom'
 import PathConstants from 'routes/pathConstants'
 import DashboardSidebar from 'custom/dashboard-sidebar'
 import DashboardSheet from 'custom/dashboard-sheet'
-import { ModeToggle } from 'components/mode-toggle'
+import { ModeToggle } from 'ui/mode-toggle'
 import { TooltipProvider } from '@/components/ui/tooltip'
 
 const DashboardLayout = () => {
   const isPlay = useBoundStore((state) => state.isPlay)
+  const scores = useBoundStore((state) => state.scores)
 
   if (!isPlay) {
     return <Navigate to={PathConstants.HOME} replace={true} />
+  } else if (!scores.length) {
+    return <Navigate to={PathConstants.SETTINGS} replace={true} />
   } else {
     return (
       <TooltipProvider>

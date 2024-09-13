@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
-import { ModeToggle } from 'components/mode-toggle'
+import { ModeToggle } from 'ui/mode-toggle'
 import useResetGame from 'hooks/use-reset-game'
 import PathConstants from 'routes/pathConstants'
 
