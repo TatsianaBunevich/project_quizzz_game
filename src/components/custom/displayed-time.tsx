@@ -17,13 +17,13 @@ const DisplayedTime = ({ seconds, className }: DisplayedTimeProps) => {
   return (
     <div
       className={cn(
-        'flex items-baseline gap-1 tabular-nums leading-none',
+        'flex items-baseline gap-2 tabular-nums leading-none',
         className
       )}
     >
       {timeParts.map(({ value, label }) =>
         value > 0 ? (
-          <div key={label} className="space-x-2">
+          <div key={label}>
             {value}{' '}
             <span className="font-normal text-muted-foreground">{label}</span>
           </div>

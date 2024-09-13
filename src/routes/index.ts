@@ -5,7 +5,7 @@ import SettingsPage from 'pages/settings'
 import QuizPage from 'pages/quiz'
 import ResultPage from 'pages/dashboard'
 import AnswersPage from 'pages/dashboard/answers'
-import ScoreboardPage from 'pages/ScoreboardPage/ScoreboardPage'
+import ScoreboardPage from 'pages/dashboard/scoreboard'
 import NoMatchPage from 'pages/no-match'
 
 const routes = [

@@ -32,7 +32,7 @@ const DashboardSidebar = () => {
     )
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-16 flex-col justify-between border-r bg-background sm:flex">
+    <aside className="fixed inset-y-0 left-0 z-20 hidden w-16 flex-col justify-between border-r bg-background sm:flex">
       <nav className="flex flex-col items-center gap-2 px-2 pt-4 md:gap-4">
         <Button
           size="icon"
