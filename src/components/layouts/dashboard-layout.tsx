@@ -1,6 +1,6 @@
 import useBoundStore from 'store/boundStore'
 import { Navigate, Outlet } from 'react-router-dom'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 import DashboardSidebar from 'custom/dashboard-sidebar'
 import DashboardSheet from 'custom/dashboard-sheet'
 import { ModeToggle } from 'ui/mode-toggle'

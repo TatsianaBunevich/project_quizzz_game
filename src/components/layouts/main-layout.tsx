@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 import { ModeToggle } from 'ui/mode-toggle'
 import useResetGame from 'hooks/use-reset-game'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 
 interface FooterProps extends React.ComponentProps<'footer'> {
   isAbsolute?: boolean

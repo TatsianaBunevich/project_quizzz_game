@@ -18,7 +18,7 @@ import {
 import { Button } from 'ui/button'
 import QuizTimer from 'custom/quiz-timer'
 import QuizDrawer from 'custom/quiz-drawer'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 import { SettingsType, SettingType } from '@/types'
 
 const QuizPage = () => {

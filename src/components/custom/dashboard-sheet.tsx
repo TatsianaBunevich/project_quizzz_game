@@ -21,7 +21,7 @@ import {
   Settings,
 } from 'lucide-react'
 import useResetGame from 'hooks/use-reset-game'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 
 const DashboardSheet = () => {
   const handleNewTry = useBoundStore((state) => state.handleNewTry)

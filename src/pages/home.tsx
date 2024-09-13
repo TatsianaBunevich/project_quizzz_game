@@ -1,7 +1,7 @@
 import useBoundStore from 'store/boundStore'
 import { cn } from '@/lib/utils'
 import MainLayout from 'layouts/main-layout'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 

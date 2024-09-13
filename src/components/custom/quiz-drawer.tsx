@@ -11,7 +11,7 @@ import {
 import { Pause, Undo2, Goal, Settings } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 
 const QuizDrawer = ({ lastQuizItem }: { lastQuizItem: number }) => {
   const handleNextButton = useBoundStore((state) => state.handleNextButton)

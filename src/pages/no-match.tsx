@@ -2,7 +2,7 @@ import useResetGame from 'hooks/use-reset-game'
 import { useRouteError, Link } from 'react-router-dom'
 import MainLayout from 'layouts/main-layout'
 import { Button } from 'ui/button'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 
 const NoMatchPage = () => {
   const error = useRouteError()

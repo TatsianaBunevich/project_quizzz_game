@@ -10,7 +10,7 @@ import SettingsBadges from 'custom/settings-badges'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 import useResetGame from 'hooks/use-reset-game'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 
 const SettingsPage = () => {
   const queryClient = useQueryClient()

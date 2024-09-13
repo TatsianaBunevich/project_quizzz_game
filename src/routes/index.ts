@@ -1,4 +1,4 @@
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 import DashboardLayout from 'layouts/dashboard-layout'
 import HomePage from 'pages/home'
 import SettingsPage from 'pages/settings'

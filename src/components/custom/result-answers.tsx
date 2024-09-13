@@ -17,7 +17,7 @@ import { Button } from 'ui/button'
 import DisplayedAnswer from 'custom/displayed-answer'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { QuizItemType } from '@/types'
-import PathConstants from 'routes/pathConstants'
+import PathConstants from 'routes/constants'
 
 interface ResultAnswersProps {
   quizItem: QuizItemType
