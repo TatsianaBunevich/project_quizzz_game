@@ -4,7 +4,7 @@ import HomePage from 'pages/home'
 import SettingsPage from 'pages/settings'
 import QuizPage from 'pages/quiz'
 import ResultPage from 'pages/dashboard'
-import AnswersPage from 'pages/AnswersPage/AnswersPage'
+import AnswersPage from 'pages/dashboard/answers'
 import ScoreboardPage from 'pages/ScoreboardPage/ScoreboardPage'
 import NoMatchPage from 'pages/no-match'
 

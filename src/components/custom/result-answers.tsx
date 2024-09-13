@@ -35,7 +35,7 @@ const ResultAnswers = ({
   length,
 }: ResultAnswersProps) => {
   return (
-    <Card className="flex flex-1 flex-col justify-between md:h-[calc(100vh-72px-2rem)]">
+    <Card className="@container flex flex-1 flex-col justify-between md:h-[calc(100vh-72px-2rem)]">
       <CardHeader className="space-y-6 border-b bg-muted/50">
         <div className="flex flex-row flex-nowrap justify-between gap-4">
           <span className="h-10 w-10 rounded-full bg-accent-foreground text-center font-bold leading-10 text-accent">
@@ -51,9 +51,9 @@ const ResultAnswers = ({
         <CardTitle
           dangerouslySetInnerHTML={{ __html: quizItem.question }}
           className="text-wrap text-lg"
-        ></CardTitle>
+        />
       </CardHeader>
-      <CardContent className="mb-auto grid gap-4 pt-6 [counter-reset:els]">
+      <CardContent className="@lg:grid-cols-2 mb-auto grid auto-rows-fr gap-4 pt-6 [counter-reset:els]">
         {quizItem.answers.map((a) => (
           <Button
             key={a.answer}
@@ -74,7 +74,6 @@ const ResultAnswers = ({
         {!quizItem.answers.some((item) => item.isSelected) && (
           <Badge variant="outline">Unanswered</Badge>
         )}
-
         <Pagination className="ml-auto mr-0 w-auto">
           <PaginationContent>
             <PaginationItem>
