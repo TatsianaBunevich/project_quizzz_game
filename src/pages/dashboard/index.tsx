@@ -2,7 +2,7 @@ import { useState } from 'react'
 import useBoundStore from 'store/bound-store'
 import ResultData from 'custom/result-data'
 import ResultScoreboard from 'custom/result-scoreboard'
-import ResultAnswers from 'custom/result-answers'
+import ResultAnswer from 'custom/result-answer'
 
 const ResultPage = () => {
   const goal = useBoundStore((state) => state.quizItems.length)
@@ -23,7 +23,7 @@ const ResultPage = () => {
         <ResultData score={scores[scores.length - 1]} goal={goal} />
         <ResultScoreboard scores={scores} />
       </div>
-      <ResultAnswers
+      <ResultAnswer
         quizItem={quizItems[quizItemId]}
         quizItemId={quizItemId}
         handlePrevClick={handlePrevClick}

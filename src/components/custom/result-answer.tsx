@@ -19,7 +19,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { QuizItemType } from '@/types'
 import PathConstants from 'routes/constants'
 
-interface ResultAnswersProps {
+interface ResultAnswerProps {
   quizItem: QuizItemType
   quizItemId: number
   handlePrevClick: () => void
@@ -27,15 +27,15 @@ interface ResultAnswersProps {
   length: number
 }
 
-const ResultAnswers = ({
+const ResultAnswer = ({
   quizItem,
   quizItemId,
   handlePrevClick,
   handleNextClick,
   length,
-}: ResultAnswersProps) => {
+}: ResultAnswerProps) => {
   return (
-    <Card className="@container flex flex-1 flex-col justify-between md:h-[calc(100vh-72px-2rem)]">
+    <Card className="flex flex-1 flex-col justify-between @container md:h-[calc(100vh-72px-2rem)]">
       <CardHeader className="space-y-6 border-b bg-muted/50">
         <div className="flex flex-row flex-nowrap justify-between gap-4">
           <span className="h-10 w-10 rounded-full bg-accent-foreground text-center font-bold leading-10 text-accent">
@@ -53,7 +53,7 @@ const ResultAnswers = ({
           className="text-wrap text-lg"
         />
       </CardHeader>
-      <CardContent className="@lg:grid-cols-2 mb-auto grid auto-rows-fr gap-4 pt-6 [counter-reset:els]">
+      <CardContent className="mb-auto grid auto-rows-fr gap-4 pt-6 [counter-reset:els] @lg:grid-cols-2">
         {quizItem.answers.map((a) => (
           <Button
             key={a.answer}
@@ -107,4 +107,4 @@ const ResultAnswers = ({
   )
 }
 
-export default ResultAnswers
+export default ResultAnswer

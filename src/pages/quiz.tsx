@@ -97,13 +97,17 @@ const QuizPage = () => {
                   })}
                 >
                   <Suspense fallback={<QuizSkeleton />}>
-                    <MainLayout.Main className="justify-between">
-                      <div className="flex min-h-full flex-col">
-                        <div className="mb-2 flex items-end justify-between">
+                    <MainLayout.Main className="h-auto justify-between">
+                      <div className="relative md:h-[calc(100vh-2.5rem*2-1rem*4)]">
+                        <div className="absolute inset-x-2 top-2 flex justify-between">
                           <span className="h-10 w-10 rounded-full bg-accent-foreground text-center font-bold leading-10 text-accent">
                             {activeId + 1}
                           </span>
-                          {timer > 0 && <QuizTimer />}
+                          {timer > 0 && (
+                            <span className="z-10 rounded-full bg-accent-foreground px-4 text-center font-bold leading-10 text-accent">
+                              <QuizTimer />
+                            </span>
+                          )}
                         </div>
                         <QuizItem
                           params={createQuestionsUrl(settings)}
@@ -112,9 +116,10 @@ const QuizPage = () => {
                           activeId={activeId}
                           sortQuizItems={sortQuizItems}
                           handleSelectAnswer={handleSelectAnswer}
-                          isTimer={timer ? true : false}
                         />
-                        <QuizDrawer lastQuizItem={lastQuizItem} />
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+                          <QuizDrawer lastQuizItem={lastQuizItem} />
+                        </div>
                       </div>
                     </MainLayout.Main>
                     <MainLayout.Footer>

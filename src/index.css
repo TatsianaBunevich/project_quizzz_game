@@ -72,6 +72,38 @@
 }
 
 @layer components {
+  .item-mask-top {
+    --r: 25px;
+    border-left: var(--r) solid #0000;
+    border-radius: calc(2 * var(--r)) var(--r) 0 0 / var(--r) var(--r) 0 0;
+    mask:
+      radial-gradient(var(--r) at 0 0, #0000 98%, #000 101%) 0 100% / var(--r)
+        var(--r) no-repeat,
+      conic-gradient(#000 0 0) padding-box;
+  }
+  .item-mask-bottom {
+    --r: 25px;
+    --s: 30px;
+    --a: 20deg;
+    --_m: 100% / calc(2 * var(--r)) var(--r) no-repeat
+      radial-gradient(50% 100% at top, #000 calc(100% - 1px), #0000);
+    --_d: (var(--s) + var(--r)) * cos(var(--a));
+    mask:
+      calc(50% + var(--_d)) var(--_m),
+      calc(50% - var(--_d)) var(--_m),
+      radial-gradient(
+          var(--s) at 50% calc(100% + sin(var(--a)) * var(--s)),
+          #0000 100%,
+          #000 calc(100% + 1px)
+        )
+        0 calc(var(--r) * (sin(var(--a)) - 1)) no-repeat,
+      linear-gradient(
+        90deg,
+        #000 calc(50% - var(--_d)),
+        #0000 0 calc(50% + var(--_d)),
+        #000 0
+      );
+  }
   .item-answer {
     @apply relative !h-full overflow-hidden !whitespace-normal !p-4 !pl-12 before:absolute before:right-[calc(100%-2.7rem)] before:top-1/2 before:aspect-square before:h-[130%] before:w-auto before:-translate-y-1/2 before:rounded-full before:border before:border-inherit after:absolute after:left-4 after:content-[counter(els,_upper-alpha)] after:[counter-increment:els];
   }

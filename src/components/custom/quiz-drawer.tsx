@@ -45,9 +45,8 @@ const QuizDrawer = ({ lastQuizItem }: { lastQuizItem: number }) => {
     <Drawer onClose={handleCloseDrawer}>
       <DrawerTrigger asChild>
         <Button
-          size="icon"
           onClick={handleOpenDrawer}
-          className="mt-2 self-end rounded-full px-2"
+          className="h-12 w-12 rounded-full p-0"
         >
           <Pause />
         </Button>
