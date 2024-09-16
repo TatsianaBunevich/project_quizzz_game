@@ -4,7 +4,7 @@ import PathConstants from 'routes/constants'
 import DashboardSidebar from 'custom/dashboard-sidebar'
 import DashboardSheet from 'custom/dashboard-sheet'
 import { ModeToggle } from 'ui/mode-toggle'
-import { TooltipProvider } from '@/components/ui/tooltip'
+import { AuroraBackground } from 'ui/aurora-background'
 
 const DashboardLayout = () => {
   const isPlay = useBoundStore((state) => state.isPlay)
@@ -16,8 +16,8 @@ const DashboardLayout = () => {
     return <Navigate to={PathConstants.SETTINGS} replace={true} />
   } else {
     return (
-      <TooltipProvider>
-        <div className="flex min-h-screen flex-col justify-between bg-muted/40">
+      <AuroraBackground>
+        <div className="relative flex min-h-screen w-screen flex-col justify-between bg-muted/40">
           <DashboardSidebar />
           <div className="flex w-full flex-col gap-4 sm:pl-16">
             <header className="sticky top-0 z-30 flex justify-between p-4 backdrop-blur-xl sm:justify-end">
@@ -29,7 +29,7 @@ const DashboardLayout = () => {
             </main>
           </div>
         </div>
-      </TooltipProvider>
+      </AuroraBackground>
     )
   }
 }
