@@ -1,3 +1,4 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
 const {
   default: flattenColorPalette,
 } = require('tailwindcss/lib/util/flattenColorPalette')
@@ -18,6 +19,10 @@ export default {
   darkMode: ['class'],
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    fontFamily: {
+      mozaicHUM: ['Mozaic HUM', ...defaultTheme.fontFamily.sans],
+      qalisso: ['Qalisso', ...defaultTheme.fontFamily.serif],
+    },
     container: {
       center: true,
       padding: '1rem',

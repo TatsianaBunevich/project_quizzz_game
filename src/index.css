@@ -1,3 +1,4 @@
+@import './assets/typography.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -68,6 +69,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    @apply antialiased;
+    @apply font-mozaicHUM;
   }
 }
 
