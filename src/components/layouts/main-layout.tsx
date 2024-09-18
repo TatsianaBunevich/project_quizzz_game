@@ -10,7 +10,7 @@ interface FooterProps extends React.ComponentProps<'footer'> {
 }
 
 const MainLayout = ({ children }: React.ComponentProps<'div'>) => (
-  <div className="relative flex h-screen w-screen flex-col justify-between overflow-hidden">
+  <div className="relative flex h-screen flex-col justify-between overflow-hidden">
     {children}
   </div>
 )
@@ -24,9 +24,18 @@ const Header = ({ isFixed }: { isFixed?: boolean }) => {
         'fixed top-0 w-full': isFixed,
       })}
     >
-      <Button variant="link" asChild onClick={() => resetGame()}>
+      <Button
+        asChild
+        variant="ghost"
+        size="icon"
+        onClick={() => resetGame()}
+        className="rounded-full"
+      >
         <Link to={PathConstants.HOME}>
-          <span>QG</span>
+          <span className="text-md font-qalisso font-bold">
+            <span className="relative bottom-0.5 left-0.5">Q</span>
+            <span className="relative right-0.5 top-0.5">G</span>
+          </span>
           <span className="sr-only">Quizzz Game</span>
         </Link>
       </Button>

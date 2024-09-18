@@ -15,7 +15,7 @@ const DashboardLayout = () => {
     return <Navigate to={PathConstants.SETTINGS} replace={true} />
   } else {
     return (
-      <div className="relative flex min-h-screen w-screen flex-col justify-between bg-muted/40">
+      <div className="relative flex min-h-screen flex-col justify-between bg-muted/40">
         <DashboardSidebar />
         <div className="flex w-full flex-col gap-4 sm:pl-16">
           <header className="sticky top-0 z-30 flex justify-between p-4 backdrop-blur-xl sm:justify-end">

@@ -37,13 +37,17 @@ const DashboardSidebar = () => {
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-16 flex-col justify-between border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-2 px-2 pt-4 md:gap-4">
           <Button
-            size="icon"
             asChild
+            variant="ghost"
+            size="icon"
             className="rounded-full"
             onClick={() => resetGame()}
           >
             <Link to={PathConstants.HOME}>
-              <span>QG</span>
+              <span className="text-md font-qalisso font-bold">
+                <span className="relative bottom-0.5 left-0.5">Q</span>
+                <span className="relative right-0.5 top-0.5">G</span>
+              </span>
               <span className="sr-only">Quizzz Game</span>
             </Link>
           </Button>

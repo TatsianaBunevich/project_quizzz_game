@@ -53,7 +53,11 @@ const DashboardSheet = () => {
   return (
     <Sheet open={status} onOpenChange={(val) => setStatus(val)}>
       <SheetTrigger asChild>
-        <Button size="icon" variant="outline" className="sm:hidden">
+        <Button
+          size="icon"
+          variant="outline"
+          className="rounded-full border-none sm:hidden"
+        >
           <PanelLeft className="h-5 w-5" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
@@ -64,13 +68,17 @@ const DashboardSheet = () => {
             <SheetHeader className="text-left">
               <SheetTitle>
                 <Button
-                  size="icon"
                   asChild
+                  variant="ghost"
+                  size="icon"
                   className="rounded-full"
                   onClick={() => resetGame()}
                 >
                   <Link to={PathConstants.HOME}>
-                    <span>QG</span>
+                    <span className="text-md font-qalisso font-bold">
+                      <span className="relative bottom-0.5 left-0.5">Q</span>
+                      <span className="relative right-0.5 top-0.5">G</span>
+                    </span>
                     <span className="sr-only">Quizzz Game</span>
                   </Link>
                 </Button>
