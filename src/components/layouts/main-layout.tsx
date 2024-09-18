@@ -2,7 +2,6 @@ import { cn } from '@/lib/utils'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 import { ModeToggle } from 'ui/mode-toggle'
-import { AuroraBackground } from 'ui/aurora-background'
 import useResetGame from 'hooks/use-reset-game'
 import PathConstants from 'routes/constants'
 
@@ -11,11 +10,9 @@ interface FooterProps extends React.ComponentProps<'footer'> {
 }
 
 const MainLayout = ({ children }: React.ComponentProps<'div'>) => (
-  <AuroraBackground className="overflow-hidden">
-    <div className="relative flex h-screen w-screen flex-col justify-between">
-      {children}
-    </div>
-  </AuroraBackground>
+  <div className="relative flex h-screen w-screen flex-col justify-between overflow-hidden">
+    {children}
+  </div>
 )
 
 const Header = ({ isFixed }: { isFixed?: boolean }) => {
