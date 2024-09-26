@@ -8,11 +8,16 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
+    'plugin:@react-three/recommended',
     'prettier',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', '*.config.*'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  plugins: {
+    'react-hooks': reactHooks,
+    'react-refresh': reactRefresh,
+    '@react-three': ReactThree,
+  },
   rules: {
     'react-refresh/only-export-components': [
       'warn',
