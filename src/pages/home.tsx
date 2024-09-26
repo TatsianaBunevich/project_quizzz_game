@@ -4,9 +4,10 @@ import PathConstants from 'routes/constants'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 import { motion } from 'framer-motion'
-import { Suspense } from 'react'
+import { Suspense, lazy } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Scene, Rig, Env } from 'custom/home-scene'
+const Scene = lazy(() => import('custom/home-scene'))
+import { Rig, Env } from 'custom/home-scene'
 
 const Text = () => {
   const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay)
@@ -75,7 +76,7 @@ const HomePage = () => {
       <Text />
       <Canvas
         camera={{
-          position: [25, 0, 50],
+          position: [5, 0, 10],
         }}
         shadows
       >

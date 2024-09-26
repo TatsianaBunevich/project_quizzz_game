@@ -2,18 +2,35 @@ import * as THREE from 'three'
 import { Vector3 } from 'three'
 import { Perf } from 'r3f-perf'
 import { useRef, useMemo } from 'react'
-import { useFrame } from '@react-three/fiber'
-import { Environment, Clouds, Cloud, CameraControls } from '@react-three/drei'
+import { useFrame, extend, ReactThreeFiber } from '@react-three/fiber'
+import {
+  Environment,
+  Clouds,
+  Cloud,
+  CameraControls,
+  Effects,
+} from '@react-three/drei'
 import { Physics, useSphere } from '@react-three/cannon'
 import type { InstancedMesh } from 'three'
 import { Vec3 } from 'cannon-es'
-import { EffectComposer, Bloom } from '@react-three/postprocessing'
+import { UnrealBloomPass } from 'three-stdlib'
 import { useTheme } from '@/components/providers/theme-provider'
+
+extend({ UnrealBloomPass })
+
+declare module '@react-three/fiber' {
+  interface ThreeElements {
+    unrealBloomPass: ReactThreeFiber.Object3DNode<
+      UnrealBloomPass,
+      typeof UnrealBloomPass
+    >
+  }
+}
 
 export const Rig = () => {
   const vec = new Vector3()
   return useFrame(({ camera, pointer }) => {
-    vec.set(pointer.x * 30, pointer.y * 30, camera.position.z)
+    vec.set(pointer.x * 0.5, pointer.y * 0.25, camera.position.z)
     camera.position.lerp(vec, 0.025)
     camera.lookAt(0, 0, 0)
   })
@@ -42,22 +59,12 @@ const CloudsGroup = () => {
     >
       <Cloud
         speed={0.1}
-        seed={3}
-        scale={3}
-        volume={10}
-        color="lightpink"
-        fade={70}
-        position={[0, 5, 0]}
+        volume={1}
+        color="lavender"
+        segments={5}
+        position={[0, 3, 0]}
       />
-      <Cloud
-        speed={0.1}
-        seed={1}
-        scale={5}
-        volume={10}
-        color="lightpink"
-        fade={100}
-        position={[0, -10, 0]}
-      />
+      <Cloud speed={0.1} color="pink" />
     </Clouds>
   )
 }
@@ -73,15 +80,15 @@ const Bubbles = () => {
       mass: 1,
       velocity: [-10, 0, -10],
       position: [
-        35 + Math.random() - 0.5,
-        -15 + Math.random() - 0.5,
-        25 + Math.random() - 0.5,
+        7 + Math.random() - 0.5,
+        -2.5 + Math.random() - 0.5,
+        7 + Math.random() - 0.5,
       ],
     }),
     useRef<InstancedMesh>(null)
   )
 
-  const windForce = useMemo(() => new Vec3(-1, 0, -1).scale(10), [])
+  const windForce = useMemo(() => new Vec3(-1, 0, -1).scale(5), [])
 
   useFrame(({ clock }) => {
     const time = Math.sin(clock.getElapsedTime()) * 50
@@ -90,9 +97,9 @@ const Bubbles = () => {
       const id = (count.current += 1) % number
       at(id).velocity.set(-10, 0, -10)
       at(id).position.set(
-        35 + Math.random() - 0.5,
-        -25 + Math.random() - 0.5,
-        25 + Math.random() - 0.5
+        7 + Math.random() - 0.5,
+        -2.5 + Math.random() - 0.5,
+        7 + Math.random() - 0.5
       )
       at(id).applyForce(windForce.toArray(), [0, 0, 0])
     }
@@ -114,19 +121,19 @@ const Bubbles = () => {
 }
 
 const Ring = () => {
+  const glow = new THREE.MeshBasicMaterial({
+    color: new THREE.Color(7, 1, 2),
+    toneMapped: false,
+  })
+
   return (
-    <mesh rotation={[0, Math.PI / 4, 0]}>
-      <torusGeometry args={[30, 1, 2, 100]} />
-      <meshStandardMaterial
-        emissive="hotpink"
-        emissiveIntensity={4}
-        toneMapped={false}
-      />
+    <mesh rotation-y={Math.PI / 4} material={glow} position={[0, 1.5, 0]}>
+      <torusGeometry args={[5, 0.1, 5, 100]} />
     </mesh>
   )
 }
 
-export const Scene = () => {
+const Scene = () => {
   return (
     <>
       <Ring />
@@ -134,9 +141,9 @@ export const Scene = () => {
       <Physics gravity={[0, 1, 0]}>
         <Bubbles />
       </Physics>
-      <EffectComposer resolutionScale={0.5}>
-        <Bloom luminanceThreshold={0.1} luminanceSmoothing={0.01} />
-      </EffectComposer>
+      <Effects disableGamma>
+        <unrealBloomPass threshold={0.1} strength={0.2} radius={0.1} />
+      </Effects>
       <CameraControls />
       <axesHelper args={[30]} />
       <gridHelper args={[30]} />
@@ -144,3 +151,5 @@ export const Scene = () => {
     </>
   )
 }
+
+export default Scene
