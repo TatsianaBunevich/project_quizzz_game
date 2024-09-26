@@ -78,7 +78,6 @@ const HomePage = () => {
         camera={{
           position: [5, 0, 10],
         }}
-        shadows
       >
         <Suspense fallback={null}>
           <Scene />
