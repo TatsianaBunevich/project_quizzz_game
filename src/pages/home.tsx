@@ -76,7 +76,7 @@ const HomePage = () => {
       <Text />
       <Canvas
         camera={{
-          position: [5, 0, 10],
+          position: [0, 0, 12],
         }}
       >
         <Suspense fallback={null}>
