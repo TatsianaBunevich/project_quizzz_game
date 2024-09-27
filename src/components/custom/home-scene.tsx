@@ -15,6 +15,7 @@ import { Physics, useSphere, Triplet } from '@react-three/cannon'
 import type { InstancedMesh } from 'three'
 import { Vec3 } from 'cannon-es'
 import { UnrealBloomPass } from 'three-stdlib'
+import { LayerMaterial } from 'lamina'
 import { useTheme } from '@/components/providers/theme-provider'
 
 interface BubblesProps {
@@ -53,16 +54,29 @@ export const Env = () => {
   const { theme } = useTheme()
 
   return (
-    <Environment
-      path="../../../img/"
-      files={
-        theme === 'dark'
-          ? 'kloppenheim_02_puresky_1k.exr'
-          : 'drakensberg_solitary_mountain_puresky_1k.exr'
-      }
-      background
-      environmentIntensity={2}
-    ></Environment>
+    <>
+      <Environment
+        path="../../../img/"
+        files={
+          theme === 'dark'
+            ? 'kloppenheim_02_puresky_1k.exr'
+            : 'kloofendal_43d_clear_puresky_1k.exr'
+        }
+        background
+        resolution={64}
+      />
+      <mesh scale={100}>
+        <sphereGeometry args={[1, 64, 64]} />
+        <LayerMaterial
+          side={THREE.BackSide}
+          alpha={1}
+          color="indigo"
+          lighting="physical"
+          transmission={1}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+    </>
   )
 }
 
@@ -122,8 +136,8 @@ const Bubbles = ({ number, size, position }: BubblesProps) => {
     >
       <sphereGeometry args={[size]} />
       <meshPhysicalMaterial
+        specularColor="red"
         reflectivity={0.5}
-        metalness={0.05}
         roughness={0.1}
         clearcoat={1}
         transmission={1}
@@ -167,6 +181,8 @@ const Scene = () => {
       <axesHelper args={[30]} />
       <gridHelper args={[30]} />
       <Perf position={'top-left'} />
+      <directionalLight position={[-10, -10, -10]} intensity={10} color="red" />
+      <directionalLight position={[10, -10, 10]} intensity={10} color="red" />
     </>
   )
 }
