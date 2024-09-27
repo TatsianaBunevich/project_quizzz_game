@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Vector3, TorusGeometry } from 'three'
+import { Vector3 } from 'three'
 import { Perf } from 'r3f-perf'
 import { useRef, useMemo } from 'react'
 import { useFrame, extend, ReactThreeFiber } from '@react-three/fiber'
@@ -9,6 +9,7 @@ import {
   Cloud,
   CameraControls,
   Effects,
+  Float,
 } from '@react-three/drei'
 import { Physics, useSphere, Triplet } from '@react-three/cannon'
 import type { InstancedMesh } from 'three'
@@ -53,11 +54,15 @@ export const Env = () => {
 
   return (
     <Environment
-      preset={theme === 'dark' ? 'night' : 'dawn'}
+      path="../../../img/"
+      files={
+        theme === 'dark'
+          ? 'kloppenheim_02_puresky_1k.exr'
+          : 'drakensberg_solitary_mountain_puresky_1k.exr'
+      }
       background
-      resolution={256}
-      backgroundBlurriness={0.6}
-    />
+      environmentIntensity={2}
+    ></Environment>
   )
 }
 
@@ -65,26 +70,30 @@ const CloudsGroup = () => {
   return (
     <Clouds material={THREE.MeshBasicMaterial} rotation-y={Math.PI / 4}>
       <Cloud
-        speed={0.1}
+        speed={0.3}
         volume={1}
         color="lavender"
         segments={5}
         position={[0, 3, 0]}
       />
-      <Cloud speed={0.1} color="pink" />
+      <Cloud speed={0.3} color="pink" fade={20} />
     </Clouds>
   )
 }
 
 const Bubbles = ({ number, size, position }: BubblesProps) => {
   const count = useRef(0)
-  const windForce = useMemo(() => new Vec3(-1, 0, -1).scale(1.5), [])
+  const windForce = useMemo(() => new Vec3(-1, 0, -1).scale(0.5), [])
   const [ref, { at }] = useSphere(
     () => ({
       args: [size],
       mass: 0.01,
       velocity: [-5, 0, -5],
-      position: [Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5],
+      position: [
+        Math.random() * -1 - 0.5,
+        Math.random() - 0.5,
+        Math.random() * -1 - 0.5,
+      ],
     }),
     useRef<InstancedMesh>(null)
   )
@@ -98,9 +107,9 @@ const Bubbles = ({ number, size, position }: BubblesProps) => {
       const id = (count.current += 1) % number
       at(id).velocity.set(-5, 0, -5)
       at(id).position.set(
+        Math.random() * -1 - 0.5,
         Math.random() - 0.5,
-        Math.random() - 0.5,
-        Math.random() - 0.5
+        Math.random() * -1 - 0.5
       )
     }
   })
@@ -140,17 +149,19 @@ const Ring = ({ args, position, rotation }: RingProps) => {
 const Scene = () => {
   return (
     <>
-      <Ring
-        args={[5, 0.05, 5, 100]}
-        position={[0, 1.5, 0]}
-        rotation={[0, Math.PI / 4, 0]}
-      />
-      <CloudsGroup />
+      <Float speed={3} rotationIntensity={0} floatIntensity={5}>
+        <Ring
+          args={[5, 0.05, 5, 100]}
+          position={[0, 1.5, 0]}
+          rotation={[0, Math.PI / 4, 0]}
+        />
+        <CloudsGroup />
+      </Float>
       <Physics gravity={[0, 1, 0]}>
-        <Bubbles number={100} size={0.5} position={[7, -4, 7]} />
+        <Bubbles number={50} size={0.5} position={[7, -4, 7]} />
       </Physics>
       <Effects disableGamma>
-        <unrealBloomPass threshold={0.1} strength={0.2} radius={0.1} />
+        <unrealBloomPass threshold={1} strength={0.2} radius={0.1} />
       </Effects>
       <CameraControls />
       <axesHelper args={[30]} />
