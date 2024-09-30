@@ -26,7 +26,6 @@ interface BubblesProps {
 
 interface RingProps {
   args: [number?, number?, number?, number?, number?]
-  position: Triplet
   rotation: Triplet
 }
 
@@ -88,9 +87,9 @@ const CloudsGroup = () => {
         volume={1}
         color="lavender"
         segments={5}
-        position={[0, 3, 0]}
+        position={[0, 2, 0]}
       />
-      <Cloud speed={0.3} color="pink" fade={20} />
+      <Cloud speed={0.3} color="pink" position={[0, -1, 0]} fade={20} />
     </Clouds>
   )
 }
@@ -147,9 +146,9 @@ const Bubbles = ({ number, size, position }: BubblesProps) => {
   )
 }
 
-const Ring = ({ args, position, rotation }: RingProps) => {
+const Ring = ({ args, rotation }: RingProps) => {
   return (
-    <mesh position={position} rotation={rotation}>
+    <mesh rotation={rotation}>
       <torusGeometry args={args} />
       <meshPhysicalMaterial
         emissive={new THREE.Color(7, 1, 2)}
@@ -164,11 +163,7 @@ const Scene = () => {
   return (
     <>
       <Float speed={3} rotationIntensity={0} floatIntensity={5}>
-        <Ring
-          args={[5, 0.05, 5, 100]}
-          position={[0, 1.5, 0]}
-          rotation={[0, Math.PI / 4, 0]}
-        />
+        <Ring args={[5, 0.05, 5, 100]} rotation={[0, Math.PI / 4, 0]} />
         <CloudsGroup />
       </Float>
       <Physics gravity={[0, 1, 0]}>
@@ -181,8 +176,8 @@ const Scene = () => {
       <axesHelper args={[30]} />
       <gridHelper args={[30]} />
       <Perf position={'top-left'} />
-      <directionalLight position={[-10, -10, -10]} intensity={10} color="red" />
-      <directionalLight position={[10, -10, 10]} intensity={10} color="red" />
+      <directionalLight position={[-10, -10, -10]} color="hotpink" />
+      <directionalLight position={[10, -10, 10]} intensity={10} color="pink" />
     </>
   )
 }
