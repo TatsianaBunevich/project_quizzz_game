@@ -23,12 +23,21 @@ const SettingsPage = () => {
 
   queryClient.removeQueries({ queryKey: ['questions'] })
 
+  const SettingsFallback = () => {
+    return (
+      <div className="flex h-screen">
+        <div className="m-auto">
+          <div className="font-qalisso text-3xl font-bold">QG</div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <MainLayout>
       <MainLayout.Header />
       <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
-        {/* TODO: add fallback */}
-        <Suspense fallback="">
+        <Suspense fallback=<SettingsFallback />>
           <MainLayout.Main className="justify-between">
             <SettingsTabs
               settings={settings}
