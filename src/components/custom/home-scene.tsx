@@ -32,7 +32,7 @@ declare module '@react-three/fiber' {
   }
 }
 
-export const Rig = () => {
+const Rig = () => {
   const vec = new Vector3()
   return useFrame(({ camera, pointer }) => {
     vec.set(pointer.x * 1.5, pointer.y * 1.5, camera.position.z)
@@ -41,7 +41,7 @@ export const Rig = () => {
   })
 }
 
-export const Env = () => {
+const Env = () => {
   const { theme } = useTheme()
 
   return (
@@ -170,4 +170,14 @@ const Scene = () => {
   )
 }
 
-export default Scene
+const HomeScene = () => {
+  return (
+    <>
+      <Scene />
+      <Rig />
+      <Env />
+    </>
+  )
+}
+
+export default HomeScene

@@ -6,23 +6,20 @@ import { Button } from 'ui/button'
 import { motion } from 'framer-motion'
 import { Suspense, lazy } from 'react'
 import { Canvas } from '@react-three/fiber'
-const Scene = lazy(() => import('custom/home-scene'))
-import { Rig, Env } from 'custom/home-scene'
+const HomeScene = lazy(() => import('custom/home-scene'))
 
 const HomePage = () => {
   const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay)
 
   return (
     <MainLayout>
-      <Suspense fallback={<>Loading...</>}>
+      <Suspense fallback={null}>
         <Canvas
           camera={{
             position: [0, 0, 12],
           }}
         >
-          <Scene />
-          <Rig />
-          <Env />
+          <HomeScene />
         </Canvas>
         <MainLayout.Header isFixed />
         <div className="absolute top-1/2 w-full -translate-y-1/2">
