@@ -137,7 +137,7 @@ const SettingsTabs = ({
 
   return (
     <Tabs defaultValue="category">
-      <TabsList className="w-full items-stretch [&>*>span]:ml-2 max-sm:[&>*>span]:hidden [&>*]:w-full">
+      <TabsList className="w-full items-stretch [&>*>span]:ml-2 max-sm:[&>*>span]:hidden [&>*]:w-full [&>*]:rounded-full">
         <TabsTrigger value="category">
           <Tags />
           <span>Category</span>

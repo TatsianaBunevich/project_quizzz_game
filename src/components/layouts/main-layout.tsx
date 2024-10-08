@@ -9,8 +9,8 @@ interface FooterProps extends React.ComponentProps<'footer'> {
   isAbsolute?: boolean
 }
 
-const MainLayout = ({ children }: React.ComponentProps<'div'>) => (
-  <div className="relative flex h-screen flex-col justify-between overflow-hidden">
+const MainLayout = ({ children, className }: React.ComponentProps<'div'>) => (
+  <div className={cn('relative flex flex-col justify-between', className)}>
     {children}
   </div>
 )
