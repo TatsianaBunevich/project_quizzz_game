@@ -8,12 +8,26 @@ import { Suspense, lazy } from 'react'
 import { Canvas } from '@react-three/fiber'
 const HomeScene = lazy(() => import('custom/home-scene'))
 
+const HomeFallback = () => {
+  return (
+    <div className="flex h-screen">
+      <div className="m-auto">
+        <img
+          src="../../../public/img/quiz.webp"
+          alt="Quizzz Game"
+          className="h-24 w-24"
+        />
+      </div>
+    </div>
+  )
+}
+
 const HomePage = () => {
   const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay)
 
   return (
-    <MainLayout>
-      <Suspense fallback={null}>
+    <MainLayout className="h-screen overflow-hidden">
+      <Suspense fallback=<HomeFallback />>
         <Canvas
           camera={{
             position: [0, 0, 12],
