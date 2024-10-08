@@ -61,20 +61,26 @@ const QuizDrawer = ({ lastQuizItem }: { lastQuizItem: number }) => {
             <Button
               variant="link"
               onClick={handleCloseDrawer}
-              className="hover:bg-accent"
+              className="hover:bg-accent hover:no-underline"
             >
               <Undo2 />
               <span>Back to the game</span>
             </Button>
           </DrawerClose>
           <Button variant="link" asChild onClick={handleCheckAnswers}>
-            <Link to={PathConstants.RESULT} className="hover:bg-accent">
+            <Link
+              to={PathConstants.RESULT}
+              className="hover:bg-accent hover:no-underline"
+            >
               <Goal />
               <span>See the result</span>
             </Link>
           </Button>
           <Button variant="link" asChild onClick={handleOpenSettings}>
-            <Link to={PathConstants.SETTINGS} className="hover:bg-accent">
+            <Link
+              to={PathConstants.SETTINGS}
+              className="hover:bg-accent hover:no-underline"
+            >
               <Settings />
               <span>Go to settings</span>
             </Link>

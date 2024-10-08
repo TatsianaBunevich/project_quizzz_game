@@ -96,6 +96,7 @@ const QuizPage = () => {
                     'flex h-full flex-col': !isCountdown,
                   })}
                 >
+                  <QuizCountdown />
                   <Suspense fallback={<QuizSkeleton />}>
                     <MainLayout.Main className="h-auto justify-between">
                       <div className="relative md:h-[calc(100vh-2.5rem*2-1rem*4)]">
@@ -104,7 +105,7 @@ const QuizPage = () => {
                             {activeId + 1}
                           </span>
                           {timer > 0 && (
-                            <span className="z-10 rounded-full bg-accent-foreground px-4 text-center font-bold leading-10 text-accent">
+                            <span className="z-10 rounded-full bg-accent-foreground px-4 text-center font-qalisso font-bold leading-10 text-accent">
                               <QuizTimer />
                             </span>
                           )}
