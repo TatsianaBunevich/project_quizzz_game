@@ -25,7 +25,7 @@ const SettingsPage = () => {
 
   const SettingsFallback = () => {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-[calc(100vh-72px)]">
         <div className="m-auto">
           <div className="font-qalisso text-3xl font-bold">QG</div>
         </div>
@@ -38,7 +38,7 @@ const SettingsPage = () => {
       <MainLayout.Header />
       <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
         <Suspense fallback=<SettingsFallback />>
-          <MainLayout.Main className="justify-between">
+          <MainLayout.Main className="flex flex-1 justify-between">
             <SettingsTabs
               settings={settings}
               updateSettings={updateSettings}
