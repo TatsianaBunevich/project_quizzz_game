@@ -6,6 +6,14 @@
 }
 
 @font-face {
+  font-family: 'Amellia Script';
+  src: url('../../public/fonts/AmelliaScript/AmelliaScript.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Mozaic GEO';
   src: url('../../public/fonts/Mozaic/MozaicGEO-Regular.eot');
   src:

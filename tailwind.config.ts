@@ -22,6 +22,7 @@ export default {
     fontFamily: {
       mozaicHUM: ['Mozaic HUM', ...defaultTheme.fontFamily.sans],
       qalisso: ['Qalisso', ...defaultTheme.fontFamily.serif],
+      amelliaScript: ['Amellia Script', ...defaultTheme.fontFamily.serif],
     },
     container: {
       center: true,
