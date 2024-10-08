@@ -4,16 +4,28 @@ import { Button } from 'ui/button'
 import { ModeToggle } from 'ui/mode-toggle'
 import useResetGame from 'hooks/use-reset-game'
 import PathConstants from 'routes/constants'
+import { useTheme } from '@/components/providers/theme-provider'
 
 interface FooterProps extends React.ComponentProps<'footer'> {
   isAbsolute?: boolean
 }
 
-const MainLayout = ({ children, className }: React.ComponentProps<'div'>) => (
-  <div className={cn('relative flex flex-col justify-between', className)}>
-    {children}
-  </div>
-)
+const MainLayout = ({ children, className }: React.ComponentProps<'div'>) => {
+  const { theme } = useTheme()
+  return (
+    <div
+      className={cn(
+        'relative flex min-h-screen flex-col justify-between bg-cover bg-center bg-no-repeat',
+        theme === 'dark'
+          ? 'bg-[url("../../../public/img/dark-sky.jpg")]'
+          : 'bg-[url("../../../public/img/light-sky.jpg")]',
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+}
 
 const Header = ({ isFixed }: { isFixed?: boolean }) => {
   const resetGame = useResetGame()
