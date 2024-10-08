@@ -1,16 +1,8 @@
 import * as THREE from 'three'
 import { Vector3 } from 'three'
-import { Perf } from 'r3f-perf'
 import { useRef, useMemo } from 'react'
 import { useFrame, extend, ReactThreeFiber } from '@react-three/fiber'
-import {
-  Environment,
-  Clouds,
-  Cloud,
-  CameraControls,
-  Effects,
-  Float,
-} from '@react-three/drei'
+import { Environment, Clouds, Cloud, Effects, Float } from '@react-three/drei'
 import { Physics, useSphere, Triplet } from '@react-three/cannon'
 import type { InstancedMesh } from 'three'
 import { Vec3 } from 'cannon-es'
@@ -172,10 +164,6 @@ const Scene = () => {
       <Effects disableGamma>
         <unrealBloomPass threshold={1} strength={0.2} radius={0.1} />
       </Effects>
-      <CameraControls />
-      <axesHelper args={[30]} />
-      <gridHelper args={[30]} />
-      <Perf position={'top-left'} />
       <directionalLight position={[-10, -10, -10]} color="hotpink" />
       <directionalLight position={[10, -10, 10]} intensity={10} color="pink" />
     </>
