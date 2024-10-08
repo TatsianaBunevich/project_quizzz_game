@@ -100,7 +100,7 @@ const QuizPage = () => {
                     <MainLayout.Main className="h-auto justify-between">
                       <div className="relative md:h-[calc(100vh-2.5rem*2-1rem*4)]">
                         <div className="absolute inset-x-2 top-2 flex justify-between">
-                          <span className="h-10 w-10 rounded-full bg-accent-foreground text-center font-bold leading-10 text-accent">
+                          <span className="font-amelliaScript h-10 w-10 rounded-full bg-accent-foreground text-center font-bold leading-10 text-accent">
                             {activeId + 1}
                           </span>
                           {timer > 0 && (

@@ -36,14 +36,14 @@ const QuizItem = ({
   return (
     <>
       <div className="item-mask-top ml-8 h-14 w-[calc(100%-2rem)] bg-muted/50" />
-      <Card className="mb-6 flex flex-col overflow-hidden rounded-3xl rounded-se-none border-0 shadow-none md:h-[calc(100%-3.5rem-1.5rem)]">
+      <Card className="mb-6 flex flex-col overflow-hidden rounded-3xl rounded-se-none border-0 bg-transparent shadow-none md:h-[calc(100%-3.5rem-1.5rem)]">
         <CardHeader className="border-b bg-muted/50">
           <CardTitle
             dangerouslySetInnerHTML={{ __html: quizItem.question }}
             className="text-wrap"
           />
         </CardHeader>
-        <CardContent className="flex-1 border-x">
+        <CardContent className="flex-1 border-x bg-card">
           <div className="grid auto-rows-fr gap-4 pt-6 [counter-reset:els] sm:grid-cols-2">
             {quizItem.answers.map((a) => (
               <Button
