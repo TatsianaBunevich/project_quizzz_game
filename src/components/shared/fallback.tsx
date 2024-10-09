@@ -15,7 +15,9 @@ const Fallback = ({ error, resetErrorBoundary }: FallbackProps) => {
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>{error.message}</AlertDescription>
       </Alert>
-      <Button onClick={() => resetErrorBoundary()}>Try again</Button>
+      <Button variant="colorful" onClick={() => resetErrorBoundary()}>
+        Try again
+      </Button>
     </main>
   )
 }

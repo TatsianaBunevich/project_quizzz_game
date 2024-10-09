@@ -128,6 +128,7 @@ const QuizPage = () => {
                         <PaginationContent className="w-full justify-center gap-4 [&>*>*]:w-full [&>*]:w-full md:[&>*]:w-1/5">
                           <PaginationItem>
                             <Button
+                              variant="colorful"
                               onClick={handlePrevButton}
                               disabled={timer > 0 && activeId > 0}
                             >
@@ -144,7 +145,10 @@ const QuizPage = () => {
                             </Button>
                           </PaginationItem>
                           <PaginationItem>
-                            <Button onClick={handleNextButton}>
+                            <Button
+                              variant="colorful"
+                              onClick={handleNextButton}
+                            >
                               <Link
                                 aria-label={
                                   activeLastId ? 'Check' : 'Go to next question'

@@ -47,10 +47,10 @@ const SettingsPage = () => {
             <SettingsBadges settings={settings} />
           </MainLayout.Main>
           <MainLayout.Footer className="[&>*]:w-full md:[&>*]:w-1/5">
-            <Button asChild onClick={addNewScore}>
+            <Button asChild variant="colorful" onClick={addNewScore}>
               <Link to={PathConstants.QUIZ}>Let&apos;s go</Link>
             </Button>
-            <Button asChild onClick={() => resetGame()}>
+            <Button asChild variant="colorful" onClick={() => resetGame()}>
               <Link to={PathConstants.HOME}>Exit</Link>
             </Button>
           </MainLayout.Footer>
