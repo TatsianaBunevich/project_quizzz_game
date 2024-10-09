@@ -96,7 +96,6 @@ const QuizPage = () => {
                     'flex h-full flex-col': !isCountdown,
                   })}
                 >
-                  <QuizCountdown />
                   <Suspense fallback={<QuizSkeleton />}>
                     <MainLayout.Main className="h-auto justify-between">
                       <div className="relative md:h-[calc(100vh-2.5rem*2-1rem*4)]">
