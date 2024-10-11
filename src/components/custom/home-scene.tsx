@@ -47,7 +47,7 @@ const Env = () => {
   return (
     <>
       <Environment
-        path="../../../img/"
+        path="img/"
         files={
           theme === 'dark'
             ? 'kloppenheim_02_puresky_1k.exr'

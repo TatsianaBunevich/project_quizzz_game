@@ -29,6 +29,10 @@ export default {
       padding: '1rem',
     },
     extend: {
+      backgroundImage: {
+        'dark-sky': "url('/img/dark-sky.jpg')",
+        'light-sky': "url('/img/light-sky.jpg')",
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
