@@ -4,9 +4,11 @@ import PathConstants from 'routes/constants'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 import { motion } from 'framer-motion'
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 const HomeScene = lazy(() => import('custom/home-scene'))
+
+type Coordinates = { x: number; y: number }
 
 const HomeFallback = () => {
   return (
@@ -24,10 +26,56 @@ const HomeFallback = () => {
 
 const HomePage = () => {
   const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay)
+  const mouseRef = useRef<Coordinates>({ x: 0, y: 0 })
+  const circleRef = useRef<HTMLDivElement>(null)
+  const delayedMouseRef = useRef<Coordinates>({ x: 0, y: 0 })
+  const frameIdRef = useRef<number | null>(null)
+  const size = 30
+
+  const lerp = (x: number, y: number, a: number) => x * (1 - a) + y * a
+
+  const updateMousePosition = (e: MouseEvent) => {
+    const { clientX, clientY } = e
+
+    mouseRef.current = {
+      x: clientX,
+      y: clientY,
+    }
+  }
+
+  const animateCircle = () => {
+    const { x, y } = delayedMouseRef.current
+
+    delayedMouseRef.current = {
+      x: lerp(x, mouseRef.current.x, 0.1),
+      y: lerp(y, mouseRef.current.y, 0.1),
+    }
+
+    updateCirclePosition(delayedMouseRef.current.x, delayedMouseRef.current.y)
+    frameIdRef.current = window.requestAnimationFrame(animateCircle)
+  }
+
+  const updateCirclePosition = (x: number, y: number) => {
+    if (circleRef.current) {
+      circleRef.current.style.transform = `translate(${x - size / 2}px, ${y - size / 2}px)`
+    }
+  }
+
+  useEffect(() => {
+    animateCircle()
+    window.addEventListener('mousemove', updateMousePosition)
+
+    return () => {
+      window.removeEventListener('mousemove', updateMousePosition)
+      if (frameIdRef.current !== null) {
+        window.cancelAnimationFrame(frameIdRef.current)
+      }
+    }
+  }, [])
 
   return (
-    <MainLayout className="h-screen overflow-hidden">
-      <Suspense fallback=<HomeFallback />>
+    <MainLayout className="h-screen cursor-none overflow-hidden">
+      <Suspense fallback={<HomeFallback />}>
         <Canvas
           camera={{
             position: [0, 0, 12],
@@ -107,7 +155,7 @@ const HomePage = () => {
                     repeat: Infinity,
                     ease: 'linear',
                   }}
-                  className="font-amelliaScript bg-[linear-gradient(to_top,var(--indigo-400),var(--indigo-100),var(--sky-400),var(--fuchsia-400),var(--sky-400),var(--indigo-100),var(--indigo-400))] bg-[length:auto_200%] bg-clip-text text-4xl font-black text-transparent"
+                  className="bg-[linear-gradient(to_top,var(--indigo-400),var(--indigo-100),var(--sky-400),var(--fuchsia-400),var(--sky-400),var(--indigo-100),var(--indigo-400))] bg-[length:auto_200%] bg-clip-text font-amelliaScript text-4xl font-black text-transparent"
                 >
                   contact the creator
                 </motion.div>
@@ -116,6 +164,14 @@ const HomePage = () => {
           </div>
         </MainLayout.Footer>
       </Suspense>
+      <div
+        ref={circleRef}
+        style={{
+          width: size,
+          height: size,
+        }}
+        className="pointer-events-none fixed rounded-full bg-black mix-blend-overlay"
+      />
     </MainLayout>
   )
 }
