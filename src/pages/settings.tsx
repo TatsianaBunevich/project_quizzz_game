@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 import useResetGame from 'hooks/use-reset-game'
 import PathConstants from 'routes/constants'
+import { motion } from 'framer-motion'
 
 const SettingsPage = () => {
   const queryClient = useQueryClient()
@@ -27,7 +28,14 @@ const SettingsPage = () => {
     return (
       <div className="flex h-[calc(100vh-72px)]">
         <div className="m-auto">
-          <div className="font-qalisso text-3xl font-bold">QG</div>
+          <motion.div
+            className="font-qalisso text-3xl font-bold"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            QG
+          </motion.div>
         </div>
       </div>
     )
@@ -37,7 +45,7 @@ const SettingsPage = () => {
     <MainLayout>
       <MainLayout.Header />
       <ErrorBoundary fallbackRender={Fallback} onReset={reset}>
-        <Suspense fallback=<SettingsFallback />>
+        <Suspense fallback={<SettingsFallback />}>
           <MainLayout.Main className="flex flex-1 justify-between">
             <SettingsTabs
               settings={settings}

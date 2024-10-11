@@ -137,7 +137,7 @@ const SettingsTabs = ({
 
   return (
     <Tabs defaultValue="category">
-      <TabsList className="w-full items-stretch [&>*>span]:ml-2 max-sm:[&>*>span]:hidden [&>*]:w-full [&>*]:rounded-full">
+      <TabsList className="w-full items-stretch rounded-full [&>*>span]:ml-2 max-sm:[&>*>span]:hidden [&>*]:w-full [&>*]:rounded-full">
         <TabsTrigger value="category">
           <Tags />
           <span>Category</span>
@@ -160,7 +160,7 @@ const SettingsTabs = ({
         </TabsTrigger>
       </TabsList>
       <TabsContent value="category">
-        <Card>
+        <Card className="rounded-3xl">
           <CardContent className="pt-6">
             <ScrollArea className="max-sm:h-[calc(100vh-72px-40px-0.5rem-51px-1rem-72px-1.5rem*2-1px*2)]">
               <div className="flex flex-wrap gap-2 md:gap-4 [&>*]:flex-auto max-sm:[&>*]:w-full max-sm:[&>*]:leading-4">
@@ -172,21 +172,21 @@ const SettingsTabs = ({
         </Card>
       </TabsContent>
       <TabsContent value="difficulty">
-        <Card>
+        <Card className="rounded-3xl">
           <CardContent className="flex flex-wrap gap-4 pt-6 [&>*]:flex-auto max-sm:[&>*]:w-full">
             {memoizedDifficulty}
           </CardContent>
         </Card>
       </TabsContent>
       <TabsContent value="type">
-        <Card>
+        <Card className="rounded-3xl">
           <CardContent className="flex flex-wrap gap-4 pt-6 [&>*]:flex-auto max-sm:[&>*]:w-full">
             {memoizedType}
           </CardContent>
         </Card>
       </TabsContent>
       <TabsContent value="amount">
-        <Card>
+        <Card className="rounded-3xl">
           <CardHeader>
             <CardDescription>
               Number of Questions: <b>{rangeValue}</b>
@@ -196,7 +196,7 @@ const SettingsTabs = ({
         </Card>
       </TabsContent>
       <TabsContent value="timer">
-        <Card className="relative">
+        <Card className="relative rounded-3xl">
           <CardHeader>
             <CardDescription>
               Timer (per question):{' '}
