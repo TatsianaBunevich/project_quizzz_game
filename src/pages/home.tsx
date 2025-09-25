@@ -4,7 +4,7 @@ import PathConstants from 'routes/constants'
 import { Link } from 'react-router-dom'
 import { Button } from 'ui/button'
 import { motion } from 'framer-motion'
-import { Suspense, lazy, useEffect, useRef } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 const HomeScene = lazy(() => import('custom/home-scene'))
 
@@ -24,11 +24,10 @@ const HomePage = () => {
   const toggleIsPlay = useBoundStore((state) => state.toggleIsPlay)
   const mouseRef = useRef<Coordinates>({ x: 0, y: 0 })
   const circleRef = useRef<HTMLDivElement>(null)
-  const delayedMouseRef = useRef<Coordinates>({ x: 0, y: 0 })
   const frameIdRef = useRef<number | null>(null)
-  const size = 30
-
-  const lerp = (x: number, y: number, a: number) => x * (1 - a) + y * a
+  const [isActive, setIsActive] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const size = isHovered ? 40 : isActive ? 0 : 20
 
   const updateMousePosition = (e: MouseEvent) => {
     const { clientX, clientY } = e
@@ -37,18 +36,8 @@ const HomePage = () => {
       x: clientX,
       y: clientY,
     }
-  }
 
-  const animateCircle = () => {
-    const { x, y } = delayedMouseRef.current
-
-    delayedMouseRef.current = {
-      x: lerp(x, mouseRef.current.x, 0.1),
-      y: lerp(y, mouseRef.current.y, 0.1),
-    }
-
-    updateCirclePosition(delayedMouseRef.current.x, delayedMouseRef.current.y)
-    frameIdRef.current = window.requestAnimationFrame(animateCircle)
+    updateCirclePosition(mouseRef.current.x, mouseRef.current.y)
   }
 
   const updateCirclePosition = (x: number, y: number) => {
@@ -58,7 +47,6 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    animateCircle()
     window.addEventListener('mousemove', updateMousePosition)
 
     return () => {
@@ -71,6 +59,7 @@ const HomePage = () => {
 
   return (
     <MainLayout className="h-screen cursor-none overflow-hidden">
+      {/* TODO change Suspence, hide text */}
       <Suspense fallback={<HomeFallback />}>
         <Canvas
           camera={{
@@ -91,9 +80,18 @@ const HomePage = () => {
           asChild
           onClick={toggleIsPlay}
           className="absolute -bottom-8 right-[10vw] h-16 w-16 rounded-full p-0 md:-bottom-12 md:h-24 md:w-24"
+          onMouseEnter={() => {
+            setIsActive(true)
+          }}
+          onMouseLeave={() => {
+            setIsActive(false)
+          }}
         >
           <motion.div whileHover={{ bottom: 10 }} whileTap={{ bottom: 10 }}>
-            <Link to={PathConstants.SETTINGS} className="h-full w-full">
+            <Link
+              to={PathConstants.SETTINGS}
+              className="h-full w-full cursor-none"
+            >
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{
@@ -143,6 +141,13 @@ const HomePage = () => {
                 href="https://www.linkedin.com/in/tatsiana-bunevich/"
                 target="_blank"
                 rel="noreferrer"
+                onMouseEnter={() => {
+                  setIsHovered(true)
+                }}
+                onMouseLeave={() => {
+                  setIsHovered(false)
+                }}
+                className="cursor-none"
               >
                 <motion.div
                   animate={{ backgroundPosition: 'center -200%' }}
@@ -166,7 +171,7 @@ const HomePage = () => {
           width: size,
           height: size,
         }}
-        className="pointer-events-none fixed rounded-full bg-black mix-blend-overlay"
+        className="pointer-events-none fixed rounded-full bg-black mix-blend-overlay duration-300"
       />
     </MainLayout>
   )
