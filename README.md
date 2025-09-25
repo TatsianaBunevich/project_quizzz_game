@@ -27,7 +27,7 @@ Welcome to the magical ✨Quizzz Game✨! This project is a fun and interactive 
 - Responsive design that works well on various devices
 
 ## Screenshots
-<!-- TODO: change image to day/night, change images quality -->
+
 ![Quizzz-Game_light](docs/images/Quizzz-Game_light.png)
 ![Quizzz-Game_quiz](docs/images/Quizzz-Game_quiz.png)
 ![Quizzz-Game_scores](docs/images/Quizzz-Game_scores.png)
@@ -40,13 +40,14 @@ See instructions [here](docs/how-to-play.md).
 > Improve your browsing experience by switching themes using the animated switch icon at the top of the page.
 
 ## Technologies Used
-<!-- TODO: update technologies -->
+
 - HTML5
 - CSS3
 - React
 - TypeScript
 - JavaScript (ES6+)
-- CSS Modules
+- Tailwind CSS
+- Zustand
 - Vite
 - Vitest
 

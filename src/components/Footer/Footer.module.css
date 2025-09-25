@@ -1,9 +1,0 @@
-.footer {
-  --gap: 1em;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1em;
-  position: relative;
-  z-index: 2;
-}

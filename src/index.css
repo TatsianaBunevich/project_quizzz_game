@@ -1,121 +1,119 @@
-:root {
-  --color: #ffffff;
-  --background-color: #1b1b32;
-  --button-bg-color: #6b7abb;
-  --border-color: #5d6baa;
-  --button-color: var(--color);
-  --blob-color: #ffffff;
-  --skeleton-color: #808080;
-  --timer-color: hsl(359, 96%, 90%);
+@import './assets/typography.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  --button-radius: 0.75em;
-  --button-padding: 0.5em 1.25em;
-  --blur-size: 5px;
-  --normal-color: #fce795;
-  --good-color: #91c483;
-  --bad-color: #fd9091;
-  --green-hs: 107, 36%;
-  --green-l: 55%;
-  --red-hs: 359, 96%;
-  --red-l: 70%;
-  --green-color: hsl(var(--green-hs), var(--green-l));
-  --red-color: hsl(var(--red-hs), var(--red-l));
-  --progress-color: #dddddd;
-  --c-width: 400px;
-  --c-gap: 1.25em;
-
-  font-family: "Inter", sans-serif;
-  line-height: 1;
-  font-weight: 400;
-  font-size: 12px;
-  width: 100%;
-  overflow-x: hidden;
-
-  color-scheme: light dark;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-[data-theme="light"] {
-  --color: #0a475c;
-  --background-color: #e8f7fc;
-  --button-bg-color: #96dcee;
-  --border-color: #72cce3;
-  --button-color: var(--color);
-  --blob-color: #fffaa8;
-  --skeleton-color: #d0d0d0;
-  --timer-color: hsl(0, 80%, 40%);
-}
-
-[data-theme="dark"] {
-  --color: #ffffff;
-  --background-color: #1b1b32;
-  --button-bg-color: #6b7abb;
-  --border-color: #5d6baa;
-  --button-color: var(--color);
-  --blob-color: #ffffff;
-  --skeleton-color: #808080;
-  --timer-color: hsl(359, 96%, 90%);
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-body::-webkit-scrollbar {
-  width: 0.5em;
-}
-
-body::-webkit-scrollbar-track {
-  background-color: #ffffff;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: var(--progress-color);
-}
-
-h1,
-h2 {
-  font-family: "Karla", sans-serif;
-  font-weight: 700;
-}
-
-h1 {
-  font-size: 4em;
-  text-align: center;
-  margin: 0.7em 0;
-}
-
-h2 {
-  font-size: 1.5em;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    --color: #0a475c;
-    --background-color: #e8f7fc;
-    --button-bg-color: #96dcee;
-    --border-color: #72cce3;
-    --button-color: var(--color);
-    --blob-color: #fffaa8;
-    --skeleton-color: #d0d0d0;
-    --timer-color: hsl(0, 80%, 40%);
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 1rem;
+    /* STATUS colors */
+    --chart-bad: 359 96% 78%;
+    --chart-normal: 48 94% 79%;
+    --chart-good: 107 36% 64%;
+  }
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
-@media (min-width: 992px) {
-  :root {
-    --c-width: 1200px;
-    --c-gap: 3em;
-
-    font-size: 16px;
+@layer base {
+  * {
+    @apply border-border;
   }
-  h1 {
-    margin: 1em 0;
+  body {
+    @apply bg-background text-foreground;
+    @apply antialiased;
+    @apply font-mozaicHUM;
+  }
+}
+
+@layer components {
+  .item-mask-top {
+    --r: 25px;
+    border-left: var(--r) solid #0000;
+    border-radius: calc(2 * var(--r)) var(--r) 0 0 / var(--r) var(--r) 0 0;
+    mask:
+      radial-gradient(var(--r) at 0 0, #0000 98%, #000 101%) 0 100% / var(--r)
+        var(--r) no-repeat,
+      conic-gradient(#000 0 0) padding-box;
+  }
+  .item-mask-bottom {
+    --r: 25px;
+    --s: 30px;
+    --a: 20deg;
+    --_m: 100% / calc(2 * var(--r)) var(--r) no-repeat
+      radial-gradient(50% 100% at top, #000 calc(100% - 1px), #0000);
+    --_d: (var(--s) + var(--r)) * cos(var(--a));
+    mask:
+      calc(50% + var(--_d)) var(--_m),
+      calc(50% - var(--_d)) var(--_m),
+      radial-gradient(
+          var(--s) at 50% calc(100% + sin(var(--a)) * var(--s)),
+          #0000 100%,
+          #000 calc(100% + 1px)
+        )
+        0 calc(var(--r) * (sin(var(--a)) - 1)) no-repeat,
+      linear-gradient(
+        90deg,
+        #000 calc(50% - var(--_d)),
+        #0000 0 calc(50% + var(--_d)),
+        #000 0
+      );
+  }
+  .item-answer {
+    @apply relative !h-full overflow-hidden !whitespace-normal !p-4 !pl-12 before:absolute before:right-[calc(100%-2.7rem)] before:top-1/2 before:aspect-square before:h-[130%] before:w-auto before:-translate-y-1/2 before:rounded-full before:border before:border-inherit after:absolute after:left-4 after:content-[counter(els,_upper-alpha)] after:[counter-increment:els];
+  }
+}
+
+@layer utilities {
+  .faded-bottom {
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-32 after:bg-[linear-gradient(180deg,_transparent_10%,_hsl(var(--background))_70%)];
   }
 }
