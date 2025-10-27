@@ -59,7 +59,6 @@ const HomePage = () => {
 
   return (
     <MainLayout className="h-screen cursor-none overflow-hidden">
-      {/* TODO change Suspence, hide text */}
       <Suspense fallback={<HomeFallback />}>
         <Canvas
           camera={{
