@@ -54,6 +54,7 @@
   "devDependencies": {
     "@react-three/eslint-plugin": "^0.1.1",
     "@tanstack/eslint-plugin-query": "^5.51.15",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.0.0",
     "@types/lodash": "^4.17.5",
     "@types/node": "^22.5.0",

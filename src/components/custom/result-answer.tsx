@@ -36,7 +36,7 @@ const ResultAnswer = ({
 }: ResultAnswerProps) => {
   return (
     <Card className="flex flex-1 flex-col justify-between @container md:h-[calc(100vh-72px-2rem)]">
-      <CardHeader className="space-y-6 border-b bg-muted/50">
+      <CardHeader className="space-y-6 rounded-t-2xl border-b bg-muted/50">
         <div className="flex flex-row flex-nowrap justify-between gap-4">
           <span className="h-10 w-10 rounded-full bg-accent-foreground text-center font-bold leading-10 text-accent">
             {quizItemId + 1}
@@ -70,7 +70,7 @@ const ResultAnswer = ({
           </Button>
         ))}
       </CardContent>
-      <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+      <CardFooter className="flex flex-row items-center rounded-b-2xl border-t bg-muted/50 px-6 py-3">
         {!quizItem.answers.some((item) => item.isSelected) && (
           <Badge variant="outline">Unanswered</Badge>
         )}

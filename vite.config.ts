@@ -29,9 +29,26 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
+    clearMocks: true,
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/**/*.{test.spec}.{ts,tsx}'],
+    css: true,
+    silent: process.env.CI === 'true',
+    retry: 2,
     coverage: {
       reporter: ['text', 'html'],
       reportOnFailure: true,
+      include: ['src/**/**/*.{test.spec}.{ts,tsx}'],
+      exclude: [
+        'src/components/ui/*.tsx',
+        'src/lib/utils.ts',
+        'src/routes/*.ts',
+        'src/store/types.ts',
+        'src/constants.ts',
+        'src/types.ts',
+        '*.cjs',
+        '*.config.{ts,js}',
+      ],
     },
   },
 })

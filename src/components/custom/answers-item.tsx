@@ -24,8 +24,8 @@ const AnswersItem = ({ quizItem, index }: AnswersItemProps) => {
   }
 
   return (
-    <Card className="@container flex flex-col justify-between">
-      <CardHeader className="space-y-6 border-b bg-muted/50">
+    <Card className="flex flex-col justify-between @container">
+      <CardHeader className="space-y-6 rounded-t-2xl border-b bg-muted/50">
         <div className="flex flex-row flex-nowrap items-start justify-between gap-4">
           <span className="h-10 w-10 rounded-full bg-accent-foreground text-center font-bold leading-10 text-accent">
             {index}
@@ -37,7 +37,7 @@ const AnswersItem = ({ quizItem, index }: AnswersItemProps) => {
           className="text-wrap text-lg"
         />
       </CardHeader>
-      <CardContent className="@lg:grid-cols-2 mb-auto grid auto-rows-fr gap-4 pt-6 [counter-reset:els]">
+      <CardContent className="mb-auto grid auto-rows-fr gap-4 pt-6 [counter-reset:els] @lg:grid-cols-2">
         {quizItem.answers.map((a) => (
           <Button
             key={a.answer}

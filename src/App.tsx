@@ -20,7 +20,7 @@ const App = () => {
           <RouterProvider router={router} />
         </ThemeProvider>
       </QueryErrorResetBoundary>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }
