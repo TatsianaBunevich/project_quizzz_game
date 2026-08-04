@@ -31,14 +31,16 @@ export default defineConfig({
     globals: true,
     clearMocks: true,
     setupFiles: ['./src/test/setup.ts'],
-    include: ['src/**/**/*.{test.spec}.{ts,tsx}'],
+    include: ['src/**/**/*.{test,spec}.{ts,tsx}'],
     css: true,
     silent: process.env.CI === 'true',
     retry: 2,
     coverage: {
+      provider: 'v8', // or 'istanbul'
+      all: true,
       reporter: ['text', 'html'],
       reportOnFailure: true,
-      include: ['src/**/**/*.{test.spec}.{ts,tsx}'],
+      include: ['src/**/**/*.{test,spec}.{ts,tsx}'],
       exclude: [
         'src/components/ui/*.tsx',
         'src/lib/utils.ts',

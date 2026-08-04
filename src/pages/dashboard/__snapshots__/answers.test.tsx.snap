@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AnswersPage > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="faded-bottom"
+  >
+    <div
+      data-testid="scroll-area"
+    >
+      <div
+        class="grid grid-cols-[repeat(auto-fit,_minmax(285px,_1fr))] gap-4"
+      >
+        <div
+          data-testid="answers-item"
+        >
+          1. Question 1
+        </div>
+        <div
+          data-testid="answers-item"
+        >
+          2. Question 2
+        </div>
+      </div>
+      <div
+        data-testid="scroll-bar"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
