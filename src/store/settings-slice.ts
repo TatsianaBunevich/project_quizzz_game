@@ -33,9 +33,13 @@ export const createSettingsActions: ActionsWithMiddlewares<
           const settingsArray = state.settings[setting]
           const foundItem = settingsArray.find((item) => item.id === optionId)
 
+          if (!foundItem) return
+
+          const wasSelected = foundItem.isSelected
+
           settingsArray.forEach((item) => (item.isSelected = false))
 
-          if (foundItem) {
+          if (!wasSelected) {
             foundItem.isSelected = true
           }
         }
